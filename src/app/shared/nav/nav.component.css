@@ -1,0 +1,270 @@
+/* Navbar Styles */
+nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  /* Fondo muy oscuro */
+  background: var(--color-dark-primary);
+  /* Sombra oscura y marcada */
+  box-shadow: 0 2px 10px var(--color-shadow-dark);
+  /* Borde inferior con el color eléctrico */
+  border-bottom: 3px solid var(--color-electric-blue);
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 100px;
+}
+
+nav li {
+  margin: 0;
+  position: relative;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px 12px 0;
+  gap: 10px;
+  transition: transform 0.3s ease;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  /* Fondo del icono eléctrico */
+  background: var(--color-electric-blue);
+  border-radius: 50%;
+  padding: 8px;
+  /* Efecto de brillo */
+  box-shadow: 0 0 8px rgba(0, 191, 255, 0.6);
+}
+
+nav h1 {
+  /* Texto claro */
+  color: var(--color-text-light);
+  font-size: 24px;
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  /* Sombra sutil para profundidad */
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 0 auto;
+}
+
+.nav-center a {
+  /* Texto claro */
+  color: var(--color-text-light);
+  padding: 18px 20px;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-center a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  /* Línea de fondo con color eléctrico */
+  background: var(--color-electric-blue);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-center a:hover {
+  /* Fondo de hover oscuro y sutil */
+  background: var(--color-dark-secondary);
+  /* Mantener el color eléctrico para el efecto de brillo */
+  color: var(--color-electric-blue);
+  transform: translateY(-2px);
+  /* Sombra con brillo azul */
+  box-shadow: 0 4px 12px rgba(0, 191, 255, 0.2);
+}
+
+.nav-center a:hover::before {
+  width: 100%;
+}
+
+.auth-section {
+  margin-left: auto;
+}
+
+.login-link {
+  /* Color de texto claro */
+  color: var(--color-text-light);
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: 500;
+  /* Fondo del botón eléctrico */
+  background: var(--color-electric-blue);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  /* Sombra con glow azul */
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
+}
+
+.login-link:hover {
+  /* Hover con color eléctrico un poco más oscuro */
+  background: var(--color-electric-blue-hover);
+  transform: translateY(-1px);
+  /* Sombra más marcada al hacer hover */
+  box-shadow: 0 6px 15px rgba(0, 191, 255, 0.8);
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  /* Texto claro */
+  color: var(--color-text-light);
+  font-weight: 500;
+  gap: 15px;
+  /* Fondo de sección ligeramente más claro que el fondo principal */
+  background: var(--color-dark-secondary);
+  border-radius: 8px;
+  /* Borde sutil del color de acento */
+  border: 1px solid rgba(0, 191, 255, 0.3);
+}
+
+.user-welcome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.user-welcome::before {
+  content: '⚡️'; /* Ícono más apropiado para la temática */
+  font-size: 16px;
+}
+
+.username {
+  /* Nombre de usuario en color eléctrico */
+  color: var(--color-electric-blue);
+  font-weight: 600;
+  text-shadow: 0 0 5px rgba(0, 191, 255, 0.4);
+}
+
+.logout-form {
+  margin: 0;
+}
+
+.logout-btn {
+  /* Botón de Logout eléctrico */
+  background: var(--color-electric-blue);
+  color: var(--color-dark-primary); /* Texto oscuro en el botón brillante */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  /* Sombra con glow azul */
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
+}
+
+.logout-btn:hover {
+  /* Hover con color eléctrico un poco más oscuro */
+  background: var(--color-electric-blue-hover);
+  transform: translateY(-1px);
+  /* Sombra más marcada al hacer hover */
+  box-shadow: 0 6px 15px rgba(0, 191, 255, 0.8);
+}
+
+/* Responsive Design para Navbar */
+@media (max-width: 768px) {
+  nav ul {
+    flex-wrap: wrap;
+    padding: 0 10px;
+  }
+
+  .logo {
+    flex: 1 1 100%;
+    justify-content: center;
+    padding: 15px;
+    /* Borde divisor oscuro */
+    border-bottom: 1px solid var(--color-dark-tertiary);
+  }
+
+  .nav-center {
+    flex: 1 1 100%;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .nav-center a {
+    padding: 14px 15px;
+    font-size: 14px;
+    flex: 1;
+    text-align: center;
+  }
+
+  .auth-section {
+    flex: 1 1 100%;
+    margin: 0;
+    padding: 10px;
+    justify-content: center;
+    /* Borde divisor oscuro */
+    border-top: 1px solid var(--color-dark-tertiary);
+  }
+
+  .user-section {
+    justify-content: center;
+    width: 100%;
+  }
+
+  nav h1 {
+    font-size: 20px;
+  }
+
+  .logo img {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-center {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nav-center a {
+    width: 100%;
+    padding: 12px;
+    /* Borde divisor oscuro */
+    border-bottom: 1px solid var(--color-dark-tertiary);
+  }
+
+  .user-section {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+}
+
+

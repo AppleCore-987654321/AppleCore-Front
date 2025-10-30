@@ -1,0 +1,146 @@
+@if (loading) {
+  <div class="flex justify-content-center align-items-center min-h-screen">
+    <p-progressSpinner styleClass="w-4rem h-4rem"></p-progressSpinner>
+    <p class="ml-3 text-lg font-medium">Cargando productos...</p>
+  </div>
+}
+
+@if (error && !loading) {
+  <p-card header="Error al cargar productos" class="m-4 shadow-3 border-round-md text-center">
+    <p class="text-red-500 mb-3">{{ error }}</p>
+
+    <p-button
+      label="Reintentar"
+      icon="pi pi-refresh"
+      (click)="loadProducts()"
+      styleClass="p-button-warning">
+    </p-button>
+  </p-card>
+}
+
+@if (!loading && !error && productos.length > 0) {
+
+    <p-card header="Productos" class="m-4 shadow-3 border-round-md" [styleClass]="'shadow-2'">
+      <div class="page-actions mb-3">
+        <p-button
+          label="Añadir Producto"
+          icon="pi pi-plus"
+          (click)="crearProducto()"
+          styleClass="p-button-raised p-button-success">
+        </p-button>
+
+      </div>
+      <p-table [value]="productos" [paginator]="true" [rows]="10" [responsiveLayout]="'scroll'">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 70px;">Imagen</th>
+            <th>Producto</th>
+            <th>Stock</th>
+            <th>Estado</th>
+            <th>Categoria</th>  <!-- Nueva columna para la categoría -->
+            <th style="width: 120px;">Acciones</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item>
+          <tr>
+            <td>
+              <img
+                [src]="item.imgUrl"
+                alt="Imagen del producto"
+                class="product-image shadow-1"
+                style="width:50px; height:50px; border-radius:4px; object-fit: cover;"
+              />
+            </td>
+            <td><strong>{{ item.name }}</strong></td>
+            <td>
+              <p-tag [value]="item.stock" severity="info"></p-tag>
+            </td>
+            <td>
+              <p-tag
+                [value]="item.status ? 'Activo' : 'Inactivo'"
+                [severity]="item.status ? 'success' : 'danger'">
+              </p-tag>
+            </td>
+            <td>
+              <!-- Muestra el nombre de la categoría basado en el categoryId -->
+              <p>{{ item.category?.name || 'Sin Categoría' }}</p>
+            </td>
+            <td>
+              <div class="flex gap-2">
+                <button
+                  pButton
+                  icon="pi pi-pencil"
+                  class="p-button-warning p-button-sm"
+                  (click)="editar(item)">
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6" class="text-center py-4 text-color-secondary">
+              No hay productos disponibles
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </p-card>
+}
+
+@if (!loading && !error && productos.length === 0) {
+  <p-card header="Catálogo Vacío" class="m-4 shadow-3 border-round-md text-center">
+    <p class="text-color-secondary mb-3">No hay productos registrados en el sistema.</p>
+    <a
+      routerLink="/admin/productos/crear"
+      pButton
+      label="Crear Primer Producto"
+      icon="pi pi-plus"
+      class="p-button-success"
+    ></a>
+  </p-card>
+}
+
+<!-- Modal de Editar -->
+<p-dialog
+  [(visible)]="mostrarModalEditar"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  header="Editar Producto"
+  [closable]="true"
+  (onHide)="cerrarModalEditar()"
+  [closeOnEscape]="false"
+  [dismissableMask]="false"
+>
+  @if (productoSeleccionado !== null) {
+    <app-editar
+      [productoId]="productoSeleccionado"
+      (onGuardar)="actualizarProducto()"
+      (onCancelar)="cerrarModalEditar()"
+    ></app-editar>
+  }
+</p-dialog>
+
+<!-- Modal de Crear -->
+<p-dialog
+  [(visible)]="mostrarModalCrear"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  header="Crear Producto"
+  [closable]="true"
+  (onHide)="cerrarModalCrear()"
+  [closeOnEscape]="false"
+  [dismissableMask]="false"
+>
+  <app-crear
+    (onGuardar)="productoCreado()"
+    (onCancelar)="cerrarModalCrear()"
+  ></app-crear>
+</p-dialog>

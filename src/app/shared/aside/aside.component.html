@@ -1,0 +1,75 @@
+<div class="layout-wrapper" [class.layout-sidebar-collapsed]="collapsed">
+  <!-- Sidebar -->
+  <aside class="layout-sidebar" [class.collapsed]="collapsed">
+    <div class="sidebar-header">
+      @if (!collapsed) {
+        <div class="logo">
+          <span class="logo-text">{{ appName }}</span>
+        </div>
+      } @else {
+        <div class="logo-mini">
+          <i class="pi pi-home"></i>
+        </div>
+      }
+    </div>
+
+    <button
+      pButton
+      type="button"
+      icon="pi pi-bars"
+      class="p-button-text toggle-btn"
+      (click)="toggleSidebar()"
+      pRipple>
+    </button>
+
+    <nav class="sidebar-menu">
+      <ul class="menu-list">
+        @for (item of menuItems; track item) {
+          <li class="menu-item">
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="active"
+              class="menu-link"
+              (click)="item.command ? item.command() : null"
+              pRipple>
+              <i [class]="item.icon" class="menu-icon"></i>
+              @if (!collapsed) {
+                <span class="menu-label">{{ item.label }}</span>
+              }
+            </a>
+
+            <!-- Submenu -->
+            @if (item.items && item.items.length > 0 && !collapsed) {
+              <ul class="submenu">
+                @for (subItem of item.items; track subItem) {
+                  <li class="submenu-item">
+                    <a
+                      [routerLink]="subItem.route"
+                      routerLinkActive="active"
+                      class="submenu-link"
+                      (click)="subItem.command ? subItem.command() : null"
+                      pRipple>
+                      <i [class]="subItem.icon" class="submenu-icon"></i>
+                      <span class="submenu-label">{{ subItem.label }}</span>
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
+          </li>
+        }
+      </ul>
+    </nav>
+
+    @if (!collapsed) {
+      <div class="sidebar-footer">
+        <p class="footer-text">{{ footerText }}</p>
+      </div>
+    }
+  </aside>
+
+  <!-- Main Content -->
+  <main class="layout-main">
+    <ng-content></ng-content>
+  </main>
+</div>

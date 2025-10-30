@@ -1,0 +1,116 @@
+/* ----- Contenedor principal ----- */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 20px 30px;
+  margin: 80px auto 20px;
+  max-width: 1200px;
+  background: var(--color-dark-secondary);
+  border: 1px solid rgba(0, 191, 255, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 191, 255, 0.15);
+}
+
+/* ----- Título ----- */
+.page-title h1 {
+  color: var(--color-electric-blue);
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  text-shadow: 0 0 6px rgba(0, 191, 255, 0.4);
+}
+
+.page-title p {
+  color: var(--color-text-light);
+  font-size: 15px;
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* ----- Contenedor de botones ----- */
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ----- Estilos base para los botones personalizados ----- */
+.custom-btn {
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  background: var(--color-electric-blue);
+  color: var(--color-dark-primary);
+  box-shadow: 0 0 8px rgba(0, 191, 255, 0.5);
+}
+
+/* Hover y focus */
+.custom-btn:hover {
+  background: var(--color-electric-blue-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 0 12px rgba(0, 191, 255, 0.7);
+}
+
+/* Success button */
+.custom-btn.success {
+  background: #00c853;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(0, 200, 83, 0.4);
+}
+.custom-btn.success:hover {
+  background: #00b34a;
+  box-shadow: 0 0 12px rgba(0, 200, 83, 0.6);
+}
+
+/* Info button */
+.custom-btn.info {
+  background: #03a9f4;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(3, 169, 244, 0.4);
+}
+.custom-btn.info:hover {
+  background: #0288d1;
+  box-shadow: 0 0 12px rgba(3, 169, 244, 0.6);
+}
+
+/* Outlined variant */
+.custom-btn.outlined {
+  background: transparent;
+  border: 2px solid currentColor;
+  color: var(--color-electric-blue);
+  box-shadow: none;
+}
+.custom-btn.outlined:hover {
+  background: rgba(0, 191, 255, 0.1);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: 15px 20px;
+  }
+
+  .page-title h1 {
+    font-size: 22px;
+  }
+
+  .page-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}

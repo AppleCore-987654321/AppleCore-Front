@@ -1,0 +1,218 @@
+/* =========================
+   CONTENEDOR PRINCIPAL
+   ========================= */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 20px;
+
+  /* === SOLUCIÓN STICKY CONTENT === */
+  /* Aseguramos que ocupe el espacio restante y aplicamos el fondo oscuro */
+  /* (Ajusta 60px y 50px si las alturas de tu Navbar y Footer son diferentes) */
+  min-height: calc(100vh - 60px - 50px);
+}
+
+.main-content h2 {
+  color: var(--color-dark-primary); /* Texto claro */
+  font-size: 2.4rem; /* Hacemos el título más grande */
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: 300;
+  position: relative;
+}
+
+.register-page .main-content {
+  padding: 60px 15px 15px 15px;
+}
+
+.main-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px; /* Hacemos la línea un poco más ancha */
+  height: 3px;
+  background: var(--color-electric-blue); /* Color eléctrico */
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--color-electric-blue); /* Añadimos brillo */
+}
+
+/* =========================
+   CONTENEDOR DEL FORMULARIO
+   ========================= */
+.container {
+  /* Fondo oscuro secundario para contraste */
+  background: var(--color-dark-secondary);
+  padding: 40px; /* Aumentamos el padding para hacerlo más espacioso */
+  border-radius: 12px;
+  /* Sombra con brillo sutil */
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
+  width: 100%;
+  /* AUMENTO DE TAMAÑO CLAVE: Hacemos el formulario más ancho */
+  max-width: 450px;
+  margin: 0 auto;
+  position: relative;
+  border: 1px solid var(--color-dark-tertiary); /* Borde metálico sutil */
+}
+
+/* =========================
+   ENLACES DE NAVEGACIÓN
+   ========================= */
+.auth-link {
+  text-align: center;
+  margin-top: 30px; /* Más espacio */
+  padding-top: 20px;
+  border-top: 1px solid var(--color-dark-tertiary); /* Borde metálico */
+}
+
+.auth-link p {
+  margin: 0;
+  color: var(--color-text-medium); /* Texto medio */
+  font-size: 15px;
+}
+
+.auth-link a {
+  color: var(--color-electric-blue); /* Color eléctrico */
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.auth-link a:hover {
+  color: var(--color-electric-blue-hover); /* Hover más oscuro */
+  text-decoration: underline;
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  /* Borde superior con gradiente eléctrico */
+  background: linear-gradient(90deg, var(--color-electric-blue), var(--color-electric-blue-hover));
+  border-radius: 12px 12px 0 0;
+}
+
+/* =========================
+   FORMULARIOS
+   ========================= */
+.form-group {
+  margin-bottom: 25px; /* Aumentamos el espacio entre campos */
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px; /* Más espacio */
+  font-weight: 600;
+  color: var(--color-text-light); /* Texto claro */
+  font-size: 1rem; /* Etiquetas más grandes */
+}
+
+.form-control {
+  width: 100%;
+  /* Inputs más grandes */
+  padding: 14px 18px 14px 50px;
+  border: 2px solid var(--color-dark-tertiary); /* Borde oscuro */
+  border-radius: 8px; /* Borde más redondeado */
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: var(--color-dark-primary); /* Fondo de input muy oscuro */
+  color: var(--color-text-light); /* Texto del input claro */
+}
+
+.form-group .input-icon {
+  position: absolute;
+  left: 15px; /* Movemos el icono a la izquierda */
+  top: 58%; /* Centramos verticalmente */
+  transform: translateY(-50%);
+  color: var(--color-text-medium); /* Icono en color medio */
+  font-size: 18px; /* Icono más grande */
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+.form-group.has-icon .form-control:focus + .input-icon,
+.form-group.has-icon .form-control:not(:placeholder-shown) + .input-icon {
+  color: var(--color-electric-blue); /* Icono eléctrico al enfocar */
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-electric-blue); /* Borde eléctrico */
+  box-shadow: 0 0 0 3px rgba(0, 191, 255, 0.3); /* Sombra de glow */
+  transform: translateY(-1px);
+}
+
+.form-control:hover {
+  border-color: var(--color-border);
+}
+
+/* =========================
+   BOTONES
+   ========================= */
+.btn {
+  padding: 14px 28px; /* Botones más grandes */
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 150px;
+}
+
+.btn-primary {
+  background: var(--color-electric-blue); /* Fondo eléctrico */
+  color: var(--color-dark-primary); /* Texto oscuro en el botón */
+  box-shadow: var(--shadow-light); /* Sombra de brillo */
+}
+
+.btn-primary:hover {
+  background: var(--color-electric-blue-hover); /* Hover más oscuro */
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 191, 255, 0.7); /* Sombra intensa */
+}
+
+/* =========================
+   ESTILOS ESPECÍFICOS PARA LOGIN
+   ========================= */
+.login-page .container {
+  /* Se asegura que el max-width grande se aplique */
+  max-width: 450px;
+}
+
+/* NOTA: Eliminamos overrides que duplican o contradicen los nuevos tamaños */
+/* .login-page .main-content h2 { font-size: 2rem; } - eliminado */
+/* .login-page .form-group { margin-bottom: 20px; } - eliminado */
+/* .login-page .form-control { padding: 12px 16px 12px 40px; font-size: 16px; } - eliminado */
+
+/* =========================
+   RESPONSIVE (Ajustes de padding)
+   ========================= */
+@media (max-width: 768px) {
+  .main-content {
+    /* Aseguramos que el min-height se adapte a pantallas más pequeñas */
+    min-height: calc(100vh - 50px); /* Asumiendo que el navbar desaparece o es más pequeño */
+  }
+
+  .container {
+    padding: 30px 25px;
+    margin: 0 15px;
+  }
+
+  .login-page .container {
+    max-width: 100%; /* Permitimos que ocupe todo el ancho disponible */
+    padding: 30px 20px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+/* ... otros media queries ... */

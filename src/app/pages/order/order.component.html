@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="page-header">
+    <h1 class="page-title">Mis Órdenes</h1>
+    <p class="page-subtitle">Gestiona y revisa el historial de tus pedidos</p>
+  </div>
+
+  <div class="orders-grid">
+    @for (item of ordenes; track item.id) {
+      <app-item [order]="item"></app-item>
+    }
+  </div>
+</div>

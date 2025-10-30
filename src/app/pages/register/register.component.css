@@ -1,0 +1,161 @@
+
+.register-page .container {
+  /* Mantenemos el ancho original (700px) que ya es grande */
+  max-width: 700px;
+  padding: 40px;
+  background: var(--color-dark-secondary);
+  border: 1px solid var(--color-dark-tertiary);
+  box-shadow: 0 0 15px rgba(0, 191, 255, 0.2);
+}
+
+.register-page .main-content h2 {
+  color: var(--color-dark-primary);
+  font-size: 2.4rem; /* Hacemos el título más grande para coincidir con el login */
+  margin-bottom: 25px;
+}
+
+.register-page .form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px; /* Aumentamos el espacio entre columnas y filas */
+  margin-bottom: 20px;
+}
+
+.register-page .form-group {
+  margin-bottom: 0;
+}
+
+.register-page .form-group.full-width {
+  grid-column: 1 / -1;
+  margin-bottom: 15px; /* Más espacio */
+}
+
+.register-page .form-group label {
+  color: var(--color-text-light);
+  font-size: 1rem; /* Etiquetas más grandes */
+  margin-bottom: 8px; /* Más espacio */
+}
+
+.register-page .form-control {
+  /* Inputs más grandes y espaciosos */
+  padding: 14px 18px 14px 50px;
+  font-size: 16px;
+  background: var(--color-dark-primary); /* Fondo de input muy oscuro */
+  color: var(--color-text-light);
+  border: 2px solid var(--color-dark-tertiary);
+}
+
+.register-page .form-group .input-icon {
+  left: 15px; /* Movemos el icono a la izquierda para el nuevo padding */
+  top: 58%; /* Centramos verticalmente (ajusta si es necesario) */
+  transform: translateY(-50%);
+  font-size: 18px; /* Icono más grande */
+  color: var(--color-text-medium);
+}
+
+.register-page .btn-primary {
+  grid-column: 1 / -1;
+  margin-top: 15px;
+  /* Botón más grande y consistente con el login */
+  padding: 16px 28px;
+  font-size: 17px;
+  border-radius: 10px;
+  /* Colores metálicos */
+  background: var(--color-electric-blue);
+  color: var(--color-dark-primary);
+  box-shadow: 0 0 12px rgba(0, 191, 255, 0.6);
+}
+
+/* =========================
+   ESTILOS DE VALIDACIÓN (TEMÁTICA)
+   ========================= */
+
+/* Estilos para campos inválidos */
+.form-control.invalid {
+  /* Usamos un rojo oscuro y profundo para los errores */
+  border-color: #9a0000 !important;
+  background-color: #1a0a0a !important; /* Fondo del input muy oscuro para error */
+  box-shadow: 0 0 0 3px rgba(154, 0, 0, 0.4); /* Sombra de error */
+}
+
+.form-control.invalid:focus {
+  border-color: #ff0000 !important; /* Rojo brillante al enfocar */
+  box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.3);
+}
+
+/* Mensajes de error debajo de cada campo */
+.error-text {
+  display: block;
+  color: #ff4d4d; /* Rojo más claro para visibilidad del error */
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  margin-left: 0;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* Ajuste para el grupo de formulario con error */
+.form-group.has-icon {
+  position: relative;
+  /* Más espacio para el mensaje de error */
+  margin-bottom: 2.5rem;
+}
+
+/* Asegurar que el mensaje de error no se superponga */
+.form-group.has-icon .error-text {
+  /* Alineado con el input más grande */
+  padding-left: 50px;
+}
+
+/* Estilo del ícono cuando el campo es inválido */
+.form-group.has-icon .form-control.invalid ~ .input-icon {
+  color: #ff4d4d; /* Icono en rojo de error */
+}
+
+/* Mensaje de error general del formulario */
+.alert-danger {
+  /* Fondo oscuro y texto rojo para el error general */
+  background-color: #2c0b0b;
+  border: 1px solid #9a0000;
+  color: #ff4d4d;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* Botón deshabilitado */
+.btn.btn-primary:disabled {
+  /* Gris oscuro y metálico para deshabilitado */
+  background-color: #3b424a;
+  border-color: #3b424a;
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+/* Responsive: ajustes para móviles */
+@media (max-width: 768px) {
+  /* El contenedor ahora ocupa el ancho completo en móviles */
+  .register-page .container {
+    max-width: 100%;
+    padding: 25px 15px;
+  }
+
+  .register-page .form-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .form-group.has-icon .error-text {
+    /* Quitamos el padding para el móvil */
+    padding-left: 0;
+  }
+
+  .error-text {
+    /* Ajuste de fuente en móvil */
+    font-size: 0.85rem;
+    padding-left: 0;
+    margin-left: 0;
+  }
+}

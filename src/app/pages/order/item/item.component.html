@@ -1,0 +1,62 @@
+ <div class="order-card">
+    <div class="order-header">
+      <div class="order-number">
+        Orden #<span>{{ order.id}}</span>
+      </div>
+      <div class="order-date">{{ order.orderDate | date: 'dd/MM/yyyy' }}</div>
+    </div>
+
+    <div class="order-details">
+      <div class="detail-item">
+        <span class="detail-label">Total</span>
+        <span class="detail-value total-amount">S/ <span>{{ order.orderTotal | number: '1.2-2' }}</span></span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Método de Pago</span>
+        <div class="payment-method">
+          <span>{{ order.paymentMethod }}</span>
+        </div>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Estado</span>
+
+        @switch (order.orderStatus) {
+          @case (OrderStatus.PENDING) {
+            <span class="status-badge status-pending">{{ order.orderStatus }}</span>
+          }
+          @case (OrderStatus.CONFIRMED) {
+            <span class="status-badge status-confirmed">{{ order.orderStatus }}</span>
+          }
+          @case (OrderStatus.PROCESSING) {
+            <span class="status-badge status-processing">{{ order.orderStatus }}</span>
+          }
+          @case (OrderStatus.SHIPPED) {
+            <span class="status-badge status-shipped">{{ order.orderStatus }}</span>
+          }
+          @case (OrderStatus.DELIVERED) {
+            <span class="status-badge status-delivered">{{ order.orderStatus }}</span>
+          }
+          @default {
+            <span class="status-badge status-cancelled">{{ order.orderStatus }}</span>
+          }
+        }
+      </div>
+    </div>
+
+    @if (order.observations) {
+      <div class="observations">
+        <strong>Observaciones:</strong> <span>{{ order.observations }}</span>
+      </div>
+    }
+
+    <div class="order-actions">
+      <form [attr.action]="'/ordenes/' + order.id + '/base64'" method="get" class="print-form">
+        <button type="submit" class="action-btn btn-print">
+          🖨️ Imprimir
+        </button>
+      </form>
+    </div>
+  </div>
+

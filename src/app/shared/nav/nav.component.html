@@ -1,0 +1,57 @@
+<nav>
+  <ul>
+    <!-- 1️⃣ Logo -->
+    <li class="logo">
+      <img src="assets/images/TechPlusLogo.svg" alt="TechnoPlus Logo" />
+      <h1>GameMasters</h1>
+    </li>
+
+    <!-- 2️⃣ Enlaces -->
+    <li class="nav-center">
+      <a routerLink="/">Inicio</a>
+      <a routerLink="product">Productos</a>
+      @if (userRol === 'CUSTOMER') {
+        <a routerLink="/ordenes">Órdenes</a>
+      }
+    </li>
+
+    <!-- 3️⃣ Botón del carrito -->
+    <li class="cart-section">
+      <button
+        pButton
+        icon="pi pi-shopping-cart"
+        class="p-button-rounded p-button-text"
+        (click)="toggleSidebar()"
+        pBadge
+        [value]="cartCount"
+        style="position: relative;"
+      ></button>
+
+      <p-sidebar
+        [(visible)]="visible"
+        position="right"
+        [modal]="false"
+        [dismissible]="true"
+        [style]="{ width: '30rem' }"
+      >
+        <app-cart></app-cart>
+      </p-sidebar>
+    </li>
+
+    <!-- 4️⃣ Login / Logout -->
+    <li class="auth-section">
+      @if (!username) {
+        <a routerLink="/login" class="login-link">Iniciar sesión</a>
+      }
+
+      @if (username) {
+        <div class="user-section">
+          <div class="user-welcome">
+            Bienvenido, <span class="username">{{ username }}</span>
+          </div>
+          <button (click)="logout()" class="logout-btn">Cerrar Sesión</button>
+        </div>
+      }
+    </li>
+  </ul>
+</nav>

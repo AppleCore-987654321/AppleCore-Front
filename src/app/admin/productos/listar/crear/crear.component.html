@@ -1,0 +1,135 @@
+<main class="p-m-4">
+  <!-- Header -->
+  <div class="p-mb-4">
+    <h2 class="p-mb-2">Nuevo Producto</h2>
+  </div>
+
+  <!-- Form -->
+  <section>
+    <div class="p-card p-shadow-2 p-p-4">
+      <form [formGroup]="formProducto" (ngSubmit)="guardarProducto()">
+        <div class="p-fluid">
+          <!-- Loader mientras carga -->
+          <div *ngIf="loading" class="flex justify-content-center align-items-center" style="min-height: 300px;">
+            <i class="pi pi-spin pi-spinner" style="font-size:2rem"></i>
+          </div>
+
+          <!-- Mensaje de error -->
+          <div *ngIf="error && !loading" class="p-message p-message-error mb-3">
+            <div class="p-message-wrapper">
+              <span class="p-message-icon pi pi-times-circle"></span>
+              <span class="p-message-detail">{{ error }}</span>
+            </div>
+          </div>
+
+          <!-- Formulario -->
+          <div class="field mb-3">
+            <label for="nombre">Nombre *</label>
+            <input
+              id="nombre"
+              type="text"
+              pInputText
+              formControlName="name"
+              [class.ng-invalid]="hasError('name')"
+              [class.ng-dirty]="hasError('name')"
+            />
+            <small class="p-error" *ngIf="hasError('name')">
+              {{ getErrorMessage('name') }}
+            </small>
+          </div>
+
+          <div class="field mb-3">
+            <label for="descripcion">Descripción *</label>
+            <input
+              id="descripcion"
+              type="text"
+              pInputText
+              formControlName="description"
+              [class.ng-invalid]="hasError('description')"
+              [class.ng-dirty]="hasError('description')"
+            />
+            <small class="p-error" *ngIf="hasError('description')">
+              {{ getErrorMessage('description') }}
+            </small>
+          </div>
+
+          <div class="field mb-3">
+            <label for="detalles">Detalles</label>
+            <input
+              id="detalles"
+              type="text"
+              pInputText
+              formControlName="details"
+            />
+          </div>
+
+          <div class="field mb-3">
+            <label for="imagen">URL Imagen</label>
+            <input
+              id="imagen"
+              type="text"
+              pInputText
+              formControlName="imgUrl"
+            />
+          </div>
+
+          <div class="field mb-3">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" formControlName="categoryId" class="p-inputtext">
+              <option [ngValue]="null">Sin categoría</option>
+              <option *ngFor="let c of categorias" [ngValue]="c.id">{{ c.name }}</option>
+            </select>
+          </div>
+
+          <div class="field mb-3">
+            <label for="precio">Precio *</label>
+            <p-inputNumber
+              id="precio"
+              formControlName="price"
+              mode="currency"
+              currency="USD"
+              [class.ng-invalid]="hasError('price')"
+              [class.ng-dirty]="hasError('price')"
+            ></p-inputNumber>
+            <small class="p-error" *ngIf="hasError('price')">
+              {{ getErrorMessage('price') }}
+            </small>
+          </div>
+
+          <div class="field mb-3">
+            <label for="stock">Stock *</label>
+            <p-inputNumber
+              id="stock"
+              formControlName="stock"
+              [class.ng-invalid]="hasError('stock')"
+              [class.ng-dirty]="hasError('stock')"
+            ></p-inputNumber>
+            <small class="p-error" *ngIf="hasError('stock')">
+              {{ getErrorMessage('stock') }}
+            </small>
+          </div>
+
+          <div class="flex gap-2 justify-content-end mt-4">
+            <button
+              pButton
+              label="Cancelar"
+              icon="pi pi-times"
+              class="p-button-secondary"
+              type="button"
+              (click)="cancelar()"
+              [disabled]="guardando"
+            ></button>
+            <button
+              pButton
+              label="Crear"
+              icon="pi pi-plus"
+              type="submit"
+              [disabled]="!formProducto.valid || guardando"
+              [loading]="guardando"
+            ></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>

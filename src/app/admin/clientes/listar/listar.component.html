@@ -1,0 +1,110 @@
+@if (loading) {
+  <div class="flex justify-content-center align-items-center min-h-screen">
+    <p-progressSpinner styleClass="w-4rem h-4rem"></p-progressSpinner>
+    <p class="ml-3 text-lg font-medium">Cargando clientes...</p>
+  </div>
+}
+
+@if (error && !loading) {
+  <p-card header="Error al cargar clientes" class="m-4 shadow-3 border-round-md text-center">
+    <p class="text-red-500 mb-3">{{ error }}</p>
+
+    <p-button
+      label="Reintentar"
+      icon="pi pi-refresh"
+      (click)="loadClientes()"
+      styleClass="p-button-warning">
+    </p-button>
+  </p-card>
+}
+
+
+@if (!loading && !error && clientes.length > 0) {
+  <p-card header="Clientes" class="m-4 shadow-3 border-round-md">
+
+    <p-table
+      [value]="clientes"
+      dataKey="id"
+      responsiveLayout="scroll"
+      class="shadow-2 border-round-md"
+      [tableStyle]="{ 'min-width': '60rem' }"
+      [paginator]="true"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} clientes">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 50px;">ID</th>
+          <th style="width: 15%;">Nombre</th>
+          <th style="width: 15%;">Apellido</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th style="width: 100px;">Estado</th>
+          <th style="width: 120px;" class="text-center">Acciones</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td><strong>{{ item.id }}</strong></td>
+          <td><strong>{{ item.firstName }}</strong></td>
+          <td><strong>{{ item.lastName }}</strong></td>
+          <td>
+            <a [href]="'mailto:' + item.email">
+              {{ item.email }}
+            </a>
+          </td>
+          <td>
+            <a [href]="'tel:' + item.phone">
+              {{ item.phone }}
+            </a>
+          </td>
+          <td>
+            <p-tag
+              [value]="item.status ? 'Activo' : 'Inactivo'"
+              [severity]="item.status ? 'success' : 'danger'">
+            </p-tag>
+          </td>
+          <td class="text-center">
+            <div class="flex justify-content-center gap-2">
+              <button
+                pButton
+                icon="pi pi-pencil"
+                class="p-button-warning p-button-sm"
+                (click)="editarCliente(item)">
+              </button>
+              <button
+                pButton
+                icon="pi pi-trash"
+                class="p-button-danger p-button-sm"
+                (click)="eliminarCliente(item)">
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7" class="text-center py-4 text-gray-400">
+            No hay clientes disponibles.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+}
+
+@if (!loading && !error && clientes.length === 0) {
+  <p-card header="Sin Clientes" class="m-4 shadow-3 border-round-md text-center">
+    <p class="text-gray-500 mb-3">No hay clientes registrados en el sistema.</p>
+    <button
+      pButton
+      label="Crear Primer Cliente"
+      icon="pi pi-plus"
+      routerLink="crear"
+      class="p-button-success">
+    </button>
+  </p-card>
+}

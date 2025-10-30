@@ -1,0 +1,46 @@
+<div class="cart-container">
+  <p-card>
+    <div class="cart-header">
+      <h3>Mi Carrito</h3>
+    </div>
+
+    <div class="cart-items">
+      @if (carrito.length > 0) {
+        @for (product of carrito; track product.id) {
+          <div class="mini-card">
+            <img [src]="product.imgUrl" [alt]="product.name">
+            <div class="mini-card-content">
+              <h5>{{product.name}}</h5>
+              <p-tag [value]="product.categoryName" severity="info" [rounded]="true"></p-tag>
+              <span class="price">S/ {{product.price | number:'1.2-2'}}</span>
+            </div>
+            <button pButton
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-danger p-button-text p-button-sm"
+                    (click)="eliminarProducto(product)">
+            </button>
+          </div>
+        }
+      } @else {
+        <div class="empty-cart">
+          <i class="pi pi-shopping-cart"></i>
+          <p>Carrito vacío</p>
+        </div>
+      }
+    </div>
+
+    @if (carrito.length > 0) {
+      <div class="cart-footer">
+        <div class="total">
+          <span>Total:</span>
+          <span class="total-amount">S/ {{total | number:'1.2-2'}}</span>
+        </div>
+        <button pButton
+                label="Pagar"
+                icon="pi pi-check"
+                class="p-button-sm p-button-success">
+        </button>
+      </div>
+    }
+  </p-card>
+</div>

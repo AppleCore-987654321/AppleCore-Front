@@ -1,0 +1,49 @@
+<div class="container">
+  <h2>Editar Orden</h2>
+
+  <form [formGroup]="ordenForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Código de orden</label>
+      <input formControlName="codigoOrden" readonly class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label>Fecha de orden</label>
+      <input type="datetime-local" formControlName="fechaOrden" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label>Monto Total</label>
+      <input type="number" formControlName="totalOrden" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label>Teléfono de contacto</label>
+      <input type="number" formControlName="telefonoEntrega" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label>Dirección de entrega</label>
+      <input type="text" formControlName="direccionEntrega" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label>Observaciones</label>
+      <input type="text" formControlName="observaciones" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label>Estado de la orden</label>
+      <select formControlName="estadoOrden" class="form-control">
+        <option value="PENDIENTE">PENDIENTE</option>
+        <option value="CONFIRMADA">CONFIRMADA</option>
+        <option value="PROCESANDO">PROCESANDO</option>
+        <option value="ENVIADO">ENVIADO</option>
+        <option value="ENTREGADO">ENTREGADO</option>
+        <option value="CANCELADO">CANCELADO</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+  </form>
+</div>

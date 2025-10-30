@@ -1,0 +1,127 @@
+@if (loading) {
+  <div class="flex justify-content-center align-items-center min-h-screen">
+    <p-progressSpinner styleClass="w-4rem h-4rem"></p-progressSpinner>
+    <p class="ml-3 text-lg font-medium">Cargando órdenes...</p>
+  </div>
+}
+
+@if (error && !loading) {
+  <p-card header="Error al cargar órdenes" class="m-4 shadow-3 border-round-md text-center">
+    <p class="text-red-500 mb-3">{{ error }}</p>
+
+    <p-button
+      label="Reintentar"
+      icon="pi pi-refresh"
+      (click)="loadOrders()"
+      styleClass="p-button-warning">
+    </p-button>
+  </p-card>
+}
+
+@if (!loading && !error && ordenes.length > 0) {
+  <p-card header="Órdenes" class="m-4 shadow-3 border-round-md">
+
+    <!-- 🔹 Acciones de la tabla -->
+    <div class="page-actions mb-3">
+      <p-button
+        label="Generar Reporte"
+        icon="pi pi-file"
+        (click)="generarReporte()"
+        styleClass="p-button-raised p-button-success">
+      </p-button>
+
+      <p-button
+        label="Actualizar"
+        icon="pi pi-refresh"
+        (click)="refrescarOrdenes()"
+        styleClass="p-button-outlined p-button-info">
+      </p-button>
+    </div>
+
+    <!-- 🔹 Tabla principal -->
+    <p-table
+      [value]="ordenes"
+      dataKey="id"
+      responsiveLayout="scroll"
+      class="shadow-2 border-round-md"
+      [tableStyle]="{ 'min-width': '50rem' }">
+
+      <!-- Cabecera -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Fecha</th>
+          <th>Total</th>
+          <th>Método de Pago</th>
+          <th>Estado</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+      </ng-template>
+
+      <!-- Filas -->
+      <ng-template pTemplate="body" let-item>
+        <tr>
+          <td>{{ item.orderDate | date:'dd/MM/yyyy' }}</td>
+          <td>S/ {{ item.orderTotal | number:'1.2-2' }}</td>
+          <td>{{ item.paymentMethod }}</td>
+          <td>
+            <p-tag
+              [value]="item.orderStatus"
+              [severity]="getSeverity(item.orderStatus)">
+            </p-tag>
+          </td>
+          <td class="text-center">
+            <div class="flex justify-content-center gap-2">
+              <p-button
+                label="Detalles"
+                icon="pi pi-eye"
+                [routerLink]="['/admin/ordenes', item.id]"
+                styleClass="p-button-info p-button-sm">
+              </p-button>
+
+              <p-button
+                label="Editar"
+                icon="pi pi-pencil"
+                [routerLink]="['/ordenes', item.id, 'editar']"
+                styleClass="p-button-secondary p-button-sm">
+              </p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Mensaje vacío -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center py-4 text-gray-400">
+            No hay órdenes disponibles
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+}
+
+<!-- =====================
+     ESTADO VACÍO
+===================== -->
+@if (!loading && !error && ordenes.length === 0) {
+  <p-card header="Sin Órdenes" class="m-4 shadow-3 border-round-md text-center">
+    <p class="text-gray-500">No hay órdenes disponibles</p>
+  </p-card>
+}
+
+<!-- Modal de Exportar -->
+<p-dialog
+  [(visible)]="mostrarDialogoExportar"
+  [modal]="true"
+  [style]="{ width: '500px' }"
+  [draggable]="false"
+  [resizable]="false"
+  header="Exportar Órdenes"
+  [closable]="true"
+  (onHide)="cerrarDialogoExportar()"
+>
+  <app-export-dialog
+    (onCancel)="cerrarDialogoExportar()"
+  ></app-export-dialog>
+</p-dialog>
