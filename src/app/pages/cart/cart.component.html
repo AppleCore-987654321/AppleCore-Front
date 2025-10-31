@@ -1,46 +1,140 @@
 <div class="cart-container">
   <p-card>
     <div class="cart-header">
-      <h3>Mi Carrito</h3>
+      <h3><i class="pi pi-shopping-cart"></i> Mi Carrito AppleCore</h3>
+      @if (cartItems.length > 0) {
+        <button pButton
+                label="Vaciar carrito"
+                icon="pi pi-trash"
+                class="p-button-sm p-button-outlined p-button-danger"
+                (click)="clearCart()">
+        </button>
+      }
     </div>
 
     <div class="cart-items">
-      @if (carrito.length > 0) {
-        @for (product of carrito; track product.id) {
-          <div class="mini-card">
-            <img [src]="product.imgUrl" [alt]="product.name">
-            <div class="mini-card-content">
-              <h5>{{product.name}}</h5>
-              <p-tag [value]="product.categoryName" severity="info" [rounded]="true"></p-tag>
-              <span class="price">S/ {{product.price | number:'1.2-2'}}</span>
+      @if (cartItems.length > 0) {
+        @for (item of cartItems; track item.id) {
+          <div class="cart-item">
+            <div class="item-image">
+              <img [src]="item.imgUrl" [alt]="item.name">
             </div>
-            <button pButton
-                    icon="pi pi-trash"
-                    class="p-button-rounded p-button-danger p-button-text p-button-sm"
-                    (click)="eliminarProducto(product)">
-            </button>
+            
+            <div class="item-details">
+              <h4>{{item.name}}</h4>
+              <p-tag [value]="item.categoryName" severity="info" [rounded]="true"></p-tag>
+              <p class="item-description">{{item.description}}</p>
+              <div class="item-price">S/ {{item.price | number:'1.2-2'}} c/u</div>
+            </div>
+
+            <div class="item-controls">
+              <div class="quantity-control">
+                <label>Cantidad:</label>
+                <p-inputNumber
+                  [(ngModel)]="item.quantity"
+                  [min]="1"
+                  [max]="item.stock"
+                  [showButtons]="true"
+                  buttonLayout="horizontal"
+                  inputId="horizontal"
+                  spinnerMode="horizontal"
+                  [step]="1"
+                  decrementButtonClass="p-button-secondary"
+                  incrementButtonClass="p-button-secondary"
+                  incrementButtonIcon="pi pi-plus"
+                  decrementButtonIcon="pi pi-minus"
+                  (onInput)="updateQuantity(item.id, item.quantity)">
+                </p-inputNumber>
+              </div>
+              
+              <div class="item-subtotal">
+                <strong>S/ {{item.subtotal | number:'1.2-2'}}</strong>
+              </div>
+              
+              <button pButton
+                      icon="pi pi-times"
+                      class="p-button-rounded p-button-danger p-button-text"
+                      (click)="removeProduct(item.id)"
+                      pTooltip="Eliminar producto">
+              </button>
+            </div>
           </div>
         }
       } @else {
         <div class="empty-cart">
           <i class="pi pi-shopping-cart"></i>
-          <p>Carrito vacío</p>
+          <h4>Tu carrito está vacío</h4>
+          <p>Agrega productos para comenzar tu compra</p>
+          <button pButton
+                  label="Ir a productos"
+                  icon="pi pi-arrow-right"
+                  class="p-button-outlined"
+                  (click)="continueShopping()">
+          </button>
         </div>
       }
     </div>
 
-    @if (carrito.length > 0) {
-      <div class="cart-footer">
-        <div class="total">
-          <span>Total:</span>
-          <span class="total-amount">S/ {{total | number:'1.2-2'}}</span>
+    @if (cartItems.length > 0) {
+      <!-- Sección de descuentos -->
+      <div class="discount-section">
+        <h4>Código de descuento</h4>
+        <div class="discount-input">
+          <input type="text" 
+                 pInputText 
+                 [(ngModel)]="discountCode" 
+                 placeholder="Ingresa tu código"
+                 class="discount-field">
+          <button pButton
+                  label="Aplicar"
+                  icon="pi pi-check"
+                  class="p-button-sm"
+                  (click)="applyDiscount()">
+          </button>
         </div>
+        <small>Códigos disponibles: APPLE10, CORE20, WELCOME5</small>
+      </div>
+
+      <!-- Resumen de totales -->
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal:</span>
+          <span>S/ {{total | number:'1.2-2'}}</span>
+        </div>
+        @if (discount > 0) {
+          <div class="summary-row discount">
+            <span>Descuento:</span>
+            <span>-S/ {{discount | number:'1.2-2'}}</span>
+          </div>
+        }
+        <div class="summary-row">
+          <span>IGV (18%):</span>
+          <span>S/ {{tax | number:'1.2-2'}}</span>
+        </div>
+        <div class="summary-row total-row">
+          <span><strong>Total final:</strong></span>
+          <span><strong>S/ {{finalTotal | number:'1.2-2'}}</strong></span>
+        </div>
+      </div>
+
+      <!-- Botones de acción -->
+      <div class="cart-actions">
         <button pButton
-                label="Pagar"
-                icon="pi pi-check"
-                class="p-button-sm p-button-success">
+                label="Continuar comprando"
+                icon="pi pi-arrow-left"
+                class="p-button-outlined"
+                (click)="continueShopping()">
+        </button>
+        <button pButton
+                label="Proceder al pago"
+                icon="pi pi-credit-card"
+                class="p-button-success"
+                (click)="proceedToCheckout()">
         </button>
       </div>
     }
   </p-card>
+
+  <p-confirmDialog></p-confirmDialog>
+  <p-toast></p-toast>
 </div>

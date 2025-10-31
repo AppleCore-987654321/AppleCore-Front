@@ -10,6 +10,7 @@ import {ClientesComponent} from './pages/admin/clientes/clientes.component';
 import {ProductosComponent} from './pages/admin/productos/productos.component';
 import {IndexComponent} from './pages/index/index.component';
 import {ProductComponent} from './pages/productos/productos.component';
+import {OfertasComponent} from './pages/ofertas/ofertas.component';
 
 export const routes: Routes = [
   {
@@ -20,7 +21,8 @@ export const routes: Routes = [
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
       {path: 'ordenes', component : OrderComponent},
-      { path: 'product', component: ProductComponent }
+      { path: 'productos', component: ProductComponent },
+      { path: 'ofertas', component: OfertasComponent }
     ]
   },
 

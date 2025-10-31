@@ -1,0 +1,106 @@
+<div class="ofertas-container">
+  <div class="ofertas-header">
+    <h1><i class="pi pi-tag"></i> Ofertas Especiales AppleCore</h1>
+    <p>Descubre los mejores descuentos en productos Apple</p>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters-section">
+    <div class="filters-container">
+      <div class="filter-group">
+        <label>Buscar:</label>
+        <input type="text" 
+               pInputText 
+               [(ngModel)]="searchTerm" 
+               (input)="onSearchChange()"
+               placeholder="Buscar productos...">
+      </div>
+      
+      <div class="filter-group">
+        <label>Categoría:</label>
+        <p-dropdown [options]="categories" 
+                    [(ngModel)]="selectedCategory"
+                    (onChange)="onCategoryChange()"
+                    placeholder="Seleccionar categoría"
+                    optionLabel="label"
+                    optionValue="value">
+        </p-dropdown>
+      </div>
+      
+      <div class="filter-group">
+        <label>Precio:</label>
+        <p-dropdown [options]="priceRanges" 
+                    [(ngModel)]="priceRange"
+                    (onChange)="onPriceRangeChange()"
+                    placeholder="Rango de precio"
+                    optionLabel="label"
+                    optionValue="value">
+        </p-dropdown>
+      </div>
+      
+      <div class="filter-group">
+        <button pButton 
+                label="Limpiar filtros" 
+                icon="pi pi-times"
+                class="p-button-outlined"
+                (click)="clearFilters()">
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <i class="pi pi-spin pi-spinner"></i>
+    <p>Cargando ofertas...</p>
+  </div>
+
+  <!-- Productos en oferta -->
+  <div *ngIf="!loading" class="products-grid">
+    <div *ngFor="let product of filteredProducts" class="product-card">
+      <p-card>
+        <div class="product-image">
+          <img [src]="product.imgUrl" [alt]="product.name">
+          <div class="discount-badge">
+            <span>-{{product.discount || 20}}%</span>
+          </div>
+        </div>
+        
+        <div class="product-info">
+          <h3>{{product.name}}</h3>
+          <p class="product-description">{{product.description}}</p>
+          
+          <p-tag [value]="product.categoryName" 
+                 severity="info" 
+                 [rounded]="true">
+          </p-tag>
+          
+          <div class="price-section">
+            <span class="original-price">S/ {{product.originalPrice | number:'1.2-2'}}</span>
+            <span class="offer-price">S/ {{product.price | number:'1.2-2'}}</span>
+          </div>
+          
+          <div class="product-actions">
+            <button pButton 
+                    label="Agregar al carrito"
+                    icon="pi pi-shopping-cart"
+                    class="p-button-success"
+                    (click)="addToCart(product)">
+            </button>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+  <!-- Sin resultados -->
+  <div *ngIf="!loading && filteredProducts.length === 0" class="no-results">
+    <i class="pi pi-search"></i>
+    <h3>No se encontraron ofertas</h3>
+    <p>Intenta ajustar los filtros para ver más productos</p>
+    <button pButton 
+            label="Ver todas las ofertas" 
+            (click)="clearFilters()">
+    </button>
+  </div>
+</div>

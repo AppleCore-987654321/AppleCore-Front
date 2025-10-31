@@ -40,7 +40,7 @@ export class ProductComponent implements OnInit {
 
   onAddToCart(product: Product) {
     console.log('Producto agregado al carrito:', product.name);
-    // Aquí puedes manejar la lógica de agregar al carrito
+    // Integrar con CartService cuando esté disponible
   }
 
 

@@ -14,7 +14,7 @@ index-main {
 }
 
 .hero-main {
-  background: linear-gradient(135deg, #e71a1a, #ff4d4d);
+  background: linear-gradient(135deg, #ff6600, #ff8833);
   color: #fff;
 }
 
@@ -57,21 +57,21 @@ index-main {
 
 .btn-primary {
   background-color: #fff;
-  color: #e71a1a;
+  color: #ff6600;
 }
 
 .btn-primary:hover {
-  background-color: #ffe6e6;
+  background-color: #fff5e6;
   transform: scale(1.05);
 }
 
 .btn-secondary {
-  background-color: #e71a1a;
+  background-color: #ff6600;
   color: #fff;
 }
 
 .btn-secondary:hover {
-  background-color: #c41515;
+  background-color: #e55a00;
   transform: scale(1.05);
 }
 
@@ -120,7 +120,7 @@ index-main {
 }
 
 .stat-card h2 {
-  color: #e71a1a;
+  color: #ff6600;
   font-size: 2.2rem;
   margin-bottom: 0.5rem;
 }

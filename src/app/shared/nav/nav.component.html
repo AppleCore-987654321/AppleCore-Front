@@ -2,14 +2,29 @@
   <ul>
     <!-- 1️⃣ Logo -->
     <li class="logo">
-      <img src="assets/images/TechPlusLogo.svg" alt="TechnoPlus Logo" />
-      <h1>GameMasters</h1>
+      <img src="assets/images/logo.jpg" alt="AppleCore Logo" />
+      <h1>AppleCore</h1>
     </li>
 
-    <!-- 2️⃣ Enlaces -->
+    <!-- 2️⃣ Buscador -->
+    <li class="search-section">
+      <div class="search-container">
+        <input type="text" 
+               placeholder="Buscar iPhone, iPad, Mac..." 
+               class="search-input"
+               [(ngModel)]="searchTerm"
+               (keyup.enter)="search()">
+        <button class="search-btn" (click)="search()">
+          <i class="pi pi-search"></i>
+        </button>
+      </div>
+    </li>
+
+    <!-- 3️⃣ Enlaces -->
     <li class="nav-center">
       <a routerLink="/">Inicio</a>
-      <a routerLink="product">Productos</a>
+      <a routerLink="/productos">Productos</a>
+      <a routerLink="/ofertas">Ofertas</a>
       @if (userRol === 'CUSTOMER') {
         <a routerLink="/ordenes">Órdenes</a>
       }
@@ -20,12 +35,15 @@
       <button
         pButton
         icon="pi pi-shopping-cart"
-        class="p-button-rounded p-button-text"
+        class="cart-button p-button-rounded"
         (click)="toggleSidebar()"
         pBadge
         [value]="cartCount"
-        style="position: relative;"
-      ></button>
+        badgeClass="cart-badge"
+        [style]="{position: 'relative'}"
+      >
+        <span class="cart-text">Carrito</span>
+      </button>
 
       <p-sidebar
         [(visible)]="visible"

@@ -16,6 +16,8 @@ export interface Product {
   status: boolean;
   categoryId: number;
   categoryName?: string;
+  originalPrice?: number;
+  discount?: number;
 }
 
 export interface UpdateProductRequest extends Omit<Product, 'id'> {

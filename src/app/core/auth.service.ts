@@ -37,6 +37,26 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
+    // Usuario de prueba para desarrollo
+    if (credentials.username === 'applefan' && credentials.password === '123456') {
+      const mockResponse: LoginResponse = {
+        jwt: 'mock-jwt-token-12345',
+        username: 'Apple Lover',
+        roleType: 'CUSTOMER',
+        customerId: 1
+      };
+      
+      localStorage.setItem('token', mockResponse.jwt);
+      this.setAuthData(mockResponse.username, mockResponse.roleType, mockResponse.customerId);
+      
+      return new Observable(observer => {
+        setTimeout(() => {
+          observer.next(mockResponse);
+          observer.complete();
+        }, 500);
+      });
+    }
+    
     return this.http
       .post<RawLoginResponse>(`${this.apiUrl}/auth/login`, credentials)
       .pipe(

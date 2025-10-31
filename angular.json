@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "GameMasters": {
+    "AppleCore": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -26,7 +26,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/game-masters",
+            "outputPath": "dist/apple-core",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -78,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "GameMasters:build:production"
+              "buildTarget": "AppleCore:build:production"
             },
             "development": {
-              "buildTarget": "GameMasters:build:development"
+              "buildTarget": "AppleCore:build:development"
             }
           },
           "defaultConfiguration": "development"
