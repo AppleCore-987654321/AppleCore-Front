@@ -5,35 +5,56 @@
     <p>Encuentra lo mejor de apple en un solo lugar.</p>
   </section>
 
-  <!-- Mensaje de carga -->
-  <div *ngIf="loading" class="loading-message">
-    <p>Cargando productos...</p>
+  <div class="productos-container">
+    <!-- Barra lateral de filtros -->
+    <aside class="filtros-sidebar">
+      <h2>Filtros</h2>
+
+      <!-- Filtro por Categoría -->
+      <div class="filtro-grupo">
+        <h3>Categoría</h3>
+        <div *ngFor="let categoria of categoriasUnicas" class="filtro-opcion">
+          <input type="radio" [id]="categoria" name="categoria" [value]="categoria" [(ngModel)]="filtroCategoria" (change)="aplicarFiltros()">
+          <label [for]="categoria">{{ categoria }}</label>
+        </div>
+        <div class="filtro-opcion">
+          <input type="radio" id="todas" name="categoria" value="" [(ngModel)]="filtroCategoria" (change)="aplicarFiltros()">
+          <label for="todas">Todas</label>
+        </div>
+      </div>
+
+      <!-- Filtro por Precio -->
+      <div class="filtro-grupo">
+        <h3>Precio Máximo</h3>
+        <input type="range" min="0" [max]="precioMaximo" [(ngModel)]="filtroPrecio" (input)="aplicarFiltros()" class="filtro-rango">
+        <div class="rango-valor">${{ filtroPrecio | number:'1.0-0' }}</div>
+      </div>
+    </aside>
+
+    <!-- Contenido de productos -->
+    <section class="productos-content">
+      <!-- Mensaje de carga -->
+      <div *ngIf="loading" class="loading-message">
+        <p>Cargando productos...</p>
+      </div>
+
+      <!-- Mensaje de error -->
+      <div *ngIf="error" class="error-message">
+        <p>{{ error }}</p>
+      </div>
+
+      <!-- Grid de productos -->
+      <div *ngIf="!loading && !error" class="productos-grid">
+        <app-card *ngFor="let producto of productosFiltrados" [product]="producto" (addToCart)="onAddToCart($event)"></app-card>
+      </div>
+
+      <!-- Mensaje si no hay productos después de filtrar -->
+      <div *ngIf="!loading && !error && productosFiltrados.length === 0" class="no-products">
+        <p>No se encontraron productos con los filtros seleccionados.</p>
+      </div>
+    </section>
   </div>
 
-  <!-- Mensaje de error -->
-  <div *ngIf="error" class="error-message">
-    <p>{{ error }}</p>
-  </div>
-
-  <!-- Grid de productos -->
-  <section *ngIf="!loading && !error" class="productos-grid">
-    <app-card
-      *ngFor="let producto of productos"
-      [product]="producto"
-      (addToCart)="onAddToCart($event)"
-      (viewDetails)="onViewDetails($event)">
-    </app-card>
-  </section>
-
-  <!-- Mensaje si no hay productos -->
-  <div *ngIf="!loading && !error && productos.length === 0" class="no-products">
-    <p>No hay productos disponibles en este momento.</p>
-  </div>
-
-  <!-- Detalles -->
-  <app-detalles
-    *ngIf="selectedProduct"
-    [product]="selectedProduct"
-    (close)="closeDetails()">
-  </app-detalles>
+  <!-- Contenedor para las notificaciones (toast) -->
+  <p-toast></p-toast>
 </main>

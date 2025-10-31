@@ -1,5 +1,15 @@
+:host {
+  /* Hacemos que el componente de layout sea un contenedor flex */
+  display: flex;
+  flex-direction: column;
+  /* Aseguramos que ocupe como mínimo toda la altura de la pantalla */
+  min-height: 100vh;
+}
 
 
 main {
   margin-top: 80px;
+  /* Hacemos que el contenido principal crezca para ocupar el espacio sobrante,
+     empujando el footer hacia abajo. */
+  flex: 1;
 }

@@ -1,0 +1,43 @@
+<div class="detalle-container">
+  <!-- Mensajes de Carga o Error -->
+  <div *ngIf="loading" class="loading-message">Cargando detalles del producto...</div>
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <!-- Contenido del Producto -->
+  <div *ngIf="product && !loading" class="product-layout">
+    <!-- Columna de la Imagen -->
+    <div class="product-image-section">
+      <img [src]="product.imgUrl" [alt]="product.name" class="product-image">
+    </div>
+
+    <!-- Columna de Información y Compra -->
+    <div class="product-info-section">
+      <h1 class="product-name">{{ product.name }}</h1>
+      <p class="product-description">{{ product.description }}</p>
+
+      <div class="price-container">
+        <span class="product-price">${{ product.price | number:'1.2-2' }}</span>
+        <span class="stock-info" [class.out-of-stock]="product.stock === 0">
+          {{ product.stock > 0 ? 'En Stock (' + product.stock + ' disponibles)' : 'Agotado' }}
+        </span>
+      </div>
+
+      <div class="actions">
+        <button
+          pButton
+          label="Añadir al Carrito"
+          icon="pi pi-cart-plus"
+          class="add-to-cart-btn"
+          (click)="addToCart()"
+          [disabled]="product.stock === 0">
+        </button>
+      </div>
+
+      <div class="product-details">
+        <h3>Detalles Adicionales</h3>
+        <p>{{ product.details }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<p-toast></p-toast>

@@ -16,48 +16,24 @@
       @if (cartItems.length > 0) {
         @for (item of cartItems; track item.id) {
           <div class="cart-item">
-            <div class="item-image">
-              <img [src]="item.imgUrl" [alt]="item.name">
+            <img [src]="item.imgUrl" [alt]="item.name" class="item-image">
+            <div class="item-info">
+              <span class="item-name">{{ item.name }}</span>
+              <span class="item-price">S/ {{ item.price | number:'1.2-2' }}</span>
             </div>
-            
-            <div class="item-details">
-              <h4>{{item.name}}</h4>
-              <p-tag [value]="item.categoryName" severity="info" [rounded]="true"></p-tag>
-              <p class="item-description">{{item.description}}</p>
-              <div class="item-price">S/ {{item.price | number:'1.2-2'}} c/u</div>
+            <div class="item-quantity">
+              <button pButton icon="pi pi-minus" class="p-button-text p-button-sm" (click)="decrementQuantity(item)"></button>
+              <span>{{ item.quantity }}</span>
+              <button pButton icon="pi pi-plus" class="p-button-text p-button-sm" (click)="incrementQuantity(item)"></button>
             </div>
-
-            <div class="item-controls">
-              <div class="quantity-control">
-                <label>Cantidad:</label>
-                <p-inputNumber
-                  [(ngModel)]="item.quantity"
-                  [min]="1"
-                  [max]="item.stock"
-                  [showButtons]="true"
-                  buttonLayout="horizontal"
-                  inputId="horizontal"
-                  spinnerMode="horizontal"
-                  [step]="1"
-                  decrementButtonClass="p-button-secondary"
-                  incrementButtonClass="p-button-secondary"
-                  incrementButtonIcon="pi pi-plus"
-                  decrementButtonIcon="pi pi-minus"
-                  (onInput)="updateQuantity(item.id, item.quantity)">
-                </p-inputNumber>
-              </div>
-              
-              <div class="item-subtotal">
-                <strong>S/ {{item.subtotal | number:'1.2-2'}}</strong>
-              </div>
-              
-              <button pButton
-                      icon="pi pi-times"
-                      class="p-button-rounded p-button-danger p-button-text"
-                      (click)="removeProduct(item.id)"
-                      pTooltip="Eliminar producto">
-              </button>
+            <div class="item-subtotal">
+              <span>S/ {{ item.subtotal | number:'1.2-2' }}</span>
             </div>
+            <button pButton
+                    icon="pi pi-trash"
+                    class="p-button-text p-button-danger p-button-sm remove-btn"
+                    (click)="removeProduct(item.id)">
+            </button>
           </div>
         }
       } @else {
@@ -77,36 +53,9 @@
 
     @if (cartItems.length > 0) {
       <!-- Sección de descuentos -->
-      <div class="discount-section">
-        <h4>Código de descuento</h4>
-        <div class="discount-input">
-          <input type="text" 
-                 pInputText 
-                 [(ngModel)]="discountCode" 
-                 placeholder="Ingresa tu código"
-                 class="discount-field">
-          <button pButton
-                  label="Aplicar"
-                  icon="pi pi-check"
-                  class="p-button-sm"
-                  (click)="applyDiscount()">
-          </button>
-        </div>
-        <small>Códigos disponibles: APPLE10, CORE20, WELCOME5</small>
-      </div>
 
       <!-- Resumen de totales -->
       <div class="cart-summary">
-        <div class="summary-row">
-          <span>Subtotal:</span>
-          <span>S/ {{total | number:'1.2-2'}}</span>
-        </div>
-        @if (discount > 0) {
-          <div class="summary-row discount">
-            <span>Descuento:</span>
-            <span>-S/ {{discount | number:'1.2-2'}}</span>
-          </div>
-        }
         <div class="summary-row">
           <span>IGV (18%):</span>
           <span>S/ {{tax | number:'1.2-2'}}</span>

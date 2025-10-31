@@ -16,12 +16,18 @@ export class ApiService {
 
   private apiUrl = environment.apiUrl;
 
+  // Method for testing with json-server
+  public getProductsForTest(): Observable<Product[]> {
+    return this.http.get<Product[]>('http://localhost:3000/products');
+  }
+
   // Auth Methods
   public register(request: RegisterRequest): Observable<RegisterRequest> {
     return this.http.post<RegisterRequest>(
       `${this.apiUrl}/auth/register`,
       request
     );
+
   }
 
   // Products Methods

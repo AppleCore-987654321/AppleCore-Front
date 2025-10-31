@@ -1,0 +1,96 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "iPhone",
+      "description": "La línea de teléfonos inteligentes de Apple.",
+      "imgUrl": "https://picsum.photos/seed/iphone/400/300"
+    },
+    {
+      "id": 2,
+      "name": "MacBook",
+      "description": "La línea de computadoras portátiles de Apple.",
+      "imgUrl": "https://picsum.photos/seed/macbook/350/500"
+    },
+    {
+      "id": 3,
+      "name": "iPad",
+      "description": "La línea de tabletas de Apple.",
+      "imgUrl": "https://picsum.photos/seed/ipad/500/350"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "iPhone 15 Pro",
+      "description": "El iPhone más avanzado hasta la fecha.",
+      "details": "Chip A17 Bionic, pantalla Super Retina XDR, sistema de cámaras Pro.",
+      "price": 1299,
+      "stock": 100,
+      "imgUrl": "https://picsum.photos/seed/iphone15pro/500/400",
+      "status": true,
+      "categoryId": 1,
+      "categoryName": "iPhone"
+    },
+    {
+      "id": 2,
+      "name": "MacBook Air M2",
+      "description": "Delgada, ligera y potente.",
+      "details": "Chip M2 de Apple, pantalla Liquid Retina de 13.6 pulgadas, hasta 18 horas de batería.",
+      "price": 1199,
+      "stock": 50,
+      "imgUrl": "https://picsum.photos/seed/macbookairm2/300/450",
+      "status": true,
+      "categoryId": 2,
+      "categoryName": "MacBook"
+    },
+    {
+      "id": 3,
+      "name": "iPad Pro",
+      "description": "El iPad definitivo.",
+      "details": "Chip M2 de Apple, pantalla Liquid Retina XDR de 12.9 pulgadas, compatible con Apple Pencil (2.ª generación) y Magic Keyboard.",
+      "price": 1099,
+      "stock": 75,
+      "imgUrl": "https://picsum.photos/seed/ipadpro/450/300",
+      "status": true,
+      "categoryId": 3,
+      "categoryName": "iPad"
+    },
+    {
+      "id": 4,
+      "name": "iPhone 14",
+      "description": "Potente y elegante.",
+      "details": "Pantalla Super Retina XDR, chip A15 Bionic, cámara dual avanzada.",
+      "price": 899,
+      "stock": 120,
+      "imgUrl": "https://picsum.photos/seed/iphone14/600/350",
+      "status": true,
+      "categoryId": 1,
+      "categoryName": "iPhone"
+    },
+    {
+      "id": 5,
+      "name": "MacBook Pro M3",
+      "description": "Rendimiento profesional extremo.",
+      "details": "Chip M3 Pro, pantalla ProMotion de 120Hz, hasta 22 horas de batería.",
+      "price": 2399,
+      "stock": 40,
+      "imgUrl": "https://picsum.photos/seed/macbookprom3/320/600",
+      "status": true,
+      "categoryId": 2,
+      "categoryName": "MacBook"
+    },
+    {
+      "id": 6,
+      "name": "iPad Air",
+      "description": "Liviano y poderoso.",
+      "details": "Pantalla Liquid Retina, chip M1, compatible con Apple Pencil y Magic Keyboard.",
+      "price": 599,
+      "stock": 90,
+      "imgUrl": "https://picsum.photos/seed/ipadair/350/350",
+      "status": true,
+      "categoryId": 3,
+      "categoryName": "iPad"
+    }
+  ]
+}

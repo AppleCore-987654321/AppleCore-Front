@@ -1,11 +1,12 @@
 <div class="product-card">
-  <img [src]="product.imgUrl" [alt]="product.name" />
+  <div class="image-container">
+    <img [src]="product.imgUrl" [alt]="product.name" />
+  </div>
   <h3>{{ product.name }}</h3>
   <p>{{ product.description }}</p>
   <p class="price">${{ product.price | number:'1.2-2' }}</p>
   <div class="card-buttons">
-    <button (click)="onAddToCart()">Agregar al carrito</button>
-    <button (click)="onViewDetails()">Ver detalles</button>
-
+    <button class="btn-add" (click)="onAddToCart()" title="Agregar al carrito"><i class="bi bi-cart-plus"></i></button>
+    <button class="btn-details" (click)="onViewDetails()">Ver detalles</button>
   </div>
 </div>

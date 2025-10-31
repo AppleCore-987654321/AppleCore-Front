@@ -1,0 +1,94 @@
+.detalle-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--bg-white);
+  border-radius: 12px;
+  box-shadow: var(--shadow-medium);
+}
+
+.product-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.product-image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-light);
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.product-info-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-name {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+
+.product-description {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+}
+
+.price-container {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.product-price {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.stock-info {
+  font-size: 1rem;
+  color: var(--success);
+  font-weight: 500;
+}
+
+.stock-info.out-of-stock {
+  color: var(--danger);
+}
+
+.actions {
+  margin-bottom: 2rem;
+}
+
+:host ::ng-deep .add-to-cart-btn {
+  background: var(--gradient-primary) !important;
+  border: none !important;
+  padding: 1rem 2rem !important;
+  font-size: 1.2rem !important;
+  box-shadow: var(--shadow-primary) !important;
+}
+
+.product-details {
+  margin-top: 1rem;
+}
+
+/* Estilos para mensajes de carga y error */
+.loading-message, .error-message { text-align: center; padding: 3rem; font-size: 1.2rem; }
+.error-message { color: var(--danger); }

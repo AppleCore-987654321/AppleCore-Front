@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -36,8 +36,8 @@ export class CartComponent implements OnInit {
   total: number = 0;
   tax: number = 0;
   finalTotal: number = 0;
-  discountCode: string = '';
-  discount: number = 0;
+
+  @Output() closeSidebar = new EventEmitter<void>();
 
   constructor(
     private cartService: CartService,
@@ -56,20 +56,22 @@ export class CartComponent implements OnInit {
   calculateTotals(): void {
     this.total = this.cartService.getTotal();
     this.tax = this.cartService.getTax();
-    this.finalTotal = this.cartService.getFinalTotal() - this.discount;
+    this.finalTotal = this.cartService.getFinalTotal();
   }
 
-  updateQuantity(productId: number, quantity: number): void {
-    if (quantity <= 0) {
-      this.removeProduct(productId);
+  incrementQuantity(item: CartItem): void {
+    if (item.quantity < item.stock) {
+      this.cartService.updateQuantity(item.id, item.quantity + 1);
+    }
+  }
+
+  decrementQuantity(item: CartItem): void {
+    if (item.quantity > 1) {
+      this.cartService.updateQuantity(item.id, item.quantity - 1);
+    } else {
+      this.removeProduct(item.id); // Si es 1 y se resta, se elimina
       return;
     }
-    this.cartService.updateQuantity(productId, quantity);
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Actualizado',
-      detail: 'Cantidad actualizada'
-    });
   }
 
   removeProduct(productId: number): void {
@@ -104,30 +106,6 @@ export class CartComponent implements OnInit {
     });
   }
 
-  applyDiscount(): void {
-    const validCodes = {
-      'APPLE10': 0.10,
-      'CORE20': 0.20,
-      'WELCOME5': 0.05
-    };
-
-    if (validCodes[this.discountCode as keyof typeof validCodes]) {
-      this.discount = this.total * validCodes[this.discountCode as keyof typeof validCodes];
-      this.calculateTotals();
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Descuento aplicado',
-        detail: `Descuento de ${(validCodes[this.discountCode as keyof typeof validCodes] * 100)}% aplicado`
-      });
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Código inválido',
-        detail: 'El código de descuento no es válido'
-      });
-    }
-  }
-
   proceedToCheckout(): void {
     if (this.cartItems.length === 0) {
       this.messageService.add({
@@ -141,6 +119,7 @@ export class CartComponent implements OnInit {
   }
 
   continueShopping(): void {
-    this.router.navigate(['/product']);
+    this.closeSidebar.emit();
+    this.router.navigate(['/productos']);
   }
 }

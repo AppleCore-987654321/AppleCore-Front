@@ -1,11 +1,11 @@
 /* Navbar Styles */
 nav {
   position: fixed;
-  width: 100%;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
+  width: 100%;
   /* Fondo muy oscuro */
   background: var(--color-dark-primary);
   /* Sombra oscura y marcada */
@@ -14,22 +14,20 @@ nav {
   border-bottom: 3px solid var(--color-electric-blue);
 }
 
-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* Contenedor del encabezado (logo + botón menú) */
+.nav-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
-  gap: 2rem;
 }
 
-nav li {
+.nav-links {
+  list-style: none;
   margin: 0;
-  position: relative;
+  padding: 0;
 }
 
 .logo {
@@ -314,208 +312,122 @@ nav h1 {
   color: white;
 }
 
-/* Estilos del botón del carrito */
-.cart-section {
-  margin-left: 1rem;
+/* --- ESTILOS PARA MÓVIL (Mobile First) --- */
+
+/* Botón de menú (hamburguesa) */
+.menu-toggle {
+  display: block; /* Visible en móvil */
+  background: none;
+  border: none;
+  color: var(--color-text-light);
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 10px;
 }
 
-.cart-button {
-  background: var(--primary-color) !important;
-  border: 2px solid var(--primary-color) !important;
-  color: white !important;
-  padding: 12px 20px !important;
-  font-size: 16px !important;
-  font-weight: 600 !important;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 4px 15px rgba(255, 102, 0, 0.4) !important;
-  position: relative !important;
-  overflow: hidden !important;
-  min-width: 120px !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
+.nav-header {
+  padding: 0 1rem; /* Menos padding en móvil */
 }
 
-.cart-button:hover {
-  background: var(--accent-hover) !important;
-  border-color: var(--accent-hover) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 6px 20px rgba(255, 102, 0, 0.6) !important;
-}
-
-.cart-button:active {
-  transform: translateY(0) !important;
-}
-
-.cart-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
+/* Ocultamos los enlaces por defecto en móvil */
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
+  background: var(--color-dark-primary);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
 }
 
-.cart-button:hover::before {
-  left: 100%;
+/* Cuando el menú está abierto */
+.nav-links.is-open {
+  max-height: 100vh; /* Un valor alto para permitir que el contenido se expanda */
+  padding-bottom: 1rem;
+  border-top: 1px solid var(--color-dark-tertiary);
 }
 
-.cart-text {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+.nav-links .nav-item {
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--color-dark-tertiary);
 }
 
-:host ::ng-deep .cart-badge {
-  background: var(--primary-color) !important;
-  color: white !important;
-  font-size: 12px !important;
-  font-weight: bold !important;
-  min-width: 20px !important;
-  height: 20px !important;
-  border-radius: 10px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.5) !important;
-  animation: pulse 2s infinite !important;
+.nav-links .nav-item:last-child {
+  border-bottom: none;
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
+.nav-center {
+  flex-direction: column;
+  width: 100%;
+  gap: 0;
 }
 
-/* Responsive Design para Navbar */
-@media (max-width: 768px) {
-  nav ul {
-    flex-wrap: wrap;
-    padding: 0 10px;
+.nav-center a {
+  width: 100%;
+  padding: 1rem;
+}
+
+.search-section, .auth-section {
+  margin: 0.5rem 0;
+}
+
+/* --- ESTILOS PARA TABLET Y ESCRITORIO (min-width: 992px) --- */
+@media (min-width: 992px) {
+  .menu-toggle {
+    display: none; /* Ocultamos el botón de hamburguesa */
   }
 
-  .logo {
-    flex: 1 1 100%;
-    justify-content: center;
-    padding: 15px;
-    /* Borde divisor oscuro */
-    border-bottom: 1px solid var(--color-dark-tertiary);
-  }
-
-  .nav-center {
-    flex: 1 1 100%;
-    justify-content: center;
-    gap: 0;
-  }
-
-  .nav-center a {
-    padding: 14px 15px;
-    font-size: 14px;
-    flex: 1;
-    text-align: center;
-  }
-
-  .auth-section {
-    flex: 1 1 100%;
-    margin: 0;
-    padding: 10px;
-    justify-content: center;
-    /* Borde divisor oscuro */
-    border-top: 1px solid var(--color-dark-tertiary);
-  }
-
-  .user-section {
-    justify-content: center;
-    width: 100%;
-  }
-
-  .search-section {
-    flex: 1 1 100%;
-    max-width: none;
-    margin: 10px;
-    order: -1;
-  }
-
-  .search-container {
-    width: 100%;
-  }
-
-  .dropdown-menu {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    box-shadow: none;
-    border: none;
-    background: var(--color-dark-primary);
-    display: none;
-  }
-
-  .dropdown:hover .dropdown-menu {
-    display: block;
-  }
-
-  .cart-section {
-    margin: 10px 0;
+  /* Hacemos que NAV sea el contenedor flex principal */
+  nav {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    gap: 2rem;
   }
 
-  .cart-button {
-    min-width: 100px !important;
-    padding: 10px 16px !important;
+  .nav-header {
+    padding: 0;
+    /* El logo ya no necesita crecer, solo ocupar su espacio */
+    flex-shrink: 0;
   }
 
-  .cart-text {
-    font-size: 13px;
+  .nav-links {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    max-height: none;
+    overflow: visible;
+    /* Hacemos que este contenedor crezca para empujar los elementos */
+    flex-grow: 1;
+    gap: 2rem;
+    justify-content: flex-end; /* Alinea los items internos a la derecha */
   }
 
-  nav h1 {
-    font-size: 20px;
+  .nav-links .nav-item {
+    width: auto;
+    border: none;
+    padding: 0;
   }
 
-  .logo img {
-    width: 35px;
-    height: 35px;
-  }
-}
-
-@media (max-width: 480px) {
   .nav-center {
-    flex-direction: column;
-    gap: 0;
+    flex-direction: row;
+    gap: 2rem;
+    /* El truco para centrar los links: se empuja desde ambos lados */
+    margin-right: auto;
   }
 
   .nav-center a {
-    width: 100%;
-    padding: 12px;
-    /* Borde divisor oscuro */
-    border-bottom: 1px solid var(--color-dark-tertiary);
-  }
-
-  .user-section {
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
-  }
-
-  .cart-button {
-    min-width: 90px !important;
-    padding: 8px 12px !important;
-    font-size: 14px !important;
-  }
-
-  .cart-text {
-    font-size: 12px;
+    width: auto;
+    padding: 18px 20px;
   }
 }
-
-

@@ -1,36 +1,101 @@
 .product-card {
-  background-color: #ffffff;
+  background-color: var(--bg-white);
   border-radius: 8px;
-  padding: 1rem;
+  box-shadow: var(--shadow-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 16px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  overflow: hidden; /* Asegura que los contenidos no se salgan del borde redondeado */
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+}
+
+.product-card .image-container {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
 }
 
 .product-card img {
   max-width: 100%;
-  border-radius: 8px;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .product-card h3 {
-  margin: 0.5rem 0;
+  font-size: 1.25rem;
+  color: var(--text-dark);
+  margin: 0 0 0.5rem 0;
+}
+
+.product-card p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  flex-grow: 1; /* Permite que la descripción ocupe el espacio disponible */
+  margin-bottom: 1rem;
 }
 
 .product-card .price {
+  font-size: 1.5rem;
   font-weight: bold;
-  margin: 0.5rem 0;
+  color: var(--primary-color);
+  margin-bottom: 16px;
 }
 
-.product-card button {
-  background-color: #e71a1a;
-  color: white;
+.card-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.card-buttons button {
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.product-card button:hover {
-  background-color: #411b1b;
+.card-buttons button:hover {
   transform: scale(1.05);
+}
+
+.btn-add {
+  background: var(--gradient-primary);
+  color: var(--bg-white);
+  box-shadow: var(--shadow-primary);
+  /* Estilos para hacerlo circular */
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem; /* Tamaño del ícono */
+}
+
+/* Renombramos el selector para mayor claridad */
+.btn-details {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  border: 1px solid var(--border-color);
+}
+
+/* Mantenemos el selector original por si se usa en otro lado, pero lo ideal es usar clases */
+.card-buttons button:last-child {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  border: 1px solid var(--border-color);
 }

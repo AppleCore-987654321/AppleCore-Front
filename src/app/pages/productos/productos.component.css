@@ -1,5 +1,14 @@
 .productos-main {
   padding: 2rem;
+  /* Centramos el contenido principal y le damos un ancho máximo */
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.productos-container {
+  display: grid;
+  grid-template-columns: 250px 1fr; /* Columna fija para filtros, el resto para productos */
+  gap: 2rem;
 }
 
 .productos-header {
@@ -12,11 +21,63 @@
   margin-bottom: 1rem;
 }
 
+.productos-content {
+  /* Este contenedor alojará la grilla y los mensajes */
+}
+
 .productos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
-  padding: 1rem;
+}
+
+/* --- Estilos para la barra de filtros --- */
+.filtros-sidebar {
+  background-color: var(--bg-white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: var(--shadow-light);
+  height: fit-content; /* Para que no ocupe toda la altura si no es necesario */
+}
+
+.filtros-sidebar h2 {
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.filtro-grupo {
+  margin-bottom: 2rem;
+}
+
+.filtro-grupo h3 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+.filtro-opcion {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.filtro-opcion label {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.filtro-rango {
+  width: 100%;
+  cursor: pointer;
+}
+
+.rango-valor {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-weight: bold;
+  color: var(--text-dark);
 }
 
 .loading-message,

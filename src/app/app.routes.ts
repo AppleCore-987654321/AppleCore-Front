@@ -9,8 +9,9 @@ import {OrdenesComponent} from './pages/admin/ordenes/ordenes.component';
 import {ClientesComponent} from './pages/admin/clientes/clientes.component';
 import {ProductosComponent} from './pages/admin/productos/productos.component';
 import {IndexComponent} from './pages/index/index.component';
-import {ProductComponent} from './pages/productos/productos.component';
+import {ProductsComponent} from './pages/productos/productos.component';
 import {OfertasComponent} from './pages/ofertas/ofertas.component';
+import { ProductoDetalleComponent } from './pages/productos/detalle/detalle.component';
 
 export const routes: Routes = [
   {
@@ -21,7 +22,8 @@ export const routes: Routes = [
       { path: 'register', component: RegisterComponent },
       { path: 'login', component: LoginComponent },
       {path: 'ordenes', component : OrderComponent},
-      { path: 'productos', component: ProductComponent },
+      { path: 'productos', component: ProductsComponent }, // La lista de productos
+      { path: 'productos/:slug', component: ProductoDetalleComponent }, // La página de detalle
       { path: 'ofertas', component: OfertasComponent }
     ]
   },
@@ -37,5 +39,3 @@ export const routes: Routes = [
     ]
   }
 ];
-
-

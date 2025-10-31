@@ -1,16 +1,24 @@
 <nav>
-  <ul>
-    <!-- 1️⃣ Logo -->
-    <li class="logo">
+  <!-- Encabezado principal (visible en todas las pantallas) -->
+  <div class="nav-header">
+    <div class="logo">
       <img src="assets/images/logo.jpg" alt="AppleCore Logo" />
       <h1>AppleCore</h1>
-    </li>
+    </div>
 
+    <!-- Botón de menú (solo visible en móvil) -->
+    <button class="menu-toggle" (click)="toggleMenu()">
+      <i class="pi" [ngClass]="isMenuOpen ? 'pi-times' : 'pi-bars'"></i>
+    </button>
+  </div>
+
+  <!-- Menú de navegación (desplegable en móvil) -->
+  <ul class="nav-links" [class.is-open]="isMenuOpen">
     <!-- 2️⃣ Buscador -->
-    <li class="search-section">
+    <li class="search-section nav-item">
       <div class="search-container">
-        <input type="text" 
-               placeholder="Buscar iPhone, iPad, Mac..." 
+        <input type="text"
+               placeholder="Buscar iPhone, iPad, Mac..."
                class="search-input"
                [(ngModel)]="searchTerm"
                (keyup.enter)="search()">
@@ -21,7 +29,7 @@
     </li>
 
     <!-- 3️⃣ Enlaces -->
-    <li class="nav-center">
+    <li class="nav-center nav-item">
       <a routerLink="/">Inicio</a>
       <a routerLink="/productos">Productos</a>
       <a routerLink="/ofertas">Ofertas</a>
@@ -30,34 +38,8 @@
       }
     </li>
 
-    <!-- 3️⃣ Botón del carrito -->
-    <li class="cart-section">
-      <button
-        pButton
-        icon="pi pi-shopping-cart"
-        class="cart-button p-button-rounded"
-        (click)="toggleSidebar()"
-        pBadge
-        [value]="cartCount"
-        badgeClass="cart-badge"
-        [style]="{position: 'relative'}"
-      >
-        <span class="cart-text">Carrito</span>
-      </button>
-
-      <p-sidebar
-        [(visible)]="visible"
-        position="right"
-        [modal]="false"
-        [dismissible]="true"
-        [style]="{ width: '30rem' }"
-      >
-        <app-cart></app-cart>
-      </p-sidebar>
-    </li>
-
     <!-- 4️⃣ Login / Logout -->
-    <li class="auth-section">
+    <li class="auth-section nav-item">
       @if (!username) {
         <a routerLink="/login" class="login-link">Iniciar sesión</a>
       }

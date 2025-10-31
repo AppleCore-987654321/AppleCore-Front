@@ -1,0 +1,25 @@
+@if (isButtonVisible) {
+  <div class="floating-cart-container">
+    <button
+      pButton
+      icon="pi pi-shopping-cart"
+      class="p-button-rounded p-button-lg"
+      (click)="toggleSidebar()"
+      pBadge
+      [value]="cartCount"
+      badgeClass="cart-badge"
+    ></button>
+  </div>
+}
+
+<p-sidebar
+  [(visible)]="isSidebarVisible"
+  position="right"
+  [modal]="true"
+  [dismissible]="true"
+  [style]="{ width: '40rem' }"
+>
+  <div (click)="$event.stopPropagation()">
+    <app-cart (closeSidebar)="isSidebarVisible = false"></app-cart>
+  </div>
+</p-sidebar>

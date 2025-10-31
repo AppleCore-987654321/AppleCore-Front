@@ -1,27 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../core/auth.service';
-import { CartService } from '../../core/cart.service';
-import {Sidebar} from 'primeng/sidebar';
-import {ButtonDirective} from 'primeng/button';
-import {CartComponent} from '../../pages/cart/cart.component';
+import { ButtonModule } from 'primeng/button';
+import { BadgeModule } from 'primeng/badge';
+import {AuthService} from '../../core/auth.service';
 
 @Component({
   selector: 'app-nav',
-  imports: [RouterLink, CommonModule, FormsModule, ButtonDirective, Sidebar, CartComponent],
+  standalone: true,
+  imports: [RouterLink, CommonModule, FormsModule, ButtonModule, BadgeModule],
   templateUrl: './nav.component.html',
-  styleUrl: './nav.component.css'
+  styleUrls: ['./nav.component.css']
 })
-export class NavComponent {
-  cartCount = 0;
-  visible = false;
+export class NavComponent implements OnInit {
   searchTerm: string = '';
-
-  toggleSidebar() {
-    this.visible = !this.visible;
-  }
+  isMenuOpen = false; // Estado para controlar el menú móvil
 
   search() {
     if (this.searchTerm.trim()) {
@@ -29,26 +23,25 @@ export class NavComponent {
     }
   }
 
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
   username: string | null = null;
   userRol: string | null = null;
 
   constructor(
     private router: Router,
-    private authService: AuthService,
-    private cartService: CartService
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    this.authService.username$.subscribe(username => {
+    this.authService.username$.subscribe((username: string | null) => {
       this.username = username;
     });
 
-    this.authService.userRol$.subscribe(userRol => {
+    this.authService.userRol$.subscribe((userRol: string | null) => {
       this.userRol = userRol;
-    });
-    
-    this.cartService.count$.subscribe(count => {
-      this.cartCount = count;
     });
   }
 
