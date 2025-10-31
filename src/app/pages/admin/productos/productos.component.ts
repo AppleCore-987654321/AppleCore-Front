@@ -8,7 +8,7 @@ import {ListarComponent} from './listar/listar.component';
     ListarComponent
   ],
   templateUrl: './productos.component.html',
-  styleUrls: ['./productos.component.css' ,'../../layout/admin/admin.component.css']
+  styleUrls: ['./productos.component.css' ,'../../../layout/admin/admin.component.css']
 })
 export class ProductosComponent {
 

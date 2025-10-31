@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, DatePipe, DecimalPipe } from '@angular/common';
 import { RouterLink, RouterModule } from '@angular/router';
-import { ApiService } from '../../../core/api.service';
+import { ApiService } from '../../../../core/api.service';
 import { Subject, takeUntil } from 'rxjs';
-import { OrderList } from '../../../core/models/order.model';
+import { OrderList } from '../../../../core/models/order.model';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';

@@ -7,8 +7,8 @@ import { CardModule } from 'primeng/card';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import {Product, Category} from '../../../../core/models/products.model';
-import {ApiService} from '../../../../core/api.service';
+import {Product, Category} from '../../../../../core/models/products.model';
+import {ApiService} from '../../../../../core/api.service';
 
 @Component({
   selector: 'app-editar',
@@ -35,7 +35,7 @@ export class EditarComponent implements OnInit, OnChanges {
   loading: boolean = true;
   guardando: boolean = false;
   error: string | null = null;
-  categorias: Category[] = [];
+  categories: Category[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -45,28 +45,19 @@ export class EditarComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.inicializarFormulario();
 
-    // Cargar categorías primero
-    this.apiService.getCategories().subscribe({
-      next: (categories) => {
-        this.categorias = categories; // El backend devuelve el array directamente
-        console.log('Categorías cargadas:', this.categorias);
+  }
 
-        // Una vez tengamos las categorías, cargamos el producto si hay ID
-        if (typeof this.productoId !== 'undefined' && this.productoId !== null) {
-          this.cargarProducto();
-        } else {
-          this.loading = false;
-        }
+  loadCategories() {
+    this.loading = true;
+    this.apiService.getCategories().subscribe({
+      next: (response) => {
+        this.categories = response.data;
+        this.loading = false;
       },
-      error: (err) => {
-        console.error('Error al cargar categorías:', err);
-        this.categorias = [];
-        // Intentamos cargar el producto aunque fallen las categorías
-        if (typeof this.productoId !== 'undefined' && this.productoId !== null) {
-          this.cargarProducto();
-        } else {
-          this.loading = false;
-        }
+      error: (error) => {
+        console.error('Error al cargar productos:', error);
+        this.error = 'Error al cargar los productos. Por favor, intente más tarde.';
+        this.loading = false;
       }
     });
   }
@@ -93,6 +84,8 @@ export class EditarComponent implements OnInit, OnChanges {
       status: [true],
       categoryId: [null],  // Hacer opcional en edición si no se maneja categoría
     });
+
+    this.loadCategories();
   }
 
 
@@ -122,7 +115,7 @@ export class EditarComponent implements OnInit, OnChanges {
           stock: producto.stock || 0,
           imgUrl: producto.imgUrl || '',
           status: producto.status ?? true,
-          categoryId: producto.categoryId || producto.category?.id || null,
+          categoryId: producto.categoryId || null,
         });
 
         this.loading = false;

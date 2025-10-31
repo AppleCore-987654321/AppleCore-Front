@@ -6,7 +6,7 @@ import {TableComponent} from './table/table.component';
   standalone: true,
   imports: [TableComponent],
   templateUrl: './ordenes.component.html',
-  styleUrls: ['./ordenes.component.css','../../layout/admin/admin.component.css']
+  styleUrls: ['./ordenes.component.css','../../../layout/admin/admin.component.css']
 })
 export class OrdenesComponent {
   vista: 'tabla' | 'detalles' = 'tabla';

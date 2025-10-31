@@ -11,8 +11,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { FormsModule } from '@angular/forms';
-import {Category} from '../../../../core/models/products.model';
-import {ApiService} from '../../../../core/api.service';
+import {Category} from '../../../../../core/models/products.model';
+import {ApiService} from '../../../../../core/api.service';
 
 @Component({
   selector: 'app-crear',
@@ -54,13 +54,13 @@ export class CrearComponent {
       categoryId: [null]
     });
 
-    this.cargarCategorias();
+    this.loadCategories();
   }
 
-  cargarCategorias() {
+  loadCategories() {
     this.apiService.getCategories().subscribe({
-      next: (categories) => {
-        this.categorias = categories;
+      next: (response) => {
+        this.categorias = response.data;
         console.log('Categorías cargadas:', this.categorias);
         this.loading = false;
       },

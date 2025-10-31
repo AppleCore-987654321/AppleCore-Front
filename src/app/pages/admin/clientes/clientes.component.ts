@@ -7,7 +7,7 @@ import {ListarClientesComponent} from './listar/listar.component';
     ListarClientesComponent
   ],
   templateUrl: './clientes.component.html',
-  styleUrls: ['./clientes.component.css','../../layout/admin/admin.component.css']
+  styleUrls: ['./clientes.component.css','../../../layout/admin/admin.component.css']
 })
 export class ClientesComponent {
 

@@ -4,10 +4,10 @@ import {RegisterComponent} from './pages/register/register.component';
 import {LoginComponent} from './pages/login/login.component';
 import {OrderComponent} from './pages/order/order.component';
 import {AdminComponent} from './layout/admin/admin.component';
-import {AdminDashboardComponent} from './admin/dashboard/admin-dashboard.component';
-import {OrdenesComponent} from './admin/ordenes/ordenes.component';
-import {ClientesComponent} from './admin/clientes/clientes.component';
-import {ProductosComponent} from './admin/productos/productos.component';
+import {AdminDashboardComponent} from './pages/admin/dashboard/admin-dashboard.component';
+import {OrdenesComponent} from './pages/admin/ordenes/ordenes.component';
+import {ClientesComponent} from './pages/admin/clientes/clientes.component';
+import {ProductosComponent} from './pages/admin/productos/productos.component';
 import {IndexComponent} from './pages/index/index.component';
 import {ProductComponent} from './pages/productos/productos.component';
 

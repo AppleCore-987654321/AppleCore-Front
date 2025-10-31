@@ -42,8 +42,8 @@ export class ApiService {
   }
 
   // Categories
-  public getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.apiUrl}/category/get`);
+  public getCategories(): Observable<ApiResponse<Category[]>> {
+    return this.http.get<ApiResponse<Category[]>>(`${this.apiUrl}/category/get`);
   }
 
   // Orders

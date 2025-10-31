@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router'; // Aunque no se use, estaba en tu código
-import { OrderList } from '../../../../core/models/order.model';
-import { ApiService } from '../../../../core/api.service';
+import { OrderList } from '../../../../../core/models/order.model';
+import { ApiService } from '../../../../../core/api.service';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextarea } from 'primeng/inputtextarea';

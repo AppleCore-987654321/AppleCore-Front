@@ -1,0 +1,13 @@
+<main class="productos-main">
+<section *ngIf="!loading && !error" class="productos-grid">
+  <p-carousel [value]="categories" [numVisible]="3" [numScroll]="1" [circular]="true">
+    <app-category-card
+      *ngFor="let category of categories"
+      [data]="category">
+    </app-category-card>
+  </p-carousel>
+
+
+</section>
+</main>
+

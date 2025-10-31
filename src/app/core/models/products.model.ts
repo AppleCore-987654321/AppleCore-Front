@@ -1,6 +1,8 @@
 export interface Category {
   id: number;
   name: string;
+  description: string;
+  imgUrl: string;
 }
 
 export interface Product {
@@ -12,8 +14,7 @@ export interface Product {
   stock: number;
   imgUrl: string;
   status: boolean;
-  categoryId?: number;
-  category?: Category;
+  categoryId: number;
   categoryName?: string;
 }
 

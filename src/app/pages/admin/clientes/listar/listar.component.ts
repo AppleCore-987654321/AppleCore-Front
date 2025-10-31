@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from '../../../core/api.service';
-import { Customer } from '../../../core/models/customer.model';
+import { ApiService } from '../../../../core/api.service';
+import { Customer } from '../../../../core/models/customer.model';
 import {Card} from 'primeng/card';
 import {TableModule} from 'primeng/table';
 import {Tag} from 'primeng/tag';

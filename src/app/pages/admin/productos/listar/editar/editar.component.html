@@ -68,7 +68,7 @@
       <label for="categoria">Categoría</label>
       <select id="categoria" formControlName="categoryId" class="p-inputtext">
         <option [ngValue]="null">Sin categoría</option>
-        <option *ngFor="let c of categorias" [ngValue]="c.id">{{ c.name }}</option>
+        <option *ngFor="let c of categories" [ngValue]="c.id">{{ c.name }}</option>
       </select>
     </div>
 
