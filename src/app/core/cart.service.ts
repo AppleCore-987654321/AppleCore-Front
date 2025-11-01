@@ -14,7 +14,6 @@ export interface CartItem {
   categoryId: number;
   categoryName?: string;
   quantity: number;
-  subtotal: number;
 }
 
 @Injectable({
@@ -34,19 +33,17 @@ export class CartService {
 
   addToCart(product: Product, quantity: number = 1): void {
     const existingItem = this.cartItems.find(item => item.id === product.id);
-    
+
     if (existingItem) {
       existingItem.quantity += quantity;
-      existingItem.subtotal = existingItem.price * existingItem.quantity;
     } else {
       const cartItem: CartItem = {
         ...product,
         quantity,
-        subtotal: product.price * quantity
       };
       this.cartItems.push(cartItem);
     }
-    
+
     this.updateCart();
   }
 
@@ -59,7 +56,6 @@ export class CartService {
     const item = this.cartItems.find(item => item.id === productId);
     if (item && quantity > 0) {
       item.quantity = quantity;
-      item.subtotal = item.price * quantity;
       this.updateCart();
     }
   }
@@ -70,15 +66,7 @@ export class CartService {
   }
 
   getTotal(): number {
-    return this.cartItems.reduce((total, item) => total + item.subtotal, 0);
-  }
-
-  getTax(): number {
-    return this.getTotal() * 0.18;
-  }
-
-  getFinalTotal(): number {
-    return this.getTotal() + this.getTax();
+    return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 
   private updateCart(): void {

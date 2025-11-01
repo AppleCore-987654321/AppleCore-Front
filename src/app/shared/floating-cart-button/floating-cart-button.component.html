@@ -17,9 +17,11 @@
   position="right"
   [modal]="true"
   [dismissible]="true"
-  [style]="{ width: '40rem' }"
+  [style]="{ width: '55rem' }"
 >
-  <div (click)="$event.stopPropagation()">
-    <app-cart (closeSidebar)="isSidebarVisible = false"></app-cart>
-  </div>
+  <ng-template pTemplate="content">
+    <div class="cart-sidebar-content" (click)="$event.stopPropagation()">
+      <app-cart (closeSidebar)="isSidebarVisible = false"></app-cart>
+    </div>
+  </ng-template>
 </p-sidebar>

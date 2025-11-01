@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {OrderList} from '../../core/models/order.model';
+import {OrderList} from '../../core/models/out/order.model';
 import {ApiService} from '../../core/api.service';
 import {ItemComponent} from './item/item.component';
 

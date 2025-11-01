@@ -9,59 +9,22 @@
     </div>
 
     <div class="p-grid p-justify-center p-align-stretch p-gap-4">
-      <!-- Clientes -->
-      <div class="p-col-12 p-md-4">
-        <p-card styleClass="p-card-shadow">
-          <ng-template pTemplate="header">
-            <div class="flex items-center justify-between">
-              <h3 class="p-m-0">Clientes</h3>
-              <i class="pi pi-users text-blue-500 text-xl"></i>
-            </div>
-          </ng-template>
-
-          <div class="p-text-center p-my-3">
-            <span class="text-3xl font-semibold text-blue-600">{{ clientesCount }}</span>
-            <p class="p-text-secondary">Clientes registrados en el sistema</p>
-          </div>
-        </p-card>
+      <!-- Reemplazamos indicadores falsos por gráfico de categorías -->
+      <div class="p-col-12 p-md-8">
+        <app-category-chart></app-category-chart>
       </div>
 
-      <!-- Órdenes -->
+      <!-- Mantengo un espacio para acciones rápidas si quieres agregar más widgets -->
       <div class="p-col-12 p-md-4">
         <p-card styleClass="p-card-shadow">
           <ng-template pTemplate="header">
             <div class="flex items-center justify-between">
-              <h3 class="p-m-0">Órdenes</h3>
-              <i class="pi pi-shopping-cart text-green-500 text-xl"></i>
+              <h3 class="p-m-0">Acciones</h3>
             </div>
           </ng-template>
 
           <div class="p-text-center p-my-3">
-            <span class="text-3xl font-semibold text-green-600">{{ ordenesCount }}</span>
-            <p class="p-text-secondary">Órdenes procesadas este mes</p>
-          </div>
-        </p-card>
-      </div>
-
-      <!-- Productos -->
-      <div class="p-col-12 p-md-4">
-        <p-card styleClass="p-card-shadow">
-          <ng-template pTemplate="header">
-            <div class="flex items-center justify-between">
-              <h3 class="p-m-0">Productos</h3>
-              <i class="pi pi-box text-purple-500 text-xl"></i>
-            </div>
-          </ng-template>
-
-          <div class="p-text-center p-my-3">
-            <span class="text-3xl font-semibold text-purple-600">{{ productosCount }}</span>
-            <p class="p-text-secondary">Productos en inventario</p>
-            <p-button
-              label="Ver productos"
-              icon="pi pi-eye"
-              styleClass="p-button-rounded p-button-text p-mt-3"
-              [routerLink]="['/admin/productos']">
-            </p-button>
+            <p class="p-text-secondary">Aquí puedes agregar accesos rápidos o métricas pequeñas.</p>
           </div>
         </p-card>
       </div>

@@ -1,10 +1,10 @@
 <nav>
   <!-- Encabezado principal (visible en todas las pantallas) -->
   <div class="nav-header">
-    <div class="logo">
+    <a routerLink="/" class="logo">
       <img src="assets/images/logo.jpg" alt="AppleCore Logo" />
       <h1>AppleCore</h1>
-    </div>
+    </a>
 
     <!-- Botón de menú (solo visible en móvil) -->
     <button class="menu-toggle" (click)="toggleMenu()">
@@ -38,7 +38,7 @@
       }
     </li>
 
-    <!-- 4️⃣ Login / Logout -->
+    <!-- 4️⃣ Login / Logout y Botón de Tema -->
     <li class="auth-section nav-item">
       @if (!username) {
         <a routerLink="/login" class="login-link">Iniciar sesión</a>
@@ -49,9 +49,13 @@
           <div class="user-welcome">
             Bienvenido, <span class="username">{{ username }}</span>
           </div>
-          <button (click)="logout()" class="logout-btn">Cerrar Sesión</button>
+          <button (click)="logout()" class.logout-btn>Cerrar Sesión</button>
         </div>
       }
+
+      <button class="theme-toggle-btn" (click)="toggleTheme()">
+        <i class="pi" [ngClass]="isDarkMode ? 'pi-sun' : 'pi-moon'"></i>
+      </button>
     </li>
   </ul>
 </nav>

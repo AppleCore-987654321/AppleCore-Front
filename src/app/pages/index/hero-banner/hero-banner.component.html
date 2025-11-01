@@ -1,0 +1,10 @@
+<p-galleria [value]="images" [numVisible]="1" [circular]="true" [showThumbnails]="false" [showIndicators]="true" [autoPlay]="true" [transitionInterval]="4000">
+  <ng-template pTemplate="item" let-item>
+    <div class="slide-wrapper">
+      <!-- Capa de fondo borrosa -->
+      <div class="slide-background" [style.backgroundImage]="'url(' + item.itemImageSrc + ')'"></div>
+      <!-- Imagen nítida al frente -->
+      <img class="slide-foreground" [src]="item.itemImageSrc" [alt]="item.alt" />
+    </div>
+  </ng-template>
+</p-galleria>

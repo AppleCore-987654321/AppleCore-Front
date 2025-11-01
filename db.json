@@ -17,6 +17,48 @@
       "name": "iPad",
       "description": "La línea de tabletas de Apple.",
       "imgUrl": "https://picsum.photos/seed/ipad/500/350"
+    },
+    {
+      "id": 4,
+      "name": "Apple Watch",
+      "description": "El reloj inteligente de Apple con funciones de salud y fitness.",
+      "imgUrl": "https://picsum.photos/seed/watch/400/400"
+    },
+    {
+      "id": 5,
+      "name": "AirPods",
+      "description": "Auriculares inalámbricos con integración total con el ecosistema Apple.",
+      "imgUrl": "https://picsum.photos/seed/airpods/400/350"
+    },
+    {
+      "id": 6,
+      "name": "Apple TV",
+      "description": "El dispositivo de streaming de Apple para contenido multimedia y juegos.",
+      "imgUrl": "https://picsum.photos/seed/appletv/450/350"
+    },
+    {
+      "id": 7,
+      "name": "iMac",
+      "description": "La línea de computadoras de escritorio todo en uno de Apple.",
+      "imgUrl": "https://picsum.photos/seed/imac/500/400"
+    },
+    {
+      "id": 8,
+      "name": "Mac Mini",
+      "description": "La computadora de escritorio compacta de Apple con potencia profesional.",
+      "imgUrl": "https://picsum.photos/seed/macmini/400/350"
+    },
+    {
+      "id": 9,
+      "name": "HomePod",
+      "description": "El altavoz inteligente con Siri y sonido envolvente de alta fidelidad.",
+      "imgUrl": "https://picsum.photos/seed/homepod/350/400"
+    },
+    {
+      "id": 10,
+      "name": "Accesorios",
+      "description": "Fundas, cables, teclados, cargadores y otros accesorios oficiales de Apple.",
+      "imgUrl": "https://picsum.photos/seed/accesorios/400/300"
     }
   ],
   "products": [
@@ -91,6 +133,50 @@
       "status": true,
       "categoryId": 3,
       "categoryName": "iPad"
+    }
+  ],
+  "categorySales": [
+    {
+      "id": 1,
+      "categoryId": 1,
+      "categoryName": "iPhone",
+      "sales": 320,
+      "month": "2025-11"
+    },
+    {
+      "id": 2,
+      "categoryId": 2,
+      "categoryName": "MacBook",
+      "sales": 180,
+      "month": "2025-11"
+    },
+    {
+      "id": 3,
+      "categoryId": 3,
+      "categoryName": "iPad",
+      "sales": 95,
+      "month": "2025-11"
+    },
+    {
+      "id": 4,
+      "categoryId": 1,
+      "categoryName": "iPhone",
+      "sales": 210,
+      "month": "2025-10"
+    },
+    {
+      "id": 5,
+      "categoryId": 2,
+      "categoryName": "MacBook",
+      "sales": 150,
+      "month": "2025-10"
+    },
+    {
+      "id": 6,
+      "categoryId": 3,
+      "categoryName": "iPad",
+      "sales": 120,
+      "month": "2025-10"
     }
   ]
 }

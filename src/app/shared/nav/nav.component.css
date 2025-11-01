@@ -6,214 +6,155 @@ nav {
   right: 0;
   z-index: 1000;
   width: 100%;
-  /* Fondo muy oscuro */
-  background: var(--color-dark-primary);
-  /* Sombra oscura y marcada */
-  box-shadow: 0 2px 10px var(--color-shadow-dark);
-  /* Borde inferior con el color eléctrico */
-  border-bottom: 3px solid var(--color-electric-blue);
+  background: var(--bg-white);
+  box-shadow: var(--shadow-light);
+  border-bottom: 1px solid var(--border-color);
 }
 
-/* Contenedor del encabezado (logo + botón menú) */
 .nav-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 1rem;
+  height: 60px;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 35px;
+  height: 35px;
+}
+
+nav h1 {
+  color: var(--text-dark);
+  font-size: 22px;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Contenedor principal de enlaces y secciones */
 .nav-links {
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  padding: 12px 20px 12px 0;
-  gap: 10px;
-  transition: transform 0.3s ease;
-}
-
-.logo img {
-  width: 40px;
-  height: 40px;
-  /* Fondo del icono eléctrico */
-  background: var(--color-electric-blue);
-  border-radius: 50%;
-  padding: 8px;
-  /* Efecto de brillo */
-  box-shadow: 0 0 8px rgba(0, 191, 255, 0.6);
-}
-
-nav h1 {
-  /* Texto claro */
-  color: var(--color-text-light);
-  font-size: 24px;
-  margin: 0;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  /* Sombra sutil para profundidad */
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
 .nav-center {
   display: flex;
   align-items: center;
-  gap: 2rem;
-  margin: 0 auto;
+  gap: 1rem;
 }
 
 .nav-center a {
-  /* Texto claro */
-  color: var(--color-text-light);
-  padding: 18px 20px;
+  color: var(--text-light);
+  padding: 8px 12px;
   text-decoration: none;
-  text-align: center;
-  display: block;
   font-weight: 500;
+  border-radius: 6px;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
 }
 
-.nav-center a::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 3px;
-  /* Línea de fondo con color eléctrico */
-  background: var(--color-electric-blue);
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
+.nav-center a:hover, .nav-center a.active {
+  background: var(--bg-light);
+  color: var(--primary-color);
 }
 
-.nav-center a:hover {
-  /* Fondo de hover oscuro y sutil */
-  background: var(--color-dark-secondary);
-  /* Mantener el color eléctrico para el efecto de brillo */
-  color: var(--color-electric-blue);
-  transform: translateY(-2px);
-  /* Sombra con brillo azul */
-  box-shadow: 0 4px 12px rgba(0, 191, 255, 0.2);
-}
-
-.nav-center a:hover::before {
-  width: 100%;
-}
-
+/* Sección de autenticación y tema */
 .auth-section {
-  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .login-link {
-  /* Color de texto claro */
-  color: var(--color-text-light);
-  padding: 10px 20px;
+  color: var(--bg-white);
+  padding: 8px 18px;
   text-decoration: none;
   font-weight: 500;
-  /* Fondo del botón eléctrico */
-  background: var(--color-electric-blue);
+  background: var(--primary-color);
   border-radius: 6px;
   transition: all 0.3s ease;
-  /* Sombra con glow azul */
-  box-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
+  white-space: nowrap;
 }
 
 .login-link:hover {
-  /* Hover con color eléctrico un poco más oscuro */
-  background: var(--color-electric-blue-hover);
-  transform: translateY(-1px);
-  /* Sombra más marcada al hacer hover */
-  box-shadow: 0 6px 15px rgba(0, 191, 255, 0.8);
+  background: var(--accent-hover);
 }
 
 .user-section {
   display: flex;
   align-items: center;
-  padding: 8px 16px;
-  /* Texto claro */
-  color: var(--color-text-light);
-  font-weight: 500;
-  gap: 15px;
-  /* Fondo de sección ligeramente más claro que el fondo principal */
-  background: var(--color-dark-secondary);
-  border-radius: 8px;
-  /* Borde sutil del color de acento */
-  border: 1px solid rgba(0, 191, 255, 0.3);
-}
-
-.user-welcome {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-}
-
-.user-welcome::before {
-  content: '⚡️'; /* Ícono más apropiado para la temática */
-  font-size: 16px;
+  gap: 10px;
+  color: var(--text-light);
+  white-space: nowrap;
 }
 
 .username {
-  /* Nombre de usuario en color eléctrico */
-  color: var(--color-electric-blue);
+  color: var(--text-dark);
   font-weight: 600;
-  text-shadow: 0 0 5px rgba(0, 191, 255, 0.4);
-}
-
-.logout-form {
-  margin: 0;
 }
 
 .logout-btn {
-  /* Botón de Logout eléctrico */
-  background: var(--color-electric-blue);
-  color: var(--color-dark-primary); /* Texto oscuro en el botón brillante */
-  border: none;
-  padding: 8px 16px;
+  background: var(--bg-light);
+  color: var(--text-light);
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
   border-radius: 6px;
-  font-size: 14px;
-  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  /* Sombra con glow azul */
-  box-shadow: 0 0 10px rgba(0, 191, 255, 0.6);
 }
 
 .logout-btn:hover {
-  /* Hover con color eléctrico un poco más oscuro */
-  background: var(--color-electric-blue-hover);
-  transform: translateY(-1px);
-  /* Sombra más marcada al hacer hover */
-  box-shadow: 0 6px 15px rgba(0, 191, 255, 0.8);
+  background: var(--danger);
+  color: var(--bg-white);
+  border-color: var(--danger);
+}
+
+.theme-toggle-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--primary-color);
+  background-color: var(--bg-light);
 }
 
 /* Estilos del buscador */
 .search-section {
   flex: 1;
-  max-width: 400px;
-  margin: 0 1rem;
+  max-width: 450px;
 }
 
 .search-container {
   display: flex;
   align-items: center;
-  background: var(--color-dark-secondary);
+  background: var(--bg-light);
   border-radius: 25px;
-  padding: 2px;
-  border: 2px solid var(--color-dark-tertiary);
+  border: 1px solid var(--border-color);
   transition: all 0.3s ease;
 }
 
 .search-container:focus-within {
   border-color: var(--primary-color);
-  box-shadow: 0 0 10px rgba(255, 102, 0, 0.3);
+  box-shadow: 0 0 8px rgba(255, 102, 0, 0.2);
 }
 
 .search-input {
@@ -221,213 +162,121 @@ nav h1 {
   background: transparent;
   border: none;
   padding: 10px 15px;
-  color: var(--color-text-light);
+  color: var(--text-dark);
   font-size: 14px;
   outline: none;
-}
-
-.search-input::placeholder {
-  color: var(--color-text-medium);
 }
 
 .search-btn {
   background: var(--primary-color);
   border: none;
   border-radius: 50%;
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   cursor: pointer;
+  margin-right: 4px;
   transition: all 0.3s ease;
 }
 
 .search-btn:hover {
   background: var(--accent-hover);
-  transform: scale(1.05);
-}
-
-/* Estilos de los menús dropdown */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-toggle {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: var(--color-text-light);
-  padding: 18px 20px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.dropdown-toggle:hover {
-  background: var(--color-dark-secondary);
-  color: var(--primary-color);
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: var(--color-dark-secondary);
-  min-width: 200px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
-  border: 1px solid var(--color-dark-tertiary);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  z-index: 1000;
-}
-
-.dropdown:hover .dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.dropdown-menu a {
-  display: block;
-  padding: 12px 20px;
-  color: var(--color-text-light);
-  text-decoration: none;
-  font-size: 14px;
-  transition: all 0.3s ease;
-  border-bottom: 1px solid var(--color-dark-tertiary);
-}
-
-.dropdown-menu a:last-child {
-  border-bottom: none;
-}
-
-.dropdown-menu a:hover {
-  background: var(--primary-color);
-  color: white;
 }
 
 /* --- ESTILOS PARA MÓVIL (Mobile First) --- */
-
-/* Botón de menú (hamburguesa) */
 .menu-toggle {
-  display: block; /* Visible en móvil */
+  display: none;
   background: none;
   border: none;
-  color: var(--color-text-light);
+  color: var(--text-dark);
   font-size: 1.8rem;
   cursor: pointer;
-  padding: 10px;
 }
 
-.nav-header {
-  padding: 0 1rem; /* Menos padding en móvil */
-}
-
-/* Ocultamos los enlaces por defecto en móvil */
-.nav-links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  background: var(--color-dark-primary);
-  position: absolute;
-  top: 100%;
-  left: 0;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease-in-out;
-}
-
-/* Cuando el menú está abierto */
-.nav-links.is-open {
-  max-height: 100vh; /* Un valor alto para permitir que el contenido se expanda */
-  padding-bottom: 1rem;
-  border-top: 1px solid var(--color-dark-tertiary);
-}
-
-.nav-links .nav-item {
-  width: 100%;
-  text-align: center;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--color-dark-tertiary);
-}
-
-.nav-links .nav-item:last-child {
-  border-bottom: none;
-}
-
-.nav-center {
-  flex-direction: column;
-  width: 100%;
-  gap: 0;
-}
-
-.nav-center a {
-  width: 100%;
-  padding: 1rem;
-}
-
-.search-section, .auth-section {
-  margin: 0.5rem 0;
-}
-
-/* --- ESTILOS PARA TABLET Y ESCRITORIO (min-width: 992px) --- */
-@media (min-width: 992px) {
-  .menu-toggle {
-    display: none; /* Ocultamos el botón de hamburguesa */
-  }
-
-  /* Hacemos que NAV sea el contenedor flex principal */
-  nav {
-    display: flex;
-    align-items: center;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    gap: 2rem;
-  }
-
+@media (max-width: 992px) {
   .nav-header {
-    padding: 0;
-    /* El logo ya no necesita crecer, solo ocupar su espacio */
-    flex-shrink: 0;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .menu-toggle {
+    display: block;
   }
 
   .nav-links {
-    position: static;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    width: auto;
-    max-height: none;
-    overflow: visible;
-    /* Hacemos que este contenedor crezca para empujar los elementos */
-    flex-grow: 1;
-    gap: 2rem;
-    justify-content: flex-end; /* Alinea los items internos a la derecha */
+    width: 100%;
+    background: var(--bg-white);
+    position: absolute;
+    top: 60px;
+    left: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out, border 0.4s ease-in-out;
+    border-bottom: 0px solid var(--border-color);
+  }
+
+  .nav-links.is-open {
+    max-height: 100vh;
+    padding: 1rem 0;
+    border-bottom-width: 1px;
   }
 
   .nav-links .nav-item {
-    width: auto;
-    border: none;
-    padding: 0;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: center;
   }
 
   .nav-center {
-    flex-direction: row;
-    gap: 2rem;
-    /* El truco para centrar los links: se empuja desde ambos lados */
-    margin-right: auto;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+    order: 2;
   }
 
   .nav-center a {
-    width: auto;
-    padding: 18px 20px;
+    width: 100%;
+    padding: 0.8rem;
+  }
+
+  .search-section {
+    order: 1;
+    margin-bottom: 1rem;
+    width: calc(100% - 2rem);
+  }
+
+  .auth-section {
+    order: 3;
+    margin-top: 1rem;
+  }
+}
+
+/* --- ESTILOS PARA ESCRITORIO --- */
+@media (min-width: 992.01px) {
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem; /* Aumentamos el gap para más espacio */
+  }
+
+  .search-section {
+    margin: 0;
   }
 }

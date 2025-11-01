@@ -1,47 +1,49 @@
-import {Component, OnInit} from '@angular/core';
-import {ApiService} from '../../../core/api.service';
-import {Category} from '../../../core/models/products.model';
-import {CategoryCardComponent} from './category-card/category-card.component';
-import {Carousel} from 'primeng/carousel';
-import {NgForOf, NgIf} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CarouselModule } from 'primeng/carousel';
+import { Category } from '../../../core/models/products.model';
+import { ApiService } from '../../../core/api.service';
+import { CategoryCardComponent } from './category-card/category-card.component';
 
 @Component({
   selector: 'app-categories',
-  imports: [
-    CategoryCardComponent,
-    Carousel,
-    NgForOf,
-    NgIf
-  ],
+  standalone: true,
+  imports: [CommonModule, CarouselModule, CategoryCardComponent],
   templateUrl: './categories.component.html',
-  styleUrl: './categories.component.css'
+  styleUrls: ['./categories.component.css']
 })
-export class CategoriesComponent implements OnInit{
+export class CategoriesComponent implements OnInit {
   categories: Category[] = [];
-
-  loading: boolean = true;
-  error: string | null = null;
-
-  ngOnInit() {
-    this.loadCategories();
-  }
+  responsiveOptions: any[] | undefined;
 
   constructor(private apiService: ApiService) {}
 
-  loadCategories() {
-    this.loading = true;
-    this.apiService.getCategories().subscribe({
-      next: (response) => {
-        this.categories = response.data;
-        this.loading = false;
-
-      },
-      error: (error) => {
-        console.error('Error al cargar productos:', error);
-        this.error = 'Error al cargar los productos. Por favor, intente más tarde.';
-        this.loading = false;
-      }
+  ngOnInit() {
+    this.apiService.getCategoriesForTest().subscribe(data => {
+      this.categories = data;
     });
-  }
 
+    this.responsiveOptions = [
+      {
+        breakpoint: '1199px',
+        numVisible: 4,
+        numScroll: 1
+      },
+      {
+        breakpoint: '991px',
+        numVisible: 3,
+        numScroll: 1
+      },
+      {
+        breakpoint: '767px',
+        numVisible: 2,
+        numScroll: 1
+      },
+      {
+        breakpoint: '575px',
+        numVisible: 1,
+        numScroll: 1
+      }
+    ];
+  }
 }

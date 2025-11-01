@@ -1,0 +1,48 @@
+.categories-container {
+  max-width: 1200px; /* Limita el ancho máximo del carrusel */
+  margin: 0 auto; /* Centra el contenedor */
+  padding: 2rem 1rem;
+}
+
+.categories-container h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+}
+
+/* Estilos profundos para personalizar el carrusel de PrimeNG */
+:host ::ng-deep {
+  /* Indicadores (los puntos de abajo) */
+  .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+    background-color: var(--primary-color);
+  }
+
+  .p-carousel .p-carousel-indicators .p-carousel-indicator button {
+    background-color: var(--border-color);
+  }
+
+  /* Flechas de navegación */
+  .p-carousel .p-carousel-content .p-carousel-prev,
+  .p-carousel .p-carousel-content .p-carousel-next {
+    background-color: var(--bg-white);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 10; /* Asegura que las flechas estén por encima */
+    box-shadow: var(--shadow-light);
+  }
+
+  .p-carousel .p-carousel-content .p-carousel-prev:hover,
+  .p-carousel .p-carousel-content .p-carousel-next:hover {
+    background-color: var(--primary-color);
+    color: var(--bg-white);
+    transform: scale(1.05);
+  }
+
+  /* Reducimos el padding para juntar más las tarjetas */
+  .p-carousel-item {
+    padding: 0 0.5rem;
+  }
+}

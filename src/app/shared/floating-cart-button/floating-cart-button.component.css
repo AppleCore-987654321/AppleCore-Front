@@ -1,42 +1,40 @@
+/* Contenedor principal del botón flotante */
 .floating-cart-container {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  z-index: 1050;
-  animation: fadeIn 0.5s ease-in-out;
+  z-index: 1000; /* Asegura que esté por encima de otros elementos */
 }
 
-:host ::ng-deep .p-button {
-  background: var(--primary-color) !important;
-  border: none !important;
-  width: 60px;
-  height: 60px;
-  box-shadow: var(--shadow-primary) !important;
-  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-}
-
-:host ::ng-deep .p-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(255, 102, 0, 0.5) !important;
-}
-
-:host ::ng-deep .p-button .p-button-icon {
-  font-size: 1.5rem;
-}
-
-:host ::ng-deep .cart-badge {
-  background: var(--color-electric-blue) !important;
-  color: white !important;
-  transform: translate(10%, -10%);
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.5);
+/* Estilos para el botón y la insignia (badge) */
+:host ::ng-deep {
+  .p-button.p-button-lg {
+    background-color: var(--primary-color);
+    border: none;
+    width: 4rem;
+    height: 4rem;
+    box-shadow: var(--shadow-primary);
+    transition: background-color 0.3s ease;
   }
-  to {
-    opacity: 1;
-    transform: scale(1);
+
+  .p-button.p-button-lg:hover {
+    background-color: var(--accent-hover);
   }
+
+  .p-button .p-badge {
+    background-color: var(--primary-black);
+    color: var(--bg-white);
+    font-weight: bold;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    top: -0.5rem;
+    right: -0.5rem;
+  }
+}
+
+/* Contenido del panel lateral */
+.cart-sidebar-content {
+  display: block;
+  height: 100%;
 }

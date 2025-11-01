@@ -1,12 +1,12 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {RegisterRequest} from './models/auth.model';
+import {RegisterRequest} from './models/out/auth.model';
 import {Category, Product, UpdateProductRequest} from './models/products.model';
 import {environment} from '../../enviroment';
 import {ApiResponse} from './models/common.model';
-import {OrderList} from './models/order.model';
-import {Customer} from './models/customer.model';
+import {OrderList} from './models/out/order.model';
+import {Customer} from './models/out/customer.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +19,16 @@ export class ApiService {
   // Method for testing with json-server
   public getProductsForTest(): Observable<Product[]> {
     return this.http.get<Product[]>('http://localhost:3000/products');
+  }
+
+  public getCategoriesForTest(): Observable<Category[]> {
+    return this.http.get<Category[]>('http://localhost:3000/categories');
+  }
+
+  // Mock: obtener ventas por categoría para un mes (json-server)
+  public getCategorySalesForTest(month: string) {
+    // json-server permite filtrar por query string, por ejemplo: /categorySales?month=2025-11
+    return this.http.get<any[]>(`http://localhost:3000/categorySales?month=${month}`);
   }
 
   // Auth Methods

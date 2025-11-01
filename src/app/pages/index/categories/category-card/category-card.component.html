@@ -1,19 +1,4 @@
-
-  <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4">
-    <div class="mb-4">
-      <div class="relative mx-auto">
-        <img *ngIf="data.imgUrl"
-             ngSrc="{{data.imgUrl}}"
-             [alt]="data.id"
-             class="w-full rounded-border"
-             fill/>
-      </div>
-    </div>
-    <div class="mb-4 font-medium">{{ data.name }}</div>
-    <div class="flex justify-between items-center">
-      <span>
-                    <p-button icon="pi pi-heart" severity="secondary" [outlined]="true" />
-                    <p-button icon="pi pi-shopping-cart" styleClass="ml-2" />
-                </span>
-    </div>
-  </div>
+<div class="category-card">
+  <img [src]="category.imgUrl" [alt]="category.name" class="category-image">
+  <div class="category-name">{{ category.name }}</div>
+</div>

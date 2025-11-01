@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
-import {LoginRequest} from '../../core/models/auth.model';
+import {LoginRequest} from '../../core/models/out/auth.model';
 
 @Component({
   selector: 'app-login',

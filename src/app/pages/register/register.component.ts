@@ -7,7 +7,7 @@ import {
 import { ApiService } from '../../core/api.service';
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { RegisterRequest } from '../../core/models/auth.model';
+import { RegisterRequest } from '../../core/models/out/auth.model';
 import { CommonModule } from '@angular/common';
 
 // Validador personalizado para coincidencia de contraseñas

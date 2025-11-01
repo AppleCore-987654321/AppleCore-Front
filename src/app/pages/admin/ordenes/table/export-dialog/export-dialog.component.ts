@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { ApiService } from '../../../../../core/api.service';
-import { OrderStatus, PaymentMethod } from '../../../../../core/models/order.model';
+import { OrderStatus, PaymentMethod } from '../../../../../core/models/out/order.model';
 
 @Component({
   selector: 'app-export-dialog',

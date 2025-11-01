@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { ImageModule } from 'primeng/image';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -20,7 +19,6 @@ import { FormsModule } from '@angular/forms';
   imports: [
     DecimalPipe,
     ButtonModule,
-    CardModule,
     TagModule,
     ImageModule,
     InputNumberModule,
@@ -34,8 +32,6 @@ import { FormsModule } from '@angular/forms';
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   total: number = 0;
-  tax: number = 0;
-  finalTotal: number = 0;
 
   @Output() closeSidebar = new EventEmitter<void>();
 
@@ -55,8 +51,6 @@ export class CartComponent implements OnInit {
 
   calculateTotals(): void {
     this.total = this.cartService.getTotal();
-    this.tax = this.cartService.getTax();
-    this.finalTotal = this.cartService.getFinalTotal();
   }
 
   incrementQuantity(item: CartItem): void {
@@ -69,7 +63,7 @@ export class CartComponent implements OnInit {
     if (item.quantity > 1) {
       this.cartService.updateQuantity(item.id, item.quantity - 1);
     } else {
-      this.removeProduct(item.id); // Si es 1 y se resta, se elimina
+      this.removeProduct(item.id);
       return;
     }
   }

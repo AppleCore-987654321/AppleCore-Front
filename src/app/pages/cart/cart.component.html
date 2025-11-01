@@ -1,15 +1,6 @@
 <div class="cart-container">
-  <p-card>
     <div class="cart-header">
       <h3><i class="pi pi-shopping-cart"></i> Mi Carrito AppleCore</h3>
-      @if (cartItems.length > 0) {
-        <button pButton
-                label="Vaciar carrito"
-                icon="pi pi-trash"
-                class="p-button-sm p-button-outlined p-button-danger"
-                (click)="clearCart()">
-        </button>
-      }
     </div>
 
     <div class="cart-items">
@@ -19,15 +10,11 @@
             <img [src]="item.imgUrl" [alt]="item.name" class="item-image">
             <div class="item-info">
               <span class="item-name">{{ item.name }}</span>
-              <span class="item-price">S/ {{ item.price | number:'1.2-2' }}</span>
             </div>
             <div class="item-quantity">
               <button pButton icon="pi pi-minus" class="p-button-text p-button-sm" (click)="decrementQuantity(item)"></button>
               <span>{{ item.quantity }}</span>
               <button pButton icon="pi pi-plus" class="p-button-text p-button-sm" (click)="incrementQuantity(item)"></button>
-            </div>
-            <div class="item-subtotal">
-              <span>S/ {{ item.subtotal | number:'1.2-2' }}</span>
             </div>
             <button pButton
                     icon="pi pi-trash"
@@ -52,17 +39,11 @@
     </div>
 
     @if (cartItems.length > 0) {
-      <!-- Sección de descuentos -->
-
       <!-- Resumen de totales -->
       <div class="cart-summary">
-        <div class="summary-row">
-          <span>IGV (18%):</span>
-          <span>S/ {{tax | number:'1.2-2'}}</span>
-        </div>
         <div class="summary-row total-row">
-          <span><strong>Total final:</strong></span>
-          <span><strong>S/ {{finalTotal | number:'1.2-2'}}</strong></span>
+          <span><strong>Total:</strong></span>
+          <span><strong>S/ {{ total | number:'1.2-2' }}</strong></span>
         </div>
       </div>
 
@@ -82,7 +63,6 @@
         </button>
       </div>
     }
-  </p-card>
 
   <p-confirmDialog></p-confirmDialog>
   <p-toast></p-toast>

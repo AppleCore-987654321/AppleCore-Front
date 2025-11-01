@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import {CategoriesComponent} from './categories/categories.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { HeroBannerComponent } from './hero-banner/hero-banner.component';
 
 @Component({
   selector: 'app-index',
+  standalone: true,
   imports: [
-    CategoriesComponent
+    CategoriesComponent,
+    HeroBannerComponent
   ],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css'

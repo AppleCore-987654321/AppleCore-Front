@@ -4,7 +4,7 @@ import {
   LoginRequest,
   LoginResponse,
   RawLoginResponse,
-} from './models/auth.model';
+} from './models/out/auth.model';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { environment } from '../../enviroment';
 
@@ -45,10 +45,10 @@ export class AuthService {
         roleType: 'CUSTOMER',
         customerId: 1
       };
-      
+
       localStorage.setItem('token', mockResponse.jwt);
       this.setAuthData(mockResponse.username, mockResponse.roleType, mockResponse.customerId);
-      
+
       return new Observable(observer => {
         setTimeout(() => {
           observer.next(mockResponse);
@@ -56,7 +56,7 @@ export class AuthService {
         }, 500);
       });
     }
-    
+
     return this.http
       .post<RawLoginResponse>(`${this.apiUrl}/auth/login`, credentials)
       .pipe(

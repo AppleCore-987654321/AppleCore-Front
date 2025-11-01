@@ -38,6 +38,9 @@ export class FloatingCartButtonComponent implements OnInit {
     ).subscribe(() => {
       this.updateButtonVisibility();
     });
+
+    // Comprobación inicial al cargar el componente
+    this.updateButtonVisibility();
   }
 
   private updateButtonVisibility(): void {

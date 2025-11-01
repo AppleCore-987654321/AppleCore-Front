@@ -15,18 +15,8 @@ import {AuthService} from '../../core/auth.service';
 })
 export class NavComponent implements OnInit {
   searchTerm: string = '';
-  isMenuOpen = false; // Estado para controlar el menú móvil
-
-  search() {
-    if (this.searchTerm.trim()) {
-      this.router.navigate(['/productos'], { queryParams: { q: this.searchTerm } });
-    }
-  }
-
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
-
+  isMenuOpen = false;
+  isDarkMode = false;
   username: string | null = null;
   userRol: string | null = null;
 
@@ -43,6 +33,43 @@ export class NavComponent implements OnInit {
     this.authService.userRol$.subscribe((userRol: string | null) => {
       this.userRol = userRol;
     });
+
+    this.initializeTheme();
+  }
+
+  search() {
+    if (this.searchTerm.trim()) {
+      this.router.navigate(['/productos'], { queryParams: { q: this.searchTerm } });
+    }
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  initializeTheme() {
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+      this.isDarkMode = storedTheme === 'dark';
+    } else {
+      this.isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    this.updateTheme();
+  }
+
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    this.updateTheme();
+  }
+
+  private updateTheme() {
+    const theme = this.isDarkMode ? 'dark' : 'light';
+    localStorage.setItem('theme', theme);
+    if (this.isDarkMode) {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
   }
 
   logout() {

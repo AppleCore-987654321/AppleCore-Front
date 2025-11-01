@@ -1,0 +1,15 @@
+<div class="category-chart-card p-card p-mb-3">
+  <div class="p-card-body">
+    <ng-container *ngIf="loading">
+      <p>Cargando datos...</p>
+    </ng-container>
+
+    <ng-container *ngIf="!loading && hasData">
+      <div #chartContainer id="category-chart-container" class="chart-wrapper" style="width:100%; height:360px;"></div>
+    </ng-container>
+
+    <ng-container *ngIf="!loading && !hasData">
+      <p class="p-text-secondary">No hay datos para el mes seleccionado.</p>
+    </ng-container>
+  </div>
+</div>

@@ -1,13 +1,8 @@
-<main class="productos-main">
-<section *ngIf="!loading && !error" class="productos-grid">
-  <p-carousel [value]="categories" [numVisible]="3" [numScroll]="1" [circular]="true">
-    <app-category-card
-      *ngFor="let category of categories"
-      [data]="category">
-    </app-category-card>
+<div class="categories-container">
+  <h2>Productos Apple</h2>
+  <p-carousel [value]="categories" [numVisible]="5" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+    <ng-template let-category pTemplate="item">
+      <app-category-card [category]="category"></app-category-card>
+    </ng-template>
   </p-carousel>
-
-
-</section>
-</main>
-
+</div>
