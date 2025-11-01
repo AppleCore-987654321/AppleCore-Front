@@ -12,6 +12,7 @@ build/
 # IDEs and editors
 .idea/
 .vscode/
+.angular/
 
 # System files
 .DS_Store
