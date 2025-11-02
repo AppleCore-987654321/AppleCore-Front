@@ -1,0 +1,67 @@
+<div class="checkout-header">
+  <div class="step active">
+    <i class="pi pi-shopping-cart"></i>
+    <span>Carrito</span>
+  </div>
+  <div class="step active">
+    <i class="pi pi-credit-card"></i>
+    <span>Checkout</span>
+  </div>
+  <div class="step">
+    <i class="pi pi-check-circle"></i>
+    <span>Pago completado</span>
+  </div>
+</div>
+
+<div class="checkout-container">
+  <!-- Columna izquierda: formulario -->
+  <section class="checkout-form-section">
+    <h2>Datos de Facturación</h2>
+    <form [formGroup]="checkoutForm" (ngSubmit)="procederPago()" class="checkout-form">
+      <div class="form-row">
+        <input type="text" pInputText formControlName="first_name" placeholder="Nombre" />
+        <input type="text" pInputText formControlName="last_name" placeholder="Apellido" />
+      </div>
+
+      <div class="form-row">
+        <input type="email" pInputText formControlName="email" placeholder="Correo electrónico" />
+        <input type="text" pInputText formControlName="phone" placeholder="Teléfono" />
+      </div>
+
+      <div class="form-row">
+        <input type="text" pInputText formControlName="address" placeholder="Dirección" />
+      </div>
+
+      <div class="form-row">
+        <input type="text" pInputText formControlName="city" placeholder="Ciudad" />
+        <input type="text" pInputText formControlName="country" placeholder="País" />
+      </div>
+
+      <button
+        pButton
+        type="submit"
+        label="Proceder al pago"
+        icon="pi pi-credit-card"
+        [disabled]="isLoading"
+        class="p-button-success w-full mt-3">
+      </button>
+    </form>
+  </section>
+
+  <!-- Columna derecha: resumen -->
+  <aside class="checkout-summary">
+    <h3>Resumen de compra</h3>
+    <div *ngFor="let item of cartItems" class="summary-item">
+      <div>
+        <strong>{{ item.name }}</strong>
+        <p>Cant: {{ item.quantity }}</p>
+      </div>
+      <span>S/ {{ (item.price * item.quantity) | number:'1.2-2' }}</span>
+    </div>
+    <hr />
+    <div class="summary-total">
+      <strong>Total:</strong>
+      <strong>S/ {{ total | number:'1.2-2' }}</strong>
+    </div>
+  </aside>
+</div>

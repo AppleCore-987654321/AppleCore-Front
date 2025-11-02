@@ -12,4 +12,6 @@ import {FloatingCartButtonComponent} from '../../shared/floating-cart-button/flo
 })
 export class PublicComponent {
 
+
+
 }

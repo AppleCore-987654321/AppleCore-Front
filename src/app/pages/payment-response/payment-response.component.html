@@ -1,0 +1,51 @@
+<div *ngIf="response" class="payment-summary">
+  <div class="payment-card">
+    <h2 class="title">Resumen de Pago</h2>
+
+    <div class="status" [ngClass]="{'success': response.meta?.status?.code === '00', 'error': response.meta?.status?.code !== '00'}">
+      <i class="pi" [ngClass]="{'pi-check-circle': response.meta?.status?.code === '00', 'pi-times-circle': response.meta?.status?.code !== '00'}"></i>
+      <span>{{ response.transaction?.state || 'DESCONOCIDO' }}</span>
+    </div>
+
+    <div class="info">
+      <p><strong>Mensaje:</strong> {{ response.meta?.status?.message_ilgn?.[0]?.value }}</p>
+      <p><strong>Código:</strong> {{ response.meta?.status?.code }}</p>
+      <p><strong>Método:</strong> {{ response.transaction?.payment_method?.method_name }}</p>
+      <p><strong>Monto total:</strong> <strong>S/. {{ formattedAmount }}</strong></p>
+    </div>
+
+    <hr>
+
+    <h3>Detalle de la compra</h3>
+
+    <table class="items-table" *ngIf="cartItems.length > 0; else noItems">
+      <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cant.</th>
+        <th>Precio (S/)</th>
+        <th>Subtotal</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of cartItems">
+        <td>{{ item.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price | number:'1.2-2' }}</td>
+        <td>{{ (item.price * item.quantity) | number:'1.2-2' }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="total">
+      <strong>Total:</strong> S/. {{ total | number:'1.2-2' }}
+    </div>
+
+    <ng-template #noItems>
+      <p>No se encontró detalle de compra.</p>
+    </ng-template>
+
+
+    <button class="back-btn" (click)="volverInicio()">Volver al inicio</button>
+  </div>
+</div>

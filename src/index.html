@@ -5,9 +5,16 @@
   <title>AppleCore</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="assets/images/logoApple_v2.png">
 </head>
 <body>
   <app-root></app-root>
+  <script>
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.body.classList.add('dark-theme');
+    }
+  </script>
+
 </body>
 </html>
+ß

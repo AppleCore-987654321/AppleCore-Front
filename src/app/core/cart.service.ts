@@ -86,4 +86,8 @@ export class CartService {
       this.updateCart();
     }
   }
+  getCartItems(): CartItem[] {
+    return [...this.cartItems]; // devolvemos una copia para evitar mutaciones directas
+  }
+
 }

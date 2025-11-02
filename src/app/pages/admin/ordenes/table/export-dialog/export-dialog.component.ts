@@ -119,6 +119,8 @@ import { OrderStatus, PaymentMethod } from '../../../../../core/models/out/order
 
       .p-button {
         min-width: 120px;
+        background: var(--primary-color);
+
       }
     }
   `]

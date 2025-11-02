@@ -109,7 +109,9 @@ export class CartComponent implements OnInit {
       });
       return;
     }
-    this.router.navigate(['/order']);
+
+    // ✅ Redirige al checkout
+    this.router.navigate(['/checkout']);
   }
 
   continueShopping(): void {

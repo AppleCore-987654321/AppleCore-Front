@@ -105,6 +105,10 @@
   color: var(--text-color-secondary);
 }
 
+.p-button {
+  color: var(--primary-color);
+}
+
 .empty-cart i {
   font-size: 2.5rem;
   margin-bottom: 1rem;

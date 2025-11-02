@@ -72,7 +72,7 @@
 }
 
 .btn-add {
-  background: var(--gradient-primary);
+  background: var(--primary-color);
   color: var(--bg-white);
   box-shadow: var(--shadow-primary);
   /* Estilos para hacerlo circular */
