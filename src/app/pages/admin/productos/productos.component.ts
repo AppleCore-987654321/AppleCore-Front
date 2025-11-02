@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {ListarComponent} from './listar/listar.component';
 
 @Component({
-  selector: 'app-ordenes',
+  selector: 'app-productos-admin',
   standalone: true,
   imports: [
     ListarComponent

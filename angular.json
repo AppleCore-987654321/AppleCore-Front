@@ -79,6 +79,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "AppleCore:build:production"
@@ -89,7 +92,6 @@
           },
           "defaultConfiguration": "development"
         },
-
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"
         },
@@ -108,8 +110,7 @@
               "src/assets"
             ],
             "styles": ["src/styles.css"],
-            "scripts": [],
-            "proxyConfig": "proxy.conf.json"
+            "scripts": []
           }
         }
       }

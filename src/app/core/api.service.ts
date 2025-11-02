@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {catchError, map, Observable, of} from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 // Models
 import { RegisterRequest, RegisterResponse } from './models/out/auth.model';
@@ -18,7 +18,7 @@ import { environment } from '../../enviroment';
 export class ApiService {
   private baseUrl = environment.useMockData
     ? environment.apiUrl
-    : ''; // ← rutas relativas para proxy Angular
+    : '';
 
   constructor(private http: HttpClient) {}
 
@@ -33,19 +33,14 @@ export class ApiService {
 
   /** Registro de usuario */
   public register(request: RegisterRequest): Observable<RegisterResponse> {
-    const url = environment.useMockData
-      ? `${environment.apiUrl}/register` // mock local
-      : `${environment.gatewayUrl}/api/auth/register`; // backend real
-
-    return this.http.post<RegisterResponse>(url, request);
+    const url = environment.useMockData ? '/register' : '/api/auth/register';
+    return this.http.post<RegisterResponse>(this.endpoint(url), request);
   }
 
   /** Login de usuario */
   public login(credentials: { username: string; password: string }): Observable<any> {
-    const url = environment.useMockData
-      ? `${environment.apiUrl}/login`
-      : `${environment.gatewayUrl}/api/auth/login`;
-    return this.http.post(url, credentials);
+    const url = environment.useMockData ? '/login' : '/api/auth/login';
+    return this.http.post(this.endpoint(url), credentials);
   }
 
   // =====================================================
@@ -84,33 +79,10 @@ export class ApiService {
 
   public getCategories(): Observable<Category[]> {
     const url = environment.useMockData ? '/categories' : '/api/category/get';
-
     return this.http
-      .get<any>(this.endpoint(url), { observe: 'response' }) // ← Observamos toda la respuesta
-      .pipe(
-        map((response) => {
-          // ⚙️ Si la respuesta tiene body con data, la devolvemos igual (aunque sea 202)
-          if (response.body && response.body.data) {
-            return response.body.data;
-          }
-          // ⚠️ Si no hay data, devolvemos array vacío para evitar errores
-          return [];
-        }),
-        // Si el servidor lanza HttpErrorResponse, lo capturamos
-        // y tratamos de extraer data de igual forma si viene en el cuerpo
-        // o devolvemos vacío.
-        // Esto evita que Angular lance un "error" visual.
-        // (opcional pero recomendado)
-        catchError((err: any) => {
-          console.warn('⚠️ API devolvió error, pero intentamos procesar igual:', err);
-          if (err?.error?.data) {
-            return of(err.error.data);
-          }
-          return of([]);
-        })
-      );
+      .get<ApiResponse<Category[]> | Category[]>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
   }
-
 
   // =====================================================
   // 🧩 ORDERS

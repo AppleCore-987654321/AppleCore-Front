@@ -1,12 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {
   LoginRequest,
   LoginResponse,
   RawLoginResponse,
 } from './models/out/auth.model';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { environment } from '../../enviroment';
+import {BehaviorSubject, map, Observable, tap} from 'rxjs';
+import {environment} from '../../enviroment';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,8 @@ export class AuthService {
   userRol$ = this.userRolSubject.asObservable();
   customerId$ = this.customerIdSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   private getStoredCustomerId(): number | null {
     const stored = localStorage.getItem('customerId');
@@ -138,7 +139,6 @@ export class AuthService {
     this.userRolSubject.next(null);
     this.customerIdSubject.next(null);
   }
-
 
 
   getToken(): string | null {
