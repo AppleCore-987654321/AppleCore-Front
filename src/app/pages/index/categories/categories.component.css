@@ -4,12 +4,24 @@
   padding: 2rem 1rem;
 }
 
+
 .categories-container h2 {
   text-align: center;
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   color: var(--text-dark);
 }
+
+:host ::ng-deep .p-carousel .p-carousel-item {
+  display: flex;
+  justify-content: center;
+  height: 250px;
+  align-items: center; /* 🔼 aumenta la altura del carrusel */
+  padding: 1rem;
+}
+
+
+
 
 /* Estilos profundos para personalizar el carrusel de PrimeNG */
 :host ::ng-deep {

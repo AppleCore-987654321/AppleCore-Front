@@ -17,6 +17,7 @@
   <!-- Columna izquierda: formulario -->
   <section class="checkout-form-section">
     <h2>Datos de Facturación</h2>
+
     <form [formGroup]="checkoutForm" (ngSubmit)="procederPago()" class="checkout-form">
       <div class="form-row">
         <input type="text" pInputText formControlName="first_name" placeholder="Nombre" />
@@ -37,6 +38,11 @@
         <input type="text" pInputText formControlName="country" placeholder="País" />
       </div>
 
+      <div class="payment-info">
+        <i class="pi pi-lock"></i>
+        <span>Tus datos están protegidos con cifrado SSL 256-bit. Compra segura garantizada 🔒</span>
+      </div>
+
       <button
         pButton
         type="submit"
@@ -45,12 +51,18 @@
         [disabled]="isLoading"
         class="p-button-success w-full mt-3">
       </button>
+
+      <div class="help-info">
+        <i class="pi pi-question-circle"></i>
+        <span>¿Necesitas ayuda? Nuestro equipo de soporte está disponible 24/7 en <a href="mailto:soporte@applecore.com">soporte&#64;applecore.com</a></span>
+      </div>
     </form>
   </section>
 
   <!-- Columna derecha: resumen -->
   <aside class="checkout-summary">
     <h3>Resumen de compra</h3>
+
     <div *ngFor="let item of cartItems" class="summary-item">
       <div>
         <strong>{{ item.name }}</strong>
@@ -58,10 +70,23 @@
       </div>
       <span>S/ {{ (item.price * item.quantity) | number:'1.2-2' }}</span>
     </div>
+
     <hr />
+
     <div class="summary-total">
       <strong>Total:</strong>
       <strong>S/ {{ total | number:'1.2-2' }}</strong>
+    </div>
+
+    <div class="secure-payment">
+      <i class="pi pi-shield"></i>
+      <span>Pagos procesados de forma segura con Visa, Mastercard y Apple Pay</span>
+      <div class="payment-icons">
+        <img src="https://www.nettavisen.no/tjeneste/investering/wp-content/uploads/2025/01/visa.png" alt="Visa">
+        <img src="https://www.mastercard.com/content/dam/public/mastercardcom/pe/es/logos/mastercard-og-image.png" alt="Mastercard">
+        <img src="https://images.seeklogo.com/logo-png/39/1/yape-app-logo-png_seeklogo-399697.png" alt="Mastercard">
+        <img src="https://cdn-icons-png.flaticon.com/512/11414/11414423.png" alt="Mastercard">
+      </div>
     </div>
   </aside>
 </div>

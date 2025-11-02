@@ -57,6 +57,27 @@ export class AuthService {
       });
     }
 
+    // Usuario de prueba para ADMIN
+    if (credentials.username === 'admincore' && credentials.password === 'admin123') {
+      const mockAdminResponse: LoginResponse = {
+        jwt: 'mock-admin-token-98765',
+        username: 'Admin Core',
+        roleType: 'ADMIN',
+        customerId: null
+      };
+
+      localStorage.setItem('token', mockAdminResponse.jwt);
+      this.setAuthData(mockAdminResponse.username, mockAdminResponse.roleType);
+
+      return new Observable(observer => {
+        setTimeout(() => {
+          observer.next(mockAdminResponse);
+          observer.complete();
+        }, 500);
+      });
+    }
+
+
     return this.http
       .post<RawLoginResponse>(`${this.apiUrl}/auth/login`, credentials)
       .pipe(

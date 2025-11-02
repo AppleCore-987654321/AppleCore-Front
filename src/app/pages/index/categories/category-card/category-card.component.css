@@ -1,46 +1,40 @@
 .category-card {
-  /* Convertimos la tarjeta en un cuadrado */
-  width: 140px;
-  height: 140px;
-  padding: 1rem;
-
-  /* Estilos visuales */
-  background: var(--bg-white);
-  border: 1px solid var(--border-color);
-  border-radius: 12px; /* Puntas más redondeadas */
-
-  /* Centrado del contenido */
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  text-align: center;
 
-  cursor: pointer;
+  width: 200px;
+
+  padding: 1rem;
+
+  background: var(--bg-white);
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
+  cursor: pointer;
+  text-align: center;
 }
 
 .category-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-light);
-  border-color: var(--primary-color);
+  transform: translateY(-6px);
+  box-shadow: 0 6px 14px rgba(255, 102, 0, 0.25);
+  background-color: #f3f3f3; /* 🎨 fondo gris claro al hacer hover */
+  border: 1px solid var(--primary-color); /* borde sutil para mayor contraste */
 }
 
+
 .category-image {
-  /* Hacemos la imagen flexible y contenida */
-  max-width: 70px;
-  max-height: 70px;
+  width: 100%;
+  height: 150px;
   object-fit: contain;
   margin-bottom: 0.75rem;
 }
 
 .category-name {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: var(--text-dark);
-  /* Evita que el texto se desborde */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
+  color: var(--primary-black);
+  margin-top: auto;
 }

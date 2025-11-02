@@ -7,10 +7,11 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
-import {LoginRequest} from '../../core/models/out/auth.model';
+import { LoginRequest } from '../../core/models/out/auth.model';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   imports: [
@@ -28,12 +29,16 @@ export class LoginComponent {
     private router: Router,
     private fb: FormBuilder
   ) {
+    // Inicializa el formulario reactivo
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
+  /**
+   * Maneja el evento de envío del formulario de inicio de sesión
+   */
   onSubmit() {
     if (this.loginForm.invalid) {
       return;
@@ -48,20 +53,24 @@ export class LoginComponent {
       next: (response) => {
         this.loading = false;
 
-        // Redirigir según el rol
+        // Redirigir según el tipo de rol
         if (response.roleType === 'ADMIN') {
           this.router.navigate(['/admin/dashboard']);
         } else if (response.roleType === 'CUSTOMER') {
-          this.router.navigate(['/customer']);
+          // Redirige a productos con el carrito abierto
+          this.router.navigate(['/productos'], {
+            queryParams: { openCart: true },
+          });
         } else {
+          // Fallback en caso de rol desconocido
           this.router.navigate(['/']);
         }
       },
       error: (error) => {
         this.loading = false;
-        this.errorMessage = 'Usuario o contraseña incorrectos';
+        this.errorMessage = 'Usuario o contraseña incorrectos.';
         console.error('Error en login:', error);
-      }
+      },
     });
   }
 }

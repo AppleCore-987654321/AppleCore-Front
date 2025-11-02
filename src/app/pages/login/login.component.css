@@ -216,3 +216,206 @@
   }
 }
 /* ... otros media queries ... */
+/* ===== Fondo con degradado animado ===== */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #fff6f1, #ffffff, #ffede0, #fff);
+  background-size: 400% 400%;
+  animation: gradientShift 10s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animación suave del degradado */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ===== Efecto de burbujas naranjas suaves ===== */
+.login-page::before,
+.login-page::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.4;
+  animation: floatBubbles 12s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+/* Burbuja grande */
+.login-page::before {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(255, 102, 0, 0.3) 0%, transparent 70%);
+  top: 10%;
+  left: -10%;
+  animation-delay: 0s;
+}
+
+/* Burbuja pequeña */
+.login-page::after {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(255, 165, 0, 0.25) 0%, transparent 70%);
+  bottom: 5%;
+  right: -5%;
+  animation-delay: 3s;
+}
+
+/* Movimiento flotante sutil */
+@keyframes floatBubbles {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+  }
+  50% {
+    transform: translateY(-30px) translateX(20px) scale(1.05);
+  }
+  100% {
+    transform: translateY(0) translateX(0) scale(1);
+  }
+}
+
+/* ===== Tarjeta de login ===== */
+.login-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  position: relative;
+  z-index: 2; /* para estar sobre el fondo animado */
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.8s ease;
+}
+
+.login-container:hover {
+  transform: translateY(-4px);
+  transition: transform 0.3s ease;
+}
+
+/* ===== Título ===== */
+.main-content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 2rem;
+}
+
+/* ===== Inputs ===== */
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #333;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.9rem;
+  color: #ff6600;
+  font-size: 1.1rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: #fafafa;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #ff6600;
+  box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.15);
+  outline: none;
+  background: #fff;
+}
+
+/* ===== Botón ===== */
+.btn-login {
+  width: 100%;
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover {
+  background-color: #e65c00;
+  transform: translateY(-2px);
+}
+
+/* ===== Mensajes ===== */
+.alert-error {
+  background-color: #ffe6e6;
+  color: #d10000;
+  border: 1px solid #ffb3b3;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* ===== Enlace registro ===== */
+.auth-link {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.auth-link a {
+  color: #ff6600;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Animaciones ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+

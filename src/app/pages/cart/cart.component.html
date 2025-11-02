@@ -1,68 +1,81 @@
 <div class="cart-container">
-    <div class="cart-header">
-      <h3><i class="pi pi-shopping-cart"></i> Mi Carrito AppleCore</h3>
-    </div>
+  <div class="cart-header">
+    <h3><i class="pi pi-shopping-cart"></i> Mi Carrito AppleCore</h3>
+  </div>
 
-    <div class="cart-items">
-      @if (cartItems.length > 0) {
-        @for (item of cartItems; track item.id) {
-          <div class="cart-item">
-            <img [src]="item.imgUrl" [alt]="item.name" class="item-image">
+  <div class="cart-items">
+    @if (cartItems.length > 0) {
+      @for (item of cartItems; track item.id) {
+        <div class="cart-item">
+          <!-- Imagen a la izquierda -->
+          <img [src]="item.imgUrl" [alt]="item.name" class="item-image">
+
+          <!-- Contenedor derecho -->
+          <div class="item-details">
+            <!-- Controles arriba -->
+            <div class="item-controls">
+              <div class="item-quantity">
+                <button pButton icon="pi pi-minus" class="p-button-text p-button-sm" (click)="decrementQuantity(item)"></button>
+                <span>{{ item.quantity }}</span>
+                <button pButton icon="pi pi-plus" class="p-button-text p-button-sm" (click)="incrementQuantity(item)"></button>
+              </div>
+
+              <button pButton
+                      icon="pi pi-trash"
+                      class="p-button-text p-button-danger p-button-sm remove-btn"
+                      (click)="removeProduct(item.id)">
+              </button>
+            </div>
+
+            <!-- Nombre abajo -->
             <div class="item-info">
               <span class="item-name">{{ item.name }}</span>
             </div>
-            <div class="item-quantity">
-              <button pButton icon="pi pi-minus" class="p-button-text p-button-sm" (click)="decrementQuantity(item)"></button>
-              <span>{{ item.quantity }}</span>
-              <button pButton icon="pi pi-plus" class="p-button-text p-button-sm" (click)="incrementQuantity(item)"></button>
-            </div>
-            <button pButton
-                    icon="pi pi-trash"
-                    class="p-button-text p-button-danger p-button-sm remove-btn"
-                    (click)="removeProduct(item.id)">
-            </button>
           </div>
-        }
-      } @else {
-        <div class="empty-cart">
-          <i class="pi pi-shopping-cart"></i>
-          <h4>Tu carrito está vacío</h4>
-          <p>Agrega productos para comenzar tu compra</p>
-          <button pButton
-                  label="Ir a productos"
-                  icon="pi pi-arrow-right"
-                  class="p-button-outlined"
-                  (click)="continueShopping()">
-          </button>
         </div>
+
       }
-    </div>
-
-    @if (cartItems.length > 0) {
-      <!-- Resumen de totales -->
-      <div class="cart-summary">
-        <div class="summary-row total-row">
-          <span><strong>Total:</strong></span>
-          <span><strong>S/ {{ total | number:'1.2-2' }}</strong></span>
-        </div>
-      </div>
-
-      <!-- Botones de acción -->
-      <div class="cart-actions">
+    } @else {
+      <div class="empty-cart">
+        <i class="pi pi-shopping-cart"></i>
+        <h4>Tu carrito está vacío</h4>
+        <p>Agrega productos para comenzar tu compra</p>
         <button pButton
-                label="Continuar comprando"
-                icon="pi pi-arrow-left"
+                label="Ir a productos"
+                icon="pi pi-arrow-right"
                 class="p-button-outlined"
                 (click)="continueShopping()">
         </button>
-        <button pButton
-                label="Proceder al pago"
-                icon="pi pi-credit-card"
-                class="p-button-success"
-                (click)="proceedToCheckout()">
-        </button>
       </div>
     }
+  </div>
+
+  @if (cartItems.length > 0) {
+    <!-- Resumen de totales -->
+    <div class="cart-summary">
+      <div class="summary-row total-row">
+        <span><strong>Total:</strong></span>
+        <span><strong>S/ {{ total | number:'1.2-2' }}</strong></span>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="cart-actions">
+      <button pButton
+              label="Continuar comprando"
+              icon="pi pi-arrow-left"
+              class="p-button-outlined"
+              (click)="continueShopping()">
+      </button>
+      <button
+        pButton
+        label="Proceder al pago"
+        icon="pi pi-credit-card"
+        class="p-button-success custom-pay-btn"
+        (click)="proceedToCheckout()">
+      </button>
+    </div>
+  }
 
   <p-confirmDialog></p-confirmDialog>
   <p-toast></p-toast>

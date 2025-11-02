@@ -24,12 +24,21 @@ export class CartService {
   private cartSubject = new BehaviorSubject<CartItem[]>([]);
   private countSubject = new BehaviorSubject<number>(0);
 
+  // 🔥 Nuevo: estado visible del carrito
+  private isCartOpenSubject = new BehaviorSubject<boolean>(false);
+
+  // Observables públicos
   cart$ = this.cartSubject.asObservable();
   count$ = this.countSubject.asObservable();
+  isCartOpen$ = this.isCartOpenSubject.asObservable();
 
   constructor() {
     this.loadCart();
   }
+
+  // ======================
+  // 🛒 Métodos principales
+  // ======================
 
   addToCart(product: Product, quantity: number = 1): void {
     const existingItem = this.cartItems.find(item => item.id === product.id);
@@ -69,6 +78,14 @@ export class CartService {
     return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 
+  getCartItems(): CartItem[] {
+    return [...this.cartItems];
+  }
+
+  // ======================
+  // 💾 Persistencia local
+  // ======================
+
   private updateCart(): void {
     this.cartSubject.next([...this.cartItems]);
     this.countSubject.next(this.cartItems.reduce((count, item) => count + item.quantity, 0));
@@ -86,8 +103,23 @@ export class CartService {
       this.updateCart();
     }
   }
-  getCartItems(): CartItem[] {
-    return [...this.cartItems]; // devolvemos una copia para evitar mutaciones directas
+
+  // ======================
+  // 👁️ Control del estado del carrito
+  // ======================
+
+  toggleCart(state?: boolean): void {
+    // Si se pasa explícitamente un estado (true/false)
+    if (typeof state === 'boolean') {
+      this.isCartOpenSubject.next(state);
+    } else {
+      // Si no, simplemente alterna el estado actual
+      const current = this.isCartOpenSubject.getValue();
+      this.isCartOpenSubject.next(!current);
+    }
   }
 
+  isCartOpen(): boolean {
+    return this.isCartOpenSubject.getValue();
+  }
 }

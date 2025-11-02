@@ -65,3 +65,114 @@
 button {
   width: 100%;
 }
+.checkout-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.checkout-form-section,
+.checkout-summary {
+  flex: 1 1 48%;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.checkout-form h2 {
+  margin-bottom: 1.2rem;
+  font-size: 1.5rem;
+  color: #222;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+input[pInputText] {
+  width: 100%;
+  background-color: #111;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem;
+}
+
+.payment-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #f3f3f3;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: #333;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.help-info {
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.help-info a {
+  color: #ff6600;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.checkout-summary h3 {
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.secure-payment {
+  margin-top: 2rem;
+  text-align: center;
+  color: #333;
+}
+
+.secure-payment i {
+  color: #ff6600;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.payment-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.payment-icons img {
+  width: 45px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.payment-icons img:hover {
+  opacity: 1;
+}

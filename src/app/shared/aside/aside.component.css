@@ -1,6 +1,20 @@
 :host {
   display: block;
   height: 100vh;
+  background: var(--gradient-bg-main);
+}
+
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 35px;
+  height: 35px;
 }
 
 .layout-wrapper {
@@ -9,14 +23,16 @@
   overflow: hidden;
 }
 
+/* ========== SIDEBAR ========== */
 .layout-sidebar {
   width: 260px;
-  background: var(--gradient-bg-sidebar); /* Gradiente oscuro */
-  color: var(--color-text-light);
-  transition: width 0.3s ease;
+  background: var(--gradient-bg-sidebar);
+  color: var(--color-text-dark);
+  transition: all 0.35s ease;
   display: flex;
   flex-direction: column;
-  box-shadow: 2px 0 10px var(--color-shadow-dark); /* Sombra más pronunciada */
+  border-right: 1px solid var(--color-border);
+  box-shadow: 3px 0 12px var(--color-shadow-light);
   position: relative;
   z-index: 100;
 }
@@ -25,63 +41,65 @@
   width: 70px;
 }
 
+/* Header */
 .sidebar-header {
   padding: 1.5rem 1rem;
   border-bottom: 1px solid var(--color-border);
   text-align: center;
+  animation: fadeIn 0.8s ease;
 }
 
 .logo-text {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-electric-blue); /* Brillante y eléctrico */
-  /* Opcional: Para simular el brillo metálico */
-  text-shadow: 0 0 5px rgba(0, 191, 255, 0.6);
+  color: var(--color-accent);
+  text-shadow: 0 0 4px var(--color-glow-accent);
+  letter-spacing: 0.5px;
 }
 
 .logo-mini i {
-  font-size: 1.5rem;
-  color: var(--color-electric-blue);
+  font-size: 1.4rem;
+  color: var(--color-accent);
 }
 
+/* Toggle Button */
 .toggle-btn {
   position: absolute;
   top: 1rem;
   right: -15px;
-  background: var(--color-electric-blue) !important;
-  color: var(--color-dark-primary) !important; /* Texto muy oscuro sobre el botón */
+  background: var(--color-accent) !important;
+  color: #fff !important;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 10px var(--color-shadow-dark);
+  box-shadow: 0 4px 12px var(--color-glow-accent);
   z-index: 101;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .toggle-btn:hover {
-  background: var(--color-electric-blue-hover) !important;
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 0 20px var(--color-glow-accent);
 }
 
+/* Menu */
 .sidebar-menu {
   flex: 1;
   overflow-y: auto;
-  overflow-x: hidden;
   padding: 1rem 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
 }
 
 .sidebar-menu::-webkit-scrollbar {
   width: 6px;
 }
-
-.sidebar-menu::-webkit-scrollbar-track {
-  background: var(--color-dark-primary);
-}
-
 .sidebar-menu::-webkit-scrollbar-thumb {
-  background: var(--color-dark-tertiary);
+  background: var(--color-accent);
   border-radius: 3px;
 }
 
@@ -93,115 +111,130 @@
 
 .menu-item {
   margin-bottom: 0.25rem;
+  position: relative;
+  overflow: hidden;
 }
 
 .menu-link {
   display: flex;
   align-items: center;
-  padding: 0.875rem 1.25rem;
+  padding: 0.9rem 1.25rem;
   color: var(--color-text-medium);
   text-decoration: none;
-  transition: all 0.2s;
-  cursor: pointer;
+  transition: all 0.25s ease;
   position: relative;
+  border-left: 3px solid transparent;
+  border-radius: 6px;
 }
 
 .layout-sidebar.collapsed .menu-link {
   justify-content: center;
-  padding: 0.875rem 0;
+  padding: 1rem 0;
 }
 
 .menu-link:hover {
-  background: var(--color-dark-secondary); /* Negro azulado para hover */
-  color: var(--color-text-light);
+  color: var(--color-accent);
+  background: rgba(255, 123, 0, 0.08);
+  border-left: 3px solid var(--color-accent);
+  transform: translateX(2px);
+  box-shadow: 0 2px 8px var(--color-shadow-light);
 }
 
 .menu-link.active {
-  background: var(--color-dark-tertiary); /* Fondo oscuro activo */
-  color: var(--color-electric-blue); /* Brillo eléctrico en el texto activo */
-}
-
-.menu-link.active::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: var(--color-electric-blue); /* Indicador de brillo eléctrico */
-  /* Opcional: añadir un poco de "glow" al indicador */
-  box-shadow: 0 0 8px var(--color-electric-blue);
+  background: rgba(255, 123, 0, 0.15);
+  color: var(--color-accent);
+  border-left: 3px solid var(--color-accent);
+  box-shadow: inset 0 0 12px rgba(255, 123, 0, 0.2);
 }
 
 .menu-icon {
   font-size: 1.25rem;
   min-width: 24px;
+  transition: transform 0.3s ease;
+}
+
+.menu-link:hover .menu-icon {
+  transform: scale(1.2);
 }
 
 .menu-label {
   margin-left: 1rem;
   font-size: 0.95rem;
+  letter-spacing: 0.3px;
   white-space: nowrap;
 }
 
+/* Submenu */
 .submenu {
   list-style: none;
   padding: 0;
   margin: 0;
-  background: var(--color-dark-primary); /* Fondo más oscuro para submenú */
-}
-
-.submenu-item {
-  margin: 0;
+  background: var(--color-light-secondary);
+  animation: slideDown 0.3s ease forwards;
+  border-radius: 8px;
 }
 
 .submenu-link {
   display: flex;
   align-items: center;
-  padding: 0.75rem 1.25rem 0.75rem 3.5rem;
+  padding: 0.75rem 1.25rem 0.75rem 3rem;
   color: var(--color-text-medium);
-  text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
   font-size: 0.9rem;
+  border-radius: 6px;
 }
 
 .submenu-link:hover {
-  background: var(--color-dark-secondary);
-  color: var(--color-text-light);
+  color: var(--color-accent);
+  background: rgba(255, 123, 0, 0.1);
+  transform: translateX(4px);
 }
 
 .submenu-link.active {
-  color: var(--color-electric-blue);
-  background: var(--color-dark-secondary);
+  color: var(--color-accent);
 }
 
-.submenu-icon {
-  font-size: 1rem;
-  min-width: 20px;
-}
-
-.submenu-label {
-  margin-left: 0.75rem;
-}
-
+/* Footer */
 .sidebar-footer {
   padding: 1rem;
   border-top: 1px solid var(--color-border);
   text-align: center;
-}
-
-.footer-text {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: var(--color-text-medium);
-  margin: 0;
+  animation: fadeIn 0.8s ease;
 }
 
+/* Main Content */
 .layout-main {
   flex: 1;
   overflow-y: auto;
-  background: var(--gradient-bg-main); /* Fondo principal muy oscuro */
+  background: var(--gradient-bg-main);
   padding: 2rem;
-  color: var(--color-text-light); /* Aseguramos que el texto principal también sea claro */
+  color: var(--color-text-dark);
+  transition: background 0.4s ease;
+}
+
+/* ========== ANIMACIONES ========== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive */
@@ -215,7 +248,7 @@
   }
 
   .layout-sidebar.collapsed {
-    left: -70px;
+    left: -260px;
   }
 
   .layout-main {

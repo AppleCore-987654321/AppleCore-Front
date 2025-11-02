@@ -1,98 +1,132 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Product } from '../../core/models/products.model';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+
+// Componentes y servicios
 import { CardComponent } from './card/card.component';
 import { ApiService } from '../../core/api.service';
-import { FormsModule } from '@angular/forms';
-import { DetallesComponent } from './card/detalles/detalles.component';
-import { CartService } from '../../core/cart.service'; // 1. Importar CartService
-import { ToastModule } from 'primeng/toast'; // 2. Importar ToastModule para notificaciones
-import { MessageService } from 'primeng/api'; // 3. Importar MessageService
+import { CartService } from '../../core/cart.service';
+import { Product } from '../../core/models/products.model';
+
+// PrimeNG
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-productos',
   standalone: true,
-  imports: [CommonModule, CardComponent, FormsModule, ToastModule],
-  providers: [MessageService], // 5. Proveer el MessageService
+  imports: [CommonModule, FormsModule, CardComponent, ToastModule],
+  providers: [MessageService],
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css']
 })
 export class ProductsComponent implements OnInit {
-  productos: Product[] = []; // Lista maestra de productos
-  productosFiltrados: Product[] = []; // Lista que se muestra en la UI
+  // === Estado general ===
+  productos: Product[] = [];
+  productosFiltrados: Product[] = [];
   loading = true;
   error: string | null = null;
 
-  // Propiedades para los filtros
+  // === Filtros ===
   categoriasUnicas: string[] = [];
   filtroCategoria: string = '';
   precioMaximo: number = 3000;
   filtroPrecio: number = 3000;
 
+  // === Inyecciones ===
   private apiService = inject(ApiService);
-  private cartService = inject(CartService); // 6. Inyectar CartService
-  private messageService = inject(MessageService); // 7. Inyectar MessageService
+  private cartService = inject(CartService);
+  private messageService = inject(MessageService);
+  private route = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.productTest();
+    this.cargarProductos();
+    this.verificarCarritoAbierto();
   }
 
-  productTest() {
+  /**
+   * Carga los productos de prueba desde el JSON server
+   */
+  private cargarProductos(): void {
     this.loading = true;
+
     this.apiService.getProductsForTest().subscribe({
       next: (response: Product[]) => {
         this.productos = response;
-        this.productosFiltrados = response; // Inicialmente, mostrar todos
+        this.productosFiltrados = response;
         this.extraerCategoriasUnicas();
         this.calcularPrecioMaximo();
         this.loading = false;
       },
       error: (error: any) => {
-        console.error('Error al cargar productos de prueba:', error);
-        this.error = 'Error al cargar los productos. Por favor, intente más tarde.';
+        console.error('❌ Error al cargar productos:', error);
+        this.error = 'Error al cargar los productos. Inténtalo más tarde.';
         this.loading = false;
       }
     });
   }
 
-  private extraerCategoriasUnicas() {
-    // Usamos 'categoryName' y filtramos posibles valores undefined
+  /**
+   * Si el usuario llega desde el login con ?openCart=true
+   * abrimos automáticamente el carrito.
+   */
+  private verificarCarritoAbierto(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['openCart']) {
+        this.cartService.toggleCart(true); // Debes tener este método en CartService
+      }
+    });
+  }
+
+  /**
+   * Extrae las categorías únicas de los productos
+   */
+  private extraerCategoriasUnicas(): void {
     const categorias = this.productos
       .map(p => p.categoryName)
       .filter((name): name is string => !!name);
     this.categoriasUnicas = [...new Set(categorias)];
   }
 
-  private calcularPrecioMaximo() {
+  /**
+   * Calcula el precio máximo dinámico según los productos
+   */
+  private calcularPrecioMaximo(): void {
     if (this.productos.length > 0) {
-      // Usamos Math.ceil para redondear hacia arriba y tener un valor limpio en el slider
-      this.precioMaximo = Math.ceil(Math.max(...this.productos.map(p => p.price)));
-      this.filtroPrecio = this.precioMaximo; // Iniciar el slider en el máximo
+      this.precioMaximo = Math.ceil(
+        Math.max(...this.productos.map(p => p.price))
+      );
+      this.filtroPrecio = this.precioMaximo;
     }
   }
 
-  aplicarFiltros() {
-    let productosTemp = [...this.productos];
+  /**
+   * Aplica filtros de categoría y precio
+   */
+  aplicarFiltros(): void {
+    let filtrados = [...this.productos];
 
-    // 1. Filtrar por categoría
     if (this.filtroCategoria) {
-      productosTemp = productosTemp.filter(p => p.categoryName === this.filtroCategoria);
+      filtrados = filtrados.filter(
+        p => p.categoryName === this.filtroCategoria
+      );
     }
 
-    // 2. Filtrar por precio
-    productosTemp = productosTemp.filter(p => p.price <= this.filtroPrecio);
-
-    this.productosFiltrados = productosTemp;
+    filtrados = filtrados.filter(p => p.price <= this.filtroPrecio);
+    this.productosFiltrados = filtrados;
   }
 
+  /**
+   * Añade un producto al carrito con notificación
+   */
   onAddToCart(product: Product): void {
-    // 8. ¡Aquí está la magia! Llamamos al servicio para añadir el producto.
     this.cartService.addToCart(product);
-    // 9. Mostramos una notificación de éxito.
     this.messageService.add({
       severity: 'success',
-      summary: '¡Éxito!',
-      detail: `${product.name} ha sido agregado al carrito.`
+      summary: 'Producto agregado',
+      detail: `${product.name} ha sido añadido al carrito.`,
+      life: 2500
     });
   }
 }
