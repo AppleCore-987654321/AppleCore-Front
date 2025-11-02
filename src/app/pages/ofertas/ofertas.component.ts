@@ -29,12 +29,12 @@ export class OfertasComponent implements OnInit {
   productos: Product[] = [];
   filteredProducts: Product[] = [];
   loading: boolean = true;
-  
+
   // Filtros
   selectedCategory: any = null;
   priceRange: any = null;
   searchTerm: string = '';
-  
+
   categories = [
     { label: 'Todas las categorías', value: null },
     { label: 'iPhone', value: 'iPhone' },
@@ -43,7 +43,7 @@ export class OfertasComponent implements OnInit {
     { label: 'Apple Watch', value: 'Watch' },
     { label: 'AirPods', value: 'AirPods' }
   ];
-  
+
   priceRanges = [
     { label: 'Todos los precios', value: null },
     { label: 'Menos de S/500', value: { min: 0, max: 500 } },
@@ -63,15 +63,21 @@ export class OfertasComponent implements OnInit {
 
   loadProducts() {
     this.loading = true;
+
     this.apiService.getProducts().subscribe({
-      next: (response) => {
-        // Simular productos en oferta (con descuentos)
-        this.productos = response.data.map(product => ({
+      next: (response: any) => {
+        // 🔹 Soporta tanto mock (array) como backend real ({ data: [] })
+        const products: Product[] = Array.isArray(response)
+          ? response
+          : response.data || [];
+
+        this.productos = products.map(product => ({
           ...product,
           originalPrice: product.price,
           price: product.price * 0.8, // 20% descuento
           discount: 20
         }));
+
         this.filteredProducts = [...this.productos];
         this.loading = false;
       },
@@ -82,23 +88,24 @@ export class OfertasComponent implements OnInit {
     });
   }
 
+
   applyFilters() {
     this.filteredProducts = this.productos.filter(product => {
       // Filtro por categoría
       if (this.selectedCategory && !product.name.toLowerCase().includes(this.selectedCategory.toLowerCase())) {
         return false;
       }
-      
+
       // Filtro por precio
       if (this.priceRange && (product.price < this.priceRange.min || product.price > this.priceRange.max)) {
         return false;
       }
-      
+
       // Filtro por búsqueda
       if (this.searchTerm && !product.name.toLowerCase().includes(this.searchTerm.toLowerCase())) {
         return false;
       }
-      
+
       return true;
     });
   }

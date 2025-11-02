@@ -59,16 +59,16 @@ export class CrearComponent {
 
   loadCategories() {
     this.apiService.getCategories().subscribe({
-      next: (response) => {
-        this.categorias = response.data;
+      next: (response: Category[] | { data: Category[] }) => {
+        // ✅ Soporta tanto mock (array) como backend real (objeto con data)
+        this.categorias = Array.isArray(response)
+          ? response
+          : (response.data ?? []);
+
         console.log('Categorías cargadas:', this.categorias);
         this.loading = false;
       },
-      error: (err) => {
-        console.error('Error al cargar categorías:', err);
-        this.error = 'Error al cargar las categorías';
-        this.loading = false;
-      }
+
     });
   }
 

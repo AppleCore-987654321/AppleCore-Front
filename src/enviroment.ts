@@ -1,5 +1,6 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8082/api',
-  appName: 'Mi App Dev'
+  production: true,
+  useMockData: false, // 🚫 desactiva mocks
+  apiUrl: 'http://18.217.70.174:8088',
+  gatewayUrl: 'http://18.217.70.174:8088',
 };

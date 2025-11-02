@@ -34,21 +34,30 @@ export class ProductoDetalleComponent implements OnInit {
       return;
     }
 
-    this.apiService.getProductsForTest().subscribe({
-      next: (products) => {
-        // Buscamos el producto cuyo nombre, convertido a slug, coincida con el de la URL
-        this.product = products.find(p => this.slugify(p.name) === slug);
+    this.apiService.getProducts().subscribe({
+      next: (response: Product[] | { data: Product[] }) => {
+        const products = Array.isArray(response)
+          ? response
+          : response.data;
+
+        this.product = products.find(
+          (p) => this.slugify(p.name) === slug
+        );
+
         if (!this.product) {
           this.error = 'Producto no encontrado.';
         }
+
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error al cargar el producto:', err);
+        console.error('❌ Error al cargar el producto:', err);
         this.error = 'No se pudo cargar la información del producto.';
         this.loading = false;
       }
     });
+
+
   }
 
   addToCart(): void {

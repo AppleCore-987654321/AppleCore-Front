@@ -73,14 +73,11 @@ export class TableComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.error = null;
 
-    this.orderService
-      .getOrders()
+    this.orderService.getOrders()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response) => {
-          this.ordenes = response.data || [];
-          console.log('Ordenes cargadas:', this.ordenes);
-          this.loading = false;
+        next: (ordenes) => {
+          this.ordenes = ordenes;
         },
         error: (err) => {
           this.error = 'Error al conectar con el servidor';

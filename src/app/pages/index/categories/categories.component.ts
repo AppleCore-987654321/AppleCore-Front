@@ -18,12 +18,20 @@ export class CategoriesComponent implements OnInit {
 
   constructor(private apiService: ApiService) {}
 
-  ngOnInit() {
-    this.apiService.getCategoriesForTest().subscribe(data => {
-      this.categories = data;
+  ngOnInit(): void {
+    this.apiService.getCategories().subscribe({
+      next: (response) => {
+        // response ya es un array de Category
+        this.categories = response;
+      },
+      error: (error) => {
+        console.error('❌ Error al cargar categorías:', error);
+      },
     });
 
-    this.responsiveOptions = [
+
+
+  this.responsiveOptions = [
       {
         breakpoint: '1199px',
         numVisible: 4,

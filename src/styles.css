@@ -115,6 +115,8 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
+
+
 .p-sidebar-mask {
   background-color: rgba(0, 0, 0, 0.5) !important;
 }

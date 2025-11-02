@@ -35,11 +35,21 @@ export class CategoryChartComponent implements OnInit, OnDestroy {
 
   private loadData() {
     // Llamamos al mock local. Cuando tengas un endpoint real, reemplaza por la versión del backend.
-    this.api.getCategorySalesForTest(this.month!).subscribe({
-      next: (data: CategorySales[]) => {
+    this.api.getCategorySales(this.month!).subscribe({
+      next: (response: CategorySales[] | { data: CategorySales[] }) => {
         this.loading = false;
-        this.hasData = Array.isArray(data) && data.length > 0;
-        const seriesData = (data || []).map(d => ({ name: d.categoryName, y: d.sales }));
+
+        // Si estás en mock, response es un array directo
+        const data: CategorySales[] = Array.isArray(response)
+          ? response
+          : (response.data ?? []);
+
+        this.hasData = data.length > 0;
+
+        const seriesData = data.map(d => ({
+          name: d.categoryName,
+          y: d.sales
+        }));
 
         const options: any = {
           chart: { type: 'pie', backgroundColor: 'transparent' },
@@ -69,43 +79,32 @@ export class CategoryChartComponent implements OnInit, OnDestroy {
           ]
         };
 
-        // guardo opciones e instancio/actualizo el chart imperativamente
         this.chartOptions = options as unknown as Highcharts.Options;
-        // Forzamos detección de cambios para asegurarnos de que el contenedor existe
-        try {
-          this.cd.detectChanges();
-        } catch (e) {
-          // noop
-        }
 
         try {
+          this.cd.detectChanges();
           if (this.chartRef) {
             this.chartRef.update(options, true, true);
-          } else if (this.chartContainer && this.chartContainer.nativeElement) {
+          } else if (this.chartContainer?.nativeElement) {
             this.chartRef = Highcharts.chart(this.chartContainer.nativeElement, options);
           } else {
-            // como fallback intentamos crear usando id si existe
             const el = document.getElementById('category-chart-container');
-            if (el) {
-              this.chartRef = Highcharts.chart(el, options);
-            }
+            if (el) this.chartRef = Highcharts.chart(el, options);
           }
-          // Forzamos un resize breve para que Highcharts calcule bien dimensiones
-          try {
-            setTimeout(() => {
-              try { window.dispatchEvent(new Event('resize')); } catch (e) {}
-            }, 50);
-          } catch (e) {}
+          setTimeout(() => {
+            try { window.dispatchEvent(new Event('resize')); } catch {}
+          }, 50);
         } catch (e) {
           console.error('Error creando Highcharts:', e);
         }
       },
       error: (err) => {
         this.loading = false;
-        console.error('Error cargando category sales mock:', err);
+        console.error('Error cargando category sales:', err);
         this.hasData = false;
       }
     });
+
   }
 
   ngOnDestroy(): void {

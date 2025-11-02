@@ -74,16 +74,17 @@
               <p-button
                 label="Detalles"
                 icon="pi pi-eye"
-                [routerLink]="['/admin/ordenes', item.id]"
+                [routerLink]="[item.id]"
                 styleClass="p-button-info p-button-sm">
               </p-button>
 
               <p-button
                 label="Editar"
                 icon="pi pi-pencil"
-                [routerLink]="['/ordenes', item.id, 'editar']"
+                [routerLink]="[item.id, 'editar']"
                 styleClass="p-button-secondary p-button-sm">
               </p-button>
+
             </div>
           </td>
         </tr>

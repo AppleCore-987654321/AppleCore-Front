@@ -51,10 +51,13 @@ export class ProductsComponent implements OnInit {
   private cargarProductos(): void {
     this.loading = true;
 
-    this.apiService.getProductsForTest().subscribe({
-      next: (response: Product[]) => {
-        this.productos = response;
-        this.productosFiltrados = response;
+    this.apiService.getProducts().subscribe({
+      next: (response: Product[] | { data: Product[] }) => {
+        this.productos = Array.isArray(response)
+          ? response
+          : response.data;
+
+        this.productosFiltrados = this.productos;
         this.extraerCategoriasUnicas();
         this.calcularPrecioMaximo();
         this.loading = false;
@@ -65,6 +68,8 @@ export class ProductsComponent implements OnInit {
         this.loading = false;
       }
     });
+
+
   }
 
   /**

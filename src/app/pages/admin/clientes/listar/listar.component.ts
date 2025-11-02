@@ -42,36 +42,35 @@ export class ListarClientesComponent implements OnInit {
 
     this.apiService
       .getClientes()
-      // 2. Añade takeUntil para evitar fugas de memoria si el componente se destruye
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response) => {
-          // 3. Asigna los datos y finaliza la carga
-          this.clientes = response.data || [];
+        next: (clientes) => {
+          this.clientes = clientes;
           console.log('Clientes cargados:', this.clientes);
           this.loading = false;
         },
         error: (err) => {
-          // 4. Asigna un mensaje de error amigable y finaliza la carga
           this.error = 'No se pudieron cargar los clientes.';
           console.error('Error fetching clients:', err);
           this.loading = false;
         },
       });
+
   }
 
   editarCliente(cliente: Customer) {
     this.router.navigate(['clientes/editar', cliente.id]);
   }
 
-  eliminarCliente(cliente: Customer) {
+  eliminarCliente(cliente: Customer): void {
     if (confirm('¿Está seguro? Esta acción no se puede deshacer.')) {
       this.apiService.deleteCliente(cliente.id).subscribe({
         next: () => {
           this.clientes = this.clientes.filter(c => c.id !== cliente.id);
+          alert('Cliente eliminado correctamente.');
         },
         error: (err) => {
-          console.error('Error deleting client:', err);
+          console.error('❌ Error al eliminar cliente:', err);
           alert('No se pudo eliminar el cliente.');
         }
       });

@@ -1,124 +1,247 @@
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {RegisterRequest} from './models/out/auth.model';
-import {Category, Product, UpdateProductRequest} from './models/products.model';
-import {environment} from '../../enviroment';
-import {ApiResponse} from './models/common.model';
-import {OrderList} from './models/out/order.model';
-import {Customer} from './models/out/customer.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import {catchError, map, Observable, of} from 'rxjs';
+
+// Models
+import { RegisterRequest, RegisterResponse } from './models/out/auth.model';
+import { Category, Product, UpdateProductRequest } from './models/products.model';
+import { ApiResponse } from './models/common.model';
+import { OrderList } from './models/out/order.model';
+import { Customer } from './models/out/customer.model';
+
+// Environment
+import { environment } from '../../enviroment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
+  private baseUrl = environment.useMockData
+    ? environment.apiUrl
+    : ''; // ← rutas relativas para proxy Angular
+
   constructor(private http: HttpClient) {}
 
-  private apiUrl = environment.apiUrl;
-
-  // Method for testing with json-server
-  public getProductsForTest(): Observable<Product[]> {
-    return this.http.get<Product[]>('http://localhost:3000/products');
+  private endpoint(path: string): string {
+    // Asegura que no se dupliquen barras (//api)
+    return `${this.baseUrl}${path.startsWith('/') ? path : '/' + path}`;
   }
 
-  public getCategoriesForTest(): Observable<Category[]> {
-    return this.http.get<Category[]>('http://localhost:3000/categories');
+  // =====================================================
+  // 🧩 AUTH
+  // =====================================================
+
+  /** Registro de usuario */
+  public register(request: RegisterRequest): Observable<RegisterResponse> {
+    const url = environment.useMockData
+      ? `${environment.apiUrl}/register` // mock local
+      : `${environment.gatewayUrl}/api/auth/register`; // backend real
+
+    return this.http.post<RegisterResponse>(url, request);
   }
 
-  // Mock: obtener ventas por categoría para un mes (json-server)
-  public getCategorySalesForTest(month: string) {
-    // json-server permite filtrar por query string, por ejemplo: /categorySales?month=2025-11
-    return this.http.get<any[]>(`http://localhost:3000/categorySales?month=${month}`);
+  /** Login de usuario */
+  public login(credentials: { username: string; password: string }): Observable<any> {
+    const url = environment.useMockData
+      ? `${environment.apiUrl}/login`
+      : `${environment.gatewayUrl}/api/auth/login`;
+    return this.http.post(url, credentials);
   }
 
-  // Auth Methods
-  public register(request: RegisterRequest): Observable<RegisterRequest> {
-    return this.http.post<RegisterRequest>(
-      `${this.apiUrl}/auth/register`,
-      request
-    );
+  // =====================================================
+  // 🧩 PRODUCTS
+  // =====================================================
 
-  }
-
-  // Products Methods
-  public getProducts(): Observable<ApiResponse<Product[]>> {
-    return this.http.get<ApiResponse<Product[]>>(`${this.apiUrl}/product/get`);
+  public getProducts(): Observable<Product[]> {
+    const url = environment.useMockData ? '/products' : '/api/product/get';
+    return this.http
+      .get<ApiResponse<Product[]> | Product[]>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
   }
 
   public getProduct(id: number): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/product/get/${id}`);
+    const url = environment.useMockData ? `/products/${id}` : `/api/product/get/${id}`;
+    return this.http
+      .get<ApiResponse<Product> | Product>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
   }
 
   public createProduct(request: Product): Observable<Product> {
-    return this.http.post<Product>(`${this.apiUrl}/product/add`, request);
+    const url = environment.useMockData ? '/products' : '/api/product/add';
+    return this.http.post<Product>(this.endpoint(url), request);
   }
 
-  public updateProduct(id: number, request: UpdateProductRequest): Observable<ApiResponse<null>> {
-    return this.http.put<ApiResponse<null>>(`${this.apiUrl}/product/edit/${id}`, request);
+  public updateProduct(id: number, request: UpdateProductRequest): Observable<Product> {
+    const url = environment.useMockData ? `/products/${id}` : `/api/product/edit/${id}`;
+    return this.http
+      .put<ApiResponse<Product> | Product>(this.endpoint(url), request)
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
   }
 
-  // Categories
-  public getCategories(): Observable<ApiResponse<Category[]>> {
-    return this.http.get<ApiResponse<Category[]>>(`${this.apiUrl}/category/get`);
+  // =====================================================
+  // 🧩 CATEGORIES
+  // =====================================================
+
+  public getCategories(): Observable<Category[]> {
+    const url = environment.useMockData ? '/categories' : '/api/category/get';
+
+    return this.http
+      .get<any>(this.endpoint(url), { observe: 'response' }) // ← Observamos toda la respuesta
+      .pipe(
+        map((response) => {
+          // ⚙️ Si la respuesta tiene body con data, la devolvemos igual (aunque sea 202)
+          if (response.body && response.body.data) {
+            return response.body.data;
+          }
+          // ⚠️ Si no hay data, devolvemos array vacío para evitar errores
+          return [];
+        }),
+        // Si el servidor lanza HttpErrorResponse, lo capturamos
+        // y tratamos de extraer data de igual forma si viene en el cuerpo
+        // o devolvemos vacío.
+        // Esto evita que Angular lance un "error" visual.
+        // (opcional pero recomendado)
+        catchError((err: any) => {
+          console.warn('⚠️ API devolvió error, pero intentamos procesar igual:', err);
+          if (err?.error?.data) {
+            return of(err.error.data);
+          }
+          return of([]);
+        })
+      );
   }
 
-  // Orders
-  public getOrders(): Observable<ApiResponse<OrderList[]>> {
-    return this.http.get<ApiResponse<OrderList[]>>(`${this.apiUrl}/orders/get`);
+
+  // =====================================================
+  // 🧩 ORDERS
+  // =====================================================
+
+  public getOrders(): Observable<OrderList[]> {
+    const url = environment.useMockData ? '/orders' : '/api/orders/get';
+    return this.http
+      .get<ApiResponse<OrderList[]> | OrderList[]>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
   }
 
-  public getOrdersByCustomer(id: number): Observable<ApiResponse<OrderList[]>> {
-    return this.http.get<ApiResponse<OrderList[]>>(
-      `${this.apiUrl}/orders/from/${id}`
-    );
+  public getOrderById(id: number): Observable<OrderList> {
+    const url = environment.useMockData ? `/orders/${id}` : `/api/orders/get/${id}`;
+    return this.http
+      .get<ApiResponse<OrderList> | OrderList>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
   }
 
-  public getOrderById(id: number): Observable<ApiResponse<OrderList>> {
-    return this.http.get<ApiResponse<OrderList>>(
-      `${this.apiUrl}/orders/get/${id}`
-    );
+  public createOrder(order: OrderList): Observable<OrderList> {
+    const url = environment.useMockData ? '/orders' : '/api/orders/create';
+    return this.http
+      .post<ApiResponse<OrderList> | OrderList>(this.endpoint(url), order)
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
   }
 
-  // Customers
-  public getClientes(): Observable<ApiResponse<Customer[]>> {
-    return this.http.get<ApiResponse<Customer[]>>(`${this.apiUrl}/customer/get`);
+  public updateOrder(id: number, order: Partial<OrderList>): Observable<OrderList> {
+    const url = environment.useMockData ? `/orders/${id}` : `/api/orders/edit/${id}`;
+    return this.http
+      .put<ApiResponse<OrderList> | OrderList>(this.endpoint(url), order)
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
   }
 
-  public getClienteById(id: number): Observable<ApiResponse<Customer>> {
-    return this.http.get<ApiResponse<Customer>>(
-      `${this.apiUrl}/customer/get/${id}`
-    );
+  public deleteOrder(id: number): Observable<void> {
+    const url = environment.useMockData ? `/orders/${id}` : `/api/orders/delete/${id}`;
+    return this.http.delete<void>(this.endpoint(url));
   }
 
-  public deleteCliente(id: number): Observable<ApiResponse<any>> {
-    return this.http.delete<ApiResponse<any>>(
-      `${this.apiUrl}/customer/delete/${id}`
-    );
+  public getOrdersByCustomer(id: number): Observable<OrderList[]> {
+    const url = environment.useMockData
+      ? `/orders?customerId=${id}`
+      : `/api/orders/from/${id}`;
+    return this.http
+      .get<ApiResponse<OrderList[]> | OrderList[]>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
   }
 
-  public updateCliente(
-    id: number,
-    request: Customer
-  ): Observable<ApiResponse<Customer>> {
-    return this.http.put<ApiResponse<Customer>>(
-      `${this.apiUrl}/Customer/update/${id}`,
-      request
-    );
+  // =====================================================
+  // 🧩 CUSTOMERS
+  // =====================================================
+
+  public getClientes(): Observable<Customer[]> {
+    const url = environment.useMockData ? '/customers' : '/api/customer/get';
+    return this.http
+      .get<ApiResponse<Customer[]> | Customer[]>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
   }
 
-  // Export Methods
+  public getClienteById(id: number): Observable<Customer> {
+    const url = environment.useMockData ? `/customers/${id}` : `/api/customer/get/${id}`;
+    return this.http
+      .get<ApiResponse<Customer> | Customer>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
+  }
+
+  public updateCliente(id: number, request: Customer): Observable<Customer> {
+    const url = environment.useMockData ? `/customers/${id}` : `/api/customer/update/${id}`;
+    return this.http
+      .put<ApiResponse<Customer> | Customer>(this.endpoint(url), request)
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
+  }
+
+  public deleteCliente(id: number): Observable<void> {
+    const url = environment.useMockData ? `/customers/${id}` : `/api/customer/delete/${id}`;
+    return this.http.delete<void>(this.endpoint(url));
+  }
+
+  // =====================================================
+  // 🧩 STATS & DASHBOARD
+  // =====================================================
+
+  public getCategorySales(month: string): Observable<any[]> {
+    const url = environment.useMockData
+      ? `/categorySales?month=${month}`
+      : `/api/stats/category-sales?month=${month}`;
+    return this.http
+      .get<ApiResponse<any[]> | any[]>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data : res)));
+  }
+
+  public getClientesCount(): Observable<number> {
+    const url = environment.useMockData ? '/customers' : '/api/customer/get';
+    return this.http
+      .get<ApiResponse<Customer[]> | Customer[]>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data.length : res.length)));
+  }
+
+  public getProductosCount(): Observable<number> {
+    const url = environment.useMockData ? '/products' : '/api/product/get';
+    return this.http
+      .get<ApiResponse<Product[]> | Product[]>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data.length : res.length)));
+  }
+
+  public getOrdenesCount(): Observable<number> {
+    const url = environment.useMockData ? '/orders' : '/api/orders/get';
+    return this.http
+      .get<ApiResponse<OrderList[]> | OrderList[]>(this.endpoint(url))
+      .pipe(map((res: any) => ('data' in res ? res.data.length : res.length)));
+  }
+
+  // =====================================================
+  // 🧩 EXPORT
+  // =====================================================
+
   public exportToExcel(filter: {
     module: string;
     fromDate: string;
     toDate: string;
     paymentMethod: any;
-    orderStatus: any
+    orderStatus: any;
   }): Observable<Blob> {
-    return this.http.post(`${this.apiUrl}/export/excel`, filter, {
+    const url = this.endpoint('/api/export/excel');
+    return this.http.post(url, filter, {
       responseType: 'blob',
       headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
-        .set('Accept', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        .set(
+          'Accept',
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        ),
     });
   }
 }

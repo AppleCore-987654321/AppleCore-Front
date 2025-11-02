@@ -1,66 +1,49 @@
-<p>editar works!</p>
-<!DOCTYPE html>
-<html lang="en">
+<p-toast></p-toast>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar cliente</title>
-    <link rel="stylesheet" th:href="@{/css/editarcliente.css}">
-    <link rel="stylesheet" th:href="@{/css/aside.css}">
-</head>
-
-<body>
-    <div th:insert="~{fragments/aside :: aside}" class="sidebar"></div>
-<main class="main-content">
-    <div class="header">
-        <h2>Editar Cliente</h2>
-    </div>
-
-    <section>
-        <div class="container">
-            <form method="post" th:object="${cliente}" th:action="@{/admin/cliente/editar}">
-                <input th:field="*{codigoCliente}" type="hidden" class="form-control">
-
-                <div class="form-group">
-                    <label for="txtNombre">Nombre del cliente</label>
-                    <input th:field="*{nombreCliente}" type="text" class="form-control" id="txtNombre" placeholder="Ingrese el nombre del producto">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtxEmail">Email</label>
-                    <input th:field="*{emailCliente}" type="text" class="form-control" id="txtxEmail" placeholder="Descripción del producto">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtTelf">Telefono</label>
-                    <input th:field="*{telfCliente}" type="number" class="form-control" id="txtTelf" placeholder="0.00" step="1">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtDir">Dirección</label>
-                    <input th:field="*{direccionCliente}" type="text" class="form-control" id="txtDir" placeholder="Direccion del cliente">
-                </div>
-
-                <div class="form-group">
-                    <label for="txtFecha">Fecha de creación</label>
-                    <input th:field="*{fecRegCliente}" type="date" class="form-control" id="txtFecha" placeholder="Fecha de creación" readonly>
-                </div>
-
-                <div class="status-group">
-                    <label>Estado del Producto</label>
-                    <span class="status-value" th:text="*{status}">Activo</span>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                </div>
-            </form>
+<div class="p-d-flex p-jc-center p-mt-5">
+  <p-card styleClass="p-shadow-5" header="Editar Cliente" [style]="{ width: '450px' }">
+    <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
+      <div class="p-fluid">
+        <div class="p-field p-mb-3">
+          <label for="name">Nombre</label>
+          <input id="name" type="text" pInputText formControlName="name" />
         </div>
-        
-    </section>
-</main>
-    <script th:src="@{/js/active.js}"></script>
-</body>
 
-</html>
+        <div class="p-field p-mb-3">
+          <label for="email">Correo electrónico</label>
+          <input id="email" type="email" pInputText formControlName="email" />
+        </div>
+
+        <div class="p-field p-mb-3">
+          <label for="phone">Teléfono</label>
+          <input id="phone" type="text" pInputText formControlName="phone" />
+        </div>
+
+        <div class="p-field p-mb-3">
+          <label for="address">Dirección</label>
+          <input id="address" type="text" pInputText formControlName="address" />
+        </div>
+
+        <div class="p-d-flex p-jc-end p-mt-3">
+          <button
+            pButton
+            type="submit"
+            label="Guardar"
+            icon="pi pi-check"
+            [disabled]="loading"
+          ></button>
+          <button
+            pButton
+            type="button"
+            label="Cancelar"
+            class="p-button-text p-ml-2"
+            icon="pi pi-times"
+            (click)="router.navigate(['/admin/clientes'])"
+          ></button>
+        </div>
+      </div>
+    </form>
+
+    <p *ngIf="error" class="p-error p-mt-3">{{ error }}</p>
+  </p-card>
+</div>

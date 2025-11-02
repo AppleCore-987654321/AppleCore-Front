@@ -1,60 +1,104 @@
-// import { Component, OnInit } from '@angular/core';
-// import { FormBuilder, FormGroup } from '@angular/forms';
-// import { ActivatedRoute, Router } from '@angular/router';
-// import { OrdenService } from '../services/orden.service';
-// import { OrderList } from '../models/order.model';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ApiService } from '../../../../../core/api.service';
+import { OrderList } from '../../../../../core/models/out/order.model';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
-// @Component({
-//   selector: 'app-editar-orden',
-//   templateUrl: './editar-orden.component.html',
-//   styleUrls: ['./editar-orden.component.css']
-// })
-// export class EditarOrdenComponent implements OnInit {
-//   ordenForm!: FormGroup;
-//   codigoOrden!: number;
+@Component({
+  selector: 'app-editar-orden',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, CardModule, ButtonModule, InputTextModule, DropdownModule, ToastModule],
+  providers: [MessageService],
+  templateUrl: './editar-orden.component.html',
+  styleUrls: ['./editar-orden.component.css']
+})
+export class EditarOrdenComponent implements OnInit {
+  ordenForm!: FormGroup;
+  ordenId!: number;
+  loading = false;
 
-//   constructor(
-//     private fb: FormBuilder,
-//     private route: ActivatedRoute,
-//     private ordenService: OrdenService,
-//     private router: Router
-//   ) {}
+  orderStatuses = [
+    { label: 'Pendiente', value: 'PENDING' },
+    { label: 'Confirmada', value: 'CONFIRMED' },
+    { label: 'Procesando', value: 'PROCESSING' },
+    { label: 'Enviada', value: 'SHIPPED' },
+    { label: 'Entregada', value: 'DELIVERED' },
+    { label: 'Cancelada', value: 'CANCELED' }
+  ];
 
-//   ngOnInit(): void {
-//     this.codigoOrden = Number(this.route.snapshot.paramMap.get('id'));
+  private fb = inject(FormBuilder);
+  private apiService = inject(ApiService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private messageService = inject(MessageService);
 
-//     this.ordenForm = this.fb.group({
-//       codigoOrden: [''],
-//       fechaOrden: [''],
-//       totalOrden: [''],
-//       telefonoEntrega: [''],
-//       direccionEntrega: [''],
-//       observaciones: [''],
-//       estadoOrden: ['']
-//     });
+  ngOnInit(): void {
+    this.ordenId = Number(this.route.snapshot.paramMap.get('id'));
+    this.buildForm();
+    this.loadOrder();
+  }
 
-//     this.loadOrden();
-//   }
+  private buildForm(): void {
+    this.ordenForm = this.fb.group({
+      id: [{ value: '', disabled: true }],
+      orderDate: ['', Validators.required],
+      orderTotal: ['', Validators.required],
+      deliveryPhone: [''],
+      deliveryAddress: [''],
+      observations: [''],
+      orderStatus: ['', Validators.required]
+    });
+  }
 
-//   loadOrden(): void {
-//     this.ordenService.getOrdenById(this.codigoOrden).subscribe({
-//       next: (response) => {
-//         const orden: OrderList = response.data;
-//         this.ordenForm.patchValue(orden);
-//       },
-//       error: (err) => console.error('Error loading order', err)
-//     });
-//   }
+  private loadOrder(): void {
+    this.loading = true;
+    this.apiService.getOrderById(this.ordenId).subscribe({
+      next: (orden: OrderList) => {
+        this.ordenForm.patchValue(orden);
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('❌ Error al cargar orden:', err);
+        this.loading = false;
+      }
+    });
+  }
 
-//   onSubmit(): void {
-//     if (this.ordenForm.valid) {
-//       this.ordenService.updateOrden(this.codigoOrden, this.ordenForm.value).subscribe({
-//         next: () => {
-//           alert('Orden actualizada correctamente');
-//           this.router.navigate(['/admin/ordenes']);
-//         },
-//         error: (err) => console.error('Error updating order', err)
-//       });
-//     }
-//   }
-// }
+  onSubmit(): void {
+    if (this.ordenForm.invalid) {
+      this.messageService.add({ severity: 'warn', summary: 'Formulario inválido', detail: 'Completa los campos requeridos' });
+      return;
+    }
+
+    this.loading = true;
+    const updatedOrder: Partial<OrderList> = this.ordenForm.getRawValue();
+
+    this.apiService.updateOrder(this.ordenId, updatedOrder).subscribe({
+      next: () => {
+        this.loading = false;
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Orden actualizada',
+          detail: 'Los cambios se guardaron correctamente'
+        });
+        setTimeout(() => this.router.navigate(['/admin/ordenes']), 1000);
+      },
+      error: (err) => {
+        console.error('❌ Error al actualizar orden:', err);
+        this.loading = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'No se pudo actualizar la orden'
+        });
+      }
+    });
+  }
+}

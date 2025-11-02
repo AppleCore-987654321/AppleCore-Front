@@ -43,6 +43,13 @@
       @if (!username) {
         <a routerLink="/login" class="login-link">Iniciar sesión</a>
       }
+      <button
+        class="theme-toggle-btn"
+        (click)="toggleTheme()"
+        [title]="isDarkMode ? 'Modo claro' : 'Modo oscuro'"
+      >
+        <i class="bi" [ngClass]="isDarkMode ? 'bi-sun' : 'bi-moon'"></i>
+      </button>
 
       @if (username) {
         <div class="user-section">

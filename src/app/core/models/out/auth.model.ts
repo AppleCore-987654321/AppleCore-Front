@@ -13,6 +13,12 @@ export interface RegisterRequest{
         address : string;
 }
 
+export interface RegisterResponse {
+  success: boolean;
+  message: string;
+  data?: any;
+}
+
 export interface LoginResponse {
   username: string;
   roleType : string;

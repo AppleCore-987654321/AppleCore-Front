@@ -37,9 +37,10 @@ export class PaymentResponseComponent implements OnInit {
     sessionStorage.setItem('paymentResponse', JSON.stringify(this.response));
   }
 
+  private sub: any;
+
   ngOnInit(): void {
-    // ✅ Capturar carrito ANTES de limpiar
-    this.cartService.cart$.subscribe(items => {
+    this.sub = this.cartService.cart$.subscribe(items => {
       this.cartItems = items;
       this.total = this.cartService.getTotal();
     });
@@ -52,8 +53,15 @@ export class PaymentResponseComponent implements OnInit {
     return num.toFixed(2);
   }
 
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
+  }
+
   volverInicio() {
     this.cartService.clearCart();
-    this.router.navigate(['/']);
+
+    const success = this.response?.meta?.status?.code === '00';
+    this.router.navigate([success ? '/ordenes' : '/']);
   }
+
 }

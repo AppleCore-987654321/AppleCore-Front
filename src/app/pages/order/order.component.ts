@@ -46,9 +46,13 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.orderService.getOrdersByCustomer(Number(customerId))
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response) => {
-          this.ordenes = response.data || [];
-          console.log('Ordenes cargadas:', this.ordenes);
+        next: (response: any) => {
+          // 🔹 Soporta tanto mock (array) como backend real ({ data: [] })
+          this.ordenes = Array.isArray(response)
+            ? response
+            : response.data || [];
+
+          console.log('Órdenes cargadas:', this.ordenes);
           this.loading = false;
         },
         error: (err) => {
@@ -58,4 +62,5 @@ export class OrderComponent implements OnInit, OnDestroy {
         }
       });
   }
+
 }

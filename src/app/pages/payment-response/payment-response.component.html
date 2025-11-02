@@ -46,6 +46,9 @@
     </ng-template>
 
 
-    <button class="back-btn" (click)="volverInicio()">Volver al inicio</button>
+    <button class="back-btn" (click)="volverInicio()">
+      {{ response.meta?.status?.code === '00' ? 'Volver al inicio' : 'Intentar nuevamente' }}
+    </button>
+
   </div>
 </div>

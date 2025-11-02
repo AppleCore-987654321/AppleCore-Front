@@ -48,18 +48,20 @@ export class EditarComponent implements OnInit, OnChanges {
   }
 
   loadCategories() {
-    this.loading = true;
     this.apiService.getCategories().subscribe({
-      next: (response) => {
-        this.categories = response.data;
+      next: (response: Category[] | { data: Category[] }) => {
+        this.categories = Array.isArray(response)
+          ? response
+          : (response.data ?? []);
         this.loading = false;
       },
       error: (error) => {
-        console.error('Error al cargar productos:', error);
-        this.error = 'Error al cargar los productos. Por favor, intente más tarde.';
+        console.error('Error al cargar categorías:', error);
+        this.error = 'Error al cargar las categorías';
         this.loading = false;
       }
     });
+
   }
 
   ngOnChanges(changes: SimpleChanges) {

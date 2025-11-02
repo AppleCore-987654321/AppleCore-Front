@@ -64,8 +64,12 @@ export class ListarComponent implements OnInit, OnDestroy{
       .getProducts()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response) => {
-          this.productos = response.data || [];
+        next: (response: Product[] | { data: Product[] }) => {
+          // ✅ Soporta ambos casos (mock o backend)
+          this.productos = Array.isArray(response)
+            ? response
+            : response.data || [];
+
           console.log('Productos cargados:', this.productos);
           this.loading = false;
         },
@@ -75,6 +79,7 @@ export class ListarComponent implements OnInit, OnDestroy{
           this.loading = false;
         },
       });
+
   }
 
   editar(item: Product) {
