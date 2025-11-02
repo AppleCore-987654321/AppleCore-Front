@@ -119,6 +119,7 @@ export class AuthService {
   }
 
 
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }
@@ -133,6 +134,11 @@ export class AuthService {
 
   getCustomerId(): number | null {
     return this.customerIdSubject.value;
+  }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token && token.trim().length > 0;
   }
 }
 

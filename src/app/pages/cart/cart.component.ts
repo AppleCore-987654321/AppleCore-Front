@@ -10,6 +10,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { CartService, CartItem } from '../../core/cart.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import {AuthService} from '../../core/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -39,7 +40,8 @@ export class CartComponent implements OnInit {
     private cartService: CartService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -110,9 +112,29 @@ export class CartComponent implements OnInit {
       return;
     }
 
-    // ✅ Redirige al checkout
+    // ✅ Verifica si está autenticado
+    const isLoggedIn = this.authService.isAuthenticated();
+
+    if (!isLoggedIn) {
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Inicia sesión',
+        detail: 'Debes iniciar sesión para proceder al pago'
+      });
+
+      // Redirige al login
+      this.router.navigate(['/login'], {
+        queryParams: { redirectTo: '/checkout' } // opcional: redirige al checkout después de login
+      });
+
+      return;
+    }
+
+    // Si está logueado, sigue normalmente
     this.router.navigate(['/checkout']);
   }
+
+
 
   continueShopping(): void {
     this.closeSidebar.emit();
